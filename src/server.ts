@@ -1,3 +1,6 @@
+import { config } from "dotenv";
+config();
+
 import errorHandler from "errorhandler";
 
 import app from "./app";

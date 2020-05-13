@@ -4,6 +4,8 @@ class Dummy extends Model {
   public id!: number; // Note that the `null assertion` `!` is required in strict mode.
   public title!: string;
   public description!: string | null;
+  public published!: boolean;
+  public cleared!: boolean;
 
   // timestamps!
   public readonly createdAt!: Date;
@@ -26,9 +28,15 @@ function initModels(sequelize: Sequelize) {
         type: new DataTypes.STRING(128),
         allowNull: true,
       },
+      published: {
+        type: DataTypes.BOOLEAN,
+      },
+      cleared: {
+        type: DataTypes.BOOLEAN,
+      },
     },
     {
-      tableName: "users",
+      tableName: "dummy",
       sequelize: sequelize, // passing the `sequelize` instance is required
     }
   );

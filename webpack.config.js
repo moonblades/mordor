@@ -1,13 +1,15 @@
 const path = require("path");
+const nodeExternals = require("webpack-node-externals");
 
 module.exports = {
-  mode: "production",
+  mode: "development",
   entry: "./src/server.ts",
+  target: "node",
   devtool: "inline-source-map",
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
+        test: /\.ts?$/,
         use: "ts-loader",
         exclude: /node_modules/,
       },
@@ -16,6 +18,7 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".js"],
   },
+  externals: [nodeExternals()],
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),

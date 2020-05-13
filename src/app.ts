@@ -1,6 +1,3 @@
-import { config } from "dotenv";
-config();
-
 import express from "express";
 import * as bodyParser from "body-parser";
 import cors, { CorsOptions } from "cors";
@@ -22,15 +19,15 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
-db.sequelize.sync();
+// db.sequelize.sync();
 // // drop the table if it already exists
-// db.sequelize.sync({ force: true }).then(() => {
-//   console.log("Drop and re-sync db.");
-// });
+db.sequelize.sync({ force: true }).then(() => {
+  console.log("Drop and re-sync db.");
+});
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to Mordor." });
+  res.json({ message: "Welcome to Mordor!" });
 });
 
 // dummy routes
