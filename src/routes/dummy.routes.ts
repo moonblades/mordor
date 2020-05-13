@@ -1,7 +1,8 @@
-module.exports = (app) => {
-  const dummy = require("../controllers/dummy.controller.js");
+import { Express, Router } from "express";
+import * as dummy from "../controllers/dummy.controller";
 
-  var router = require("express").Router();
+function initRoutes(app: Express) {
+  var router = Router();
 
   // Create a new Dummy
   router.post("/", dummy.create);
@@ -19,10 +20,12 @@ module.exports = (app) => {
   router.put("/:id", dummy.update);
 
   // Delete a Dummy with id
-  router.delete("/:id", dummy.delete);
+  router.delete("/:id", dummy.deleteOne);
 
   // Create a new Dummy
   router.delete("/", dummy.deleteAll);
 
   app.use("/api/dummy", router);
-};
+}
+
+export { initRoutes };

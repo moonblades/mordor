@@ -1,12 +1,16 @@
-require("dotenv").config();
+import { config } from "dotenv";
+config();
 
-const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
+import express from "express";
+import * as bodyParser from "body-parser";
+import cors, { CorsOptions } from "cors";
+
+import { db } from "./models";
+import * as dummy from "./routes/dummy.routes";
 
 const app = express();
 
-var corsOptions = {
+var corsOptions: CorsOptions = {
   origin: `http://${process.env.DB_HOST}:${process.env.DB_PORT}`,
 };
 
@@ -17,8 +21,6 @@ app.use(bodyParser.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
-
-const db = require("./app/models");
 
 db.sequelize.sync();
 // // drop the table if it already exists
@@ -31,10 +33,7 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to Mordor." });
 });
 
-require("./app/routes/dummy.routes")(app);
+// dummy routes
+dummy.initRoutes(app);
 
-// set port, listen for requests
-const PORT = process.env.SERVER_PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
-});
+export default app;

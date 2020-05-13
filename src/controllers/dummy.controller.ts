@@ -1,9 +1,9 @@
-const db = require("../models");
-const Dummy = db.dummy;
-const Op = db.Sequelize.Op;
+// import { Op } from "sequelize";
+import { Request, Response } from "express";
+import { Dummy } from "../models/index";
 
 // Create and Save a new Dummy
-exports.create = (req, res) => {
+function create(req: Request, res: Response) {
   // Validate request
   if (!req.body.title) {
     res.status(400).send({
@@ -29,14 +29,17 @@ exports.create = (req, res) => {
         message: err.message || "Some error occurred while creating the dummy.",
       });
     });
-};
+}
 
 // Retrieve all Dummies from the database.
-exports.findAll = (req, res) => {
+function findAll(req: Request, res: Response) {
   const title = req.query.title;
-  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
-  Dummy.findAll({ where: condition })
+  Dummy.findAll({
+    where: {
+      title: title,
+    },
+  })
     .then((data) => {
       res.send(data);
     })
@@ -45,10 +48,10 @@ exports.findAll = (req, res) => {
         message: err.message || "Some error occurred while retrieving dummies.",
       });
     });
-};
+}
 
 // Find a single Dummy with an id
-exports.findOne = (req, res) => {
+function findOne(req: Request, res: Response) {
   const id = req.params.id;
 
   Dummy.findByPk(id)
@@ -60,10 +63,10 @@ exports.findOne = (req, res) => {
         message: "Error retrieving Dummy with id=" + id,
       });
     });
-};
+}
 
 // Update a Dummy by the id in the request
-exports.update = (req, res) => {
+function update(req: Request, res: Response) {
   const id = req.params.id;
 
   Dummy.update(req.body, {
@@ -85,10 +88,10 @@ exports.update = (req, res) => {
         message: "Error updating Dummy with id=" + id,
       });
     });
-};
+}
 
 // Delete a Dummy with the specified id in the request
-exports.delete = (req, res) => {
+function deleteOne(req: Request, res: Response) {
   const id = req.params.id;
 
   Dummy.destroy({
@@ -110,10 +113,10 @@ exports.delete = (req, res) => {
         message: "Could not delete Dummy with id=" + id,
       });
     });
-};
+}
 
 // Delete all Dummies from the database.
-exports.deleteAll = (req, res) => {
+function deleteAll(req: Request, res: Response) {
   Dummy.destroy({
     where: {},
     truncate: false,
@@ -127,10 +130,10 @@ exports.deleteAll = (req, res) => {
           err.message || "Some error occurred while removing all dummies.",
       });
     });
-};
+}
 
 // find all published Dummy
-exports.findAllPublished = (req, res) => {
+function findAllPublished(req: Request, res: Response) {
   Dummy.findAll({ where: { published: true } })
     .then((data) => {
       res.send(data);
@@ -140,4 +143,14 @@ exports.findAllPublished = (req, res) => {
         message: err.message || "Some error occurred while retrieving dummies.",
       });
     });
+}
+
+export {
+  create,
+  findAll,
+  findOne,
+  update,
+  deleteOne,
+  deleteAll,
+  findAllPublished,
 };
