@@ -3,13 +3,30 @@
   // Hover to view descriptions of existing attributes.
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
-  "configurations": [
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Launch Program",
-      "skipFiles": ["<node_internals>/**"],
-      "program": "${workspaceFolder}/server.js"
-    }
-  ]
+  "configurations": [{
+    "type": "node",
+    "request": "launch",
+    "name": "Launch Server",
+    "skipFiles": ["<node_internals>/**"],
+    "program": "${workspaceFolder}/dist/bundle.js",
+    "console": "integratedTerminal",
+  }, {
+    "type": "node",
+    "request": "launch",
+    "name": "Launch Server (Watch)",
+    "skipFiles": ["<node_internals>/**"],
+    "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/nodemon",
+    "program": "${workspaceFolder}/dist/bundle.js",
+    "restart": true,
+    "console": "integratedTerminal",
+  }, {
+    "type": "node",
+    "request": "launch",
+    "name": "Build (Watch)",
+    "skipFiles": ["<node_internals>/**"],
+    "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/webpack",
+    "runtimeArgs": ["--watch"],
+    "restart": true,
+    "console": "integratedTerminal",
+  }]
 }
