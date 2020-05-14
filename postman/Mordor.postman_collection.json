@@ -1,0 +1,204 @@
+{
+	"info": {
+		"_postman_id": "79be16e4-30c6-4d5c-9082-55162aef64a6",
+		"name": "Mordor",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Dummy",
+			"item": [
+				{
+					"name": "Create dummy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f1edf6e8-8e57-4cdc-8fb9-74bfd2f2e205",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+									"});",
+									"",
+									"pm.test(\"Response test\", function () {",
+									"    var reqBody = JSON.parse(pm.request.body.raw);",
+									"    var jsonData = pm.response.json();",
+									"",
+									"    pm.expect(jsonData.title).to.eql(reqBody.title);",
+									"    pm.expect(jsonData.descrition).to.eql(reqBody.descrition);",
+									"    pm.expect(jsonData.published).to.eql(reqBody.published);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\":\"test\",\n\t\"description\":\"test desc\",\n\t\"published\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/dummy/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"dummy",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete dummy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6604aeac-a985-4475-9b56-3ad1a24c40c1",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/dummy/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"dummy",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Published dummies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d0a3eadf-808e-4e2d-8125-c480dd34accc",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/dummy/published",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"dummy",
+								"published"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0f280747-8e85-4f07-a748-ba335461bbe0",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "869feb12-19a2-4794-93e2-24c31ded3cf1",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Api test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "21f38dcb-38df-47cf-b37b-411a0708ec1f",
+						"exec": [
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

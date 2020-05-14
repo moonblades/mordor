@@ -22,7 +22,7 @@ function initRoutes(app: Express) {
   // Delete a Dummy with id
   router.delete("/:id", dummy.deleteOne);
 
-  // Create a new Dummy
+  // Delete all Dummies
   router.delete("/", dummy.deleteAll);
 
   app.use("/api/dummy", router);

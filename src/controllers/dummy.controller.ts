@@ -22,7 +22,7 @@ function create(req: Request, res: Response) {
   // Save Dummy in the database
   Dummy.create(dummy)
     .then((data) => {
-      res.send(data);
+      res.status(201).send(data);
     })
     .catch((err) => {
       res.status(500).send({
