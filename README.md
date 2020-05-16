@@ -2,12 +2,12 @@
 Backend server for Gondor.
 
 ## Setup
-To setup the projec run:
+To setup the project run:
 ```
 npm install
 ```
 
-## Compile
+## Compile TS
 To compile the code:
 ```js
 npm run build // compile once
@@ -18,7 +18,7 @@ npm run watch // watch files and recompile whenever they change
 ```
 The compiled js code can be found in `dist/bundle.js`.
 
-### Run
+### Run the server
 To run the server:
 ```js
 npm run node // run the server
@@ -26,6 +26,12 @@ npm run node // run the server
 or
 ```js
 npm run nodemon // watch files and restart the server whenver they change
+```
+
+### Documentation
+To generate the documentation:
+```js
+npm run docs
 ```
 
 ---
