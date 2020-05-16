@@ -13,7 +13,16 @@ const sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
   },
 });
 
-initModels(sequelize);
+// make sure the connection is successful
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log("Connection has been established successfully.");
+    initModels(sequelize);
+  })
+  .catch((err) => {
+    console.error("Unable to connect to the database:", err);
+  });
 
 const db = {
   sequelize,
