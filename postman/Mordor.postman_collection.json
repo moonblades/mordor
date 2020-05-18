@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "79be16e4-30c6-4d5c-9082-55162aef64a6",
+		"_postman_id": "8121d20b-fd16-4aff-8bf4-7ac40fa6b657",
 		"name": "Mordor",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -14,7 +14,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f1edf6e8-8e57-4cdc-8fb9-74bfd2f2e205",
+								"id": "98ff4026-a15b-4f44-a30d-9f113a11d7a7",
 								"exec": [
 									"pm.test(\"Successful POST request\", function () {",
 									"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
@@ -68,7 +68,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6604aeac-a985-4475-9b56-3ad1a24c40c1",
+								"id": "b6a57481-e9bd-4001-a1a5-44a23ae56b3f",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -112,7 +112,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d0a3eadf-808e-4e2d-8125-c480dd34accc",
+								"id": "4d703dc9-43fb-422e-8c52-04fbecde895e",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -146,7 +146,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "0f280747-8e85-4f07-a748-ba335461bbe0",
+						"id": "aa90e748-d9bf-46a8-98bc-405404a54d9c",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -156,7 +156,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "869feb12-19a2-4794-93e2-24c31ded3cf1",
+						"id": "13f9c600-5eb8-433d-8a79-79a5c13e7076",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -167,12 +167,62 @@
 			"protocolProfileBehavior": {}
 		},
 		{
+			"name": "Vendor",
+			"item": [
+				{
+					"name": "Create vendor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4aafdda5-e192-4c6d-8b73-96c95df9906a",
+								"exec": [
+									"pm.test(\"Succesfull POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"test@test.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/vendor/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"vendor",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
 			"name": "Api test",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "21f38dcb-38df-47cf-b37b-411a0708ec1f",
+						"id": "7abc005b-563d-458b-9620-522aeaba1aad",
 						"exec": [
 							"pm.test(\"Status test\", function () {",
 							"    pm.response.to.have.status(200);",
