@@ -1,6 +1,10 @@
 import { config } from "../config/db.config";
 import { Sequelize } from "sequelize";
-import { initModels, Dummy } from "./dummy.model";
+import { initModels } from "./initModels";
+import { Dummy } from "./dummy.model";
+import { Client } from "./client.model";
+import { Vendor } from "./vendor.model";
+import { Business } from "./business.model";
 
 const sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
   host: config.HOST,
@@ -18,14 +22,15 @@ sequelize
   .authenticate()
   .then(() => {
     console.log("Connection has been established successfully.");
-    initModels(sequelize);
   })
   .catch((err) => {
     console.error("Unable to connect to the database:", err);
   });
 
+initModels(sequelize);
+
 const db = {
   sequelize,
 };
 
-export { db, Dummy };
+export { db, Dummy, Client, Vendor, Business };

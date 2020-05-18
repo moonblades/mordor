@@ -2,8 +2,8 @@ import express from "express";
 import * as bodyParser from "body-parser";
 import cors, { CorsOptions } from "cors";
 
-import { db } from "./models";
-import * as dummy from "./routes/dummy.routes";
+import { db, Vendor } from "./models";
+import { initRoutes } from "./routes/initRoutes";
 
 const app = express();
 
@@ -31,7 +31,6 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to Mordor!" });
 });
 
-// dummy routes
-dummy.initRoutes(app);
+initRoutes(app);
 
 export default app;

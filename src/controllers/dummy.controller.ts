@@ -1,6 +1,6 @@
 // import { Op } from "sequelize";
 import { Request, Response } from "express";
-import { Dummy } from "../models/index";
+import { Dummy } from "../models";
 
 // Create and Save a new Dummy
 function create(req: Request, res: Response) {

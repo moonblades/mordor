@@ -12,7 +12,7 @@ class Dummy extends Model {
   public readonly updatedAt!: Date;
 }
 
-function initModels(sequelize: Sequelize) {
+function init(sequelize: Sequelize) {
   Dummy.init(
     {
       id: {
@@ -42,4 +42,4 @@ function initModels(sequelize: Sequelize) {
   );
 }
 
-export { initModels, Dummy };
+export { init, Dummy };

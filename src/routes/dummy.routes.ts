@@ -1,7 +1,7 @@
 import { Express, Router } from "express";
 import * as dummy from "../controllers/dummy.controller";
 
-function initRoutes(app: Express) {
+function init(app: Express) {
   var router = Router();
 
   // Create a new Dummy
@@ -28,4 +28,4 @@ function initRoutes(app: Express) {
   app.use("/api/dummy", router);
 }
 
-export { initRoutes };
+export { init };
