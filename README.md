@@ -1,3 +1,5 @@
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
+
 # mordor
 Backend server for Gondor.
 
@@ -52,3 +54,13 @@ DB_PASSWORD="password"
 # Sever port (on this machine)
 SERVER_PORT=3000
 ```
+
+---
+
+## Conventions and guidelines
+
+### Versioning
+https://semver.org/
+
+### Commits
+https://www.conventionalcommits.org/
