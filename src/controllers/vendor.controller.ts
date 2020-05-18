@@ -61,7 +61,7 @@ function findOne(req: Request, res: Response) {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Error retrieving Dummy with id=" + id,
+        message: err.message || "Error retrieving Vendor with id=" + id,
       });
     });
 }
