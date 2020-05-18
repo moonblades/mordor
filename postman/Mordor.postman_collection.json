@@ -190,7 +190,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"email\": \"test@test.com\"\n}",
+							"raw": "{\n\t\"email\": \"test@test.com\",\n\t\"displayName\": \"test\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -208,6 +208,160 @@
 								"api",
 								"vendor",
 								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find all vendors",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a2dc11fe-a406-4491-aa31-3162dbef4973",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/vendor?displayName=test",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"vendor"
+							],
+							"query": [
+								{
+									"key": "displayName",
+									"value": "test"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find vendor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c843dad7-cffc-4c7e-8281-5bd868433816",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/vendor/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"vendor",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update vendor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1ab514b8-7f99-410f-b485-e4911def4c78",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"displayName\" : \"test_updated\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/vendor/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"vendor",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete vendor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "41d61611-3fc1-459a-984f-56aeeeb21c96",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/vendor/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"vendor",
+								"1"
 							]
 						}
 					},
