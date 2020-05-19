@@ -533,6 +533,205 @@
 			"protocolProfileBehavior": {}
 		},
 		{
+			"name": "Business",
+			"item": [
+				{
+					"name": "Create business",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2437ad41-942e-4610-99b2-26841188f7a4",
+								"exec": [
+									"pm.test(\"Succesfull POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"vendorId\": 1,\n\t\"phoneNumber\": \"666666666\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/business/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"business",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find all businesses",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "422770d4-a05d-4026-a6a4-e6c881476e1e",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/business/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"business",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find business",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cc84bfae-0bdf-4e69-b0d4-afbb85bbb6d7",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/business/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"business",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update business",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d8b5f1ed-76a9-43bc-880a-bd03f9a1b5c8",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"phoneNumber\" : \"333333333\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/business/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"business",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete business",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "02519c3c-0d26-46db-a13a-40406df00d2c",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/business/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"business",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
 			"name": "Api test",
 			"event": [
 				{
