@@ -14,7 +14,6 @@ import { Vendor } from "./vendor.model";
 
 class Business extends Model {
   public id!: number;
-  public vendorId!: number;
   public vatNumber: string;
   public phoneNumber: string;
   public name: string;

@@ -3,7 +3,6 @@ import { Business } from "./business.model";
 
 class Product extends Model {
   public id!: number;
-  public businessId!: number;
   public name: string;
   public description: string;
   public price: number;
