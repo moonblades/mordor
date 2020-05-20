@@ -71,15 +71,14 @@ function init(sequelize: Sequelize) {
     },
     {
       tableName: "vendor",
+      modelName: "vendor",
       sequelize: sequelize,
     }
   );
-
-  Vendor.hasMany(Business, {
-    sourceKey: "id",
-    foreignKey: "vendorId",
-    as: "businesses",
-  });
 }
 
-export { init, Vendor };
+function defineRelations() {
+  Vendor.hasMany(Business);
+}
+
+export { init, defineRelations, Vendor };

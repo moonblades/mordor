@@ -67,6 +67,7 @@ function init(sequelize: Sequelize) {
     },
     {
       tableName: "client",
+      modelName: "client",
       sequelize: sequelize,
     }
   );

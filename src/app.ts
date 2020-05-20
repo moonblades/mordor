@@ -2,7 +2,7 @@ import express from "express";
 import * as bodyParser from "body-parser";
 import cors, { CorsOptions } from "cors";
 
-import { db, Vendor } from "./models";
+import { db } from "./models";
 import { initRoutes } from "./routes/initRoutes";
 
 const app = express();

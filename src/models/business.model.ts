@@ -1,4 +1,16 @@
-import { Model, Sequelize, DataTypes } from "sequelize";
+import {
+  Model,
+  Sequelize,
+  DataTypes,
+  Association,
+  HasManyAddAssociationMixin,
+  HasManyCountAssociationsMixin,
+  HasManyGetAssociationsMixin,
+  HasManyHasAssociationMixin,
+  HasManyCreateAssociationMixin,
+} from "sequelize";
+import { Product } from "./product.model";
+import { Vendor } from "./vendor.model";
 
 class Business extends Model {
   public id!: number;
@@ -17,6 +29,18 @@ class Business extends Model {
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+
+  public getProducts!: HasManyGetAssociationsMixin<Product>; // Note the null assertions!
+  public addProduct!: HasManyAddAssociationMixin<Product, number>;
+  public hasProduct!: HasManyHasAssociationMixin<Product, number>;
+  public countProducts!: HasManyCountAssociationsMixin;
+  public createProduct!: HasManyCreateAssociationMixin<Product>;
+
+  public readonly products?: Product[]; // Note this is optional since it's only populated when explicitly requested in code
+
+  public static associations: {
+    products: Association<Business, Product>;
+  };
 }
 
 function init(sequelize: Sequelize) {
@@ -26,10 +50,6 @@ function init(sequelize: Sequelize) {
         type: DataTypes.INTEGER.UNSIGNED,
         autoIncrement: true,
         primaryKey: true,
-      },
-      vendorId: {
-        type: DataTypes.INTEGER.UNSIGNED,
-        allowNull: false,
       },
       vatNumber: {
         type: DataTypes.STRING,
@@ -48,9 +68,17 @@ function init(sequelize: Sequelize) {
     },
     {
       tableName: "business",
+      modelName: "business",
       sequelize: sequelize,
     }
   );
+
+  // Business.hasMany(Product);
 }
 
-export { init, Business };
+function defineRelations() {
+  Business.belongsTo(Vendor);
+  Business.hasMany(Product);
+}
+
+export { init, defineRelations, Business };

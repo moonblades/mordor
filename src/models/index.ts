@@ -1,10 +1,11 @@
 import { config } from "../config/db.config";
 import { Sequelize } from "sequelize";
-import { initModels } from "./initModels";
+import { initModels, defineRelations } from "./init";
 import { Dummy } from "./dummy.model";
 import { Client } from "./client.model";
 import { Vendor } from "./vendor.model";
 import { Business } from "./business.model";
+import { Product } from "./product.model";
 
 const sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
   host: config.HOST,
@@ -28,9 +29,10 @@ sequelize
   });
 
 initModels(sequelize);
+defineRelations();
 
 const db = {
   sequelize,
 };
 
-export { db, Dummy, Client, Vendor, Business };
+export { db, Dummy, Client, Vendor, Business, Product };
