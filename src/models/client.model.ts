@@ -1,4 +1,6 @@
 import { Model, DataTypes, Sequelize } from "sequelize";
+import { Reservation } from "./reservation.model";
+import { Business } from "./business.model";
 
 class Client extends Model {
   public id!: number;
@@ -73,4 +75,9 @@ function init(sequelize: Sequelize) {
   );
 }
 
-export { init, Client };
+function defineRelations() {
+  Client.hasMany(Reservation);
+  Client.belongsToMany(Business, { through: "business_client" });
+}
+
+export { init, defineRelations, Client };
