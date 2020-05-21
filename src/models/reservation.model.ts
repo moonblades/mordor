@@ -4,6 +4,7 @@ import { Product } from ".";
 
 class Reservation extends Model {
   public id!: number;
+  public clientId!: number;
   public date: Date;
   public reminderToClient: boolean;
   public cancelable: boolean;

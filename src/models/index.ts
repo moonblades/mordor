@@ -6,6 +6,7 @@ import { Client } from "./client.model";
 import { Vendor } from "./vendor.model";
 import { Business } from "./business.model";
 import { Product } from "./product.model";
+import { Schedule } from "./schedule.model";
 
 const sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
   host: config.HOST,
@@ -35,4 +36,4 @@ const db = {
   sequelize,
 };
 
-export { db, Dummy, Client, Vendor, Business, Product };
+export { db, Dummy, Client, Vendor, Business, Product, Schedule };

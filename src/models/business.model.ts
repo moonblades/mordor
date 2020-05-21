@@ -12,9 +12,11 @@ import {
 import { Product } from "./product.model";
 import { Vendor } from "./vendor.model";
 import { Client } from "./client.model";
+import { Schedule } from "./schedule.model";
 
 class Business extends Model {
   public id!: number;
+  public vendorId!: number;
   public vatNumber: string;
   public phoneNumber: string;
   public name: string;
@@ -38,8 +40,17 @@ class Business extends Model {
 
   public readonly products?: Product[]; // Note this is optional since it's only populated when explicitly requested in code
 
+  public getSchedules!: HasManyGetAssociationsMixin<Schedule>; // Note the null assertions!
+  public addSchedule!: HasManyAddAssociationMixin<Schedule, number>;
+  public hasSchedule!: HasManyHasAssociationMixin<Schedule, number>;
+  public countSchedules!: HasManyCountAssociationsMixin;
+  public createSchedule!: HasManyCreateAssociationMixin<Schedule>;
+
+  public readonly schedules?: Product[]; // Note this is optional since it's only populated when explicitly requested in code
+
   public static associations: {
     products: Association<Business, Product>;
+    schedules: Association<Business, Schedule>;
   };
 }
 
@@ -80,6 +91,7 @@ function defineRelations() {
   Business.belongsTo(Vendor);
   Business.hasMany(Product);
   Business.belongsToMany(Client, { through: "business_client" });
+  Business.hasMany(Schedule);
 }
 
 export { init, defineRelations, Business };
