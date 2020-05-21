@@ -170,6 +170,214 @@
 			"name": "Vendor",
 			"item": [
 				{
+					"name": "Business",
+					"item": [
+						{
+							"name": "Get all businesses",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "47e8acf6-2f57-42fc-ab55-93b6c74079f2",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/vendor/2/business/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"vendor",
+										"2",
+										"business",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create business",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8f74be01-de63-4a39-939e-09faa45b0f9e",
+										"exec": [
+											"pm.test(\"Succesfull POST request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"phoneNumber\": \"123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/vendor/2/business",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"vendor",
+										"2",
+										"business"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update business",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "286b5335-40e9-43be-b852-b8df04258174",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"phoneNumber\" : \"333333333\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/vendor/2/business/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"vendor",
+										"2",
+										"business",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete business",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "a95ee299-333f-4302-a917-6e9632c0dc18",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/vendor/2/business/7",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"vendor",
+										"2",
+										"business",
+										"7"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete all businesses",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "bc4cb47e-96bd-4781-a1ae-75b2c40e5227",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/vendor/2/business",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"vendor",
+										"2",
+										"business"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
 					"name": "Create vendor",
 					"event": [
 						{
@@ -233,7 +441,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/vendor?displayName=test",
+							"raw": "http://localhost:3000/api/vendor",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -242,12 +450,6 @@
 							"path": [
 								"api",
 								"vendor"
-							],
-							"query": [
-								{
-									"key": "displayName",
-									"value": "test"
-								}
 							]
 						}
 					},
@@ -810,50 +1012,6 @@
 					"_postman_isSubFolder": true
 				},
 				{
-					"name": "Create business",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "8f74be01-de63-4a39-939e-09faa45b0f9e",
-								"exec": [
-									"pm.test(\"Succesfull POST request\", function () {\r",
-									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"vendorId\": 1,\n\t\"phoneNumber\": \"666666666\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/business/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"business",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Find all businesses",
 					"event": [
 						{
@@ -906,85 +1064,6 @@
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/business/3",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"business",
-								"3"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update business",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "286b5335-40e9-43be-b852-b8df04258174",
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"phoneNumber\" : \"333333333\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/business/3",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"business",
-								"3"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete business",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "a95ee299-333f-4302-a917-6e9632c0dc18",
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
 						"header": [],
 						"url": {
 							"raw": "http://localhost:3000/api/business/3",
