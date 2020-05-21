@@ -22,6 +22,21 @@ function init(app: Express) {
   // Delete all Vendors
   router.delete("/", vendor.deleteAll);
 
+  // Retrieve all business for vendor
+  router.get("/:id/business", vendor.findAllBusinesses);
+
+  // Create business for vendor
+  router.post("/:id/business", vendor.createBusiness);
+
+  // Update business for vendor
+  router.put("/:id/business/:businessId", vendor.updateBusiness);
+
+  // Delete business for vendor
+  router.delete("/:id/business/:businessId", vendor.deleteOneBusiness);
+
+  // Delete all businesses for vendor
+  router.delete("/:id/business", vendor.deleteAllBusinesses);
+
   app.use("/api/vendor", router);
 }
 

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Vendor } from "../models";
+import { Vendor, Business } from "../models";
 
 // Create and Save a new Vendor
 function create(req: Request, res: Response) {
@@ -35,12 +35,8 @@ function create(req: Request, res: Response) {
 
 // Retrieve all Vendors from database
 function findAll(req: Request, res: Response) {
-  const displayName = req.query.displayName;
-
   Vendor.findAll({
-    where: {
-      displayName: displayName,
-    },
+    where: {},
   })
     .then((data) => {
       res.send(data);
@@ -133,4 +129,165 @@ function deleteAll(req: Request, res: Response) {
     });
 }
 
-export { create, findAll, findOne, update, deleteOne, deleteAll };
+// Create a business for a vendor
+function findAllBusinesses(req: Request, res: Response) {
+  const { id: vendorId } = req.params;
+
+  Business.findAll({
+    where: {
+      vendorId: vendorId,
+    },
+  })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message,
+      });
+    });
+}
+
+// Create a business for a vendor
+function createBusiness(req: Request, res: Response) {
+  const { id: vendorId } = req.params;
+
+  Vendor.findByPk(vendorId)
+    .then((vendor: Vendor) => {
+      if (!vendor) {
+        res
+          .status(404)
+          .send({ message: `Cannot find vendor with id ${vendorId}.` });
+      }
+
+      const business = {
+        vatNumber: req.body.vatNumber,
+        phoneNumber: req.body.phoneNumber,
+        name: req.body.name,
+        description: req.body.description,
+        imageUrl: req.body.imageUrl,
+        currency: req.body.currency,
+        timeZone: req.body.timeZone,
+        streetAndNumber: req.body.streetAndNumber,
+        postalCode: req.body.postalCode,
+        city: req.body.city,
+      };
+
+      vendor
+        .createBusiness(business)
+        .then((data) => {
+          res.send(data);
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message: err.message,
+          });
+        });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message,
+      });
+    });
+}
+
+function updateBusiness(req: Request, res: Response) {
+  const { id: vendorId, businessId } = req.params;
+
+  Vendor.findByPk(vendorId).then((vendor: Vendor) => {
+    vendor.hasBusiness(parseInt(businessId)).then((value) => {
+      if (!value) {
+        res.status(404).send({
+          message: `Business with id ${businessId} not found in vendor with id ${vendorId}`,
+        });
+        return;
+      }
+
+      Business.update(req.body, {
+        where: { id: businessId },
+      })
+        .then((num) => {
+          if (num == 1) {
+            res.send({
+              message: "Business was updated successfully.",
+            });
+          } else {
+            res.send({
+              message: `Cannot update Business with id=${businessId}. Maybe Business was not found or req.body is empty!`,
+            });
+          }
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message: err.message,
+          });
+        });
+    });
+  });
+}
+
+function deleteOneBusiness(req: Request, res: Response) {
+  const { id: vendorId, businessId } = req.params;
+
+  Vendor.findByPk(vendorId).then((vendor: Vendor) => {
+    vendor.hasBusiness(parseInt(businessId)).then((value) => {
+      if (!value) {
+        res.status(404).send({
+          message: `Business with id ${businessId} not found in vendor with id ${vendorId}`,
+        });
+        return;
+      }
+
+      Business.destroy({
+        where: { id: businessId },
+      })
+        .then((num) => {
+          if (num == 1) {
+            res.send({
+              message: "Business was deleted successfully!",
+            });
+          } else {
+            res.send({
+              message: `Cannot delete Business with id=${businessId}. Maybe Business was not found!`,
+            });
+          }
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message: err.message,
+          });
+        });
+    });
+  });
+}
+
+function deleteAllBusinesses(req: Request, res: Response) {
+  const { id: vendorId } = req.params;
+
+  Business.destroy({
+    where: { vendorId: vendorId },
+    truncate: false,
+  })
+    .then((nums) => {
+      res.send({ message: `${nums} Businesses were deleted successfully!` });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message,
+      });
+    });
+}
+
+export {
+  create,
+  findAll,
+  findOne,
+  update,
+  deleteOne,
+  deleteAll,
+  findAllBusinesses,
+  createBusiness,
+  updateBusiness,
+  deleteOneBusiness,
+  deleteAllBusinesses,
+};
