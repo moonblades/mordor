@@ -5,6 +5,7 @@ import * as Client from "./client.routes";
 import * as Business from "./business.routes";
 import * as Product from "./product.routes";
 import * as Schedule from "./schedule.routes";
+import * as Vacation from "./vacation.routes";
 
 function initRoutes(app: Express) {
   Dummy.init(app);
@@ -13,6 +14,8 @@ function initRoutes(app: Express) {
   Business.init(app);
   Product.init(app);
   Schedule.init(app);
+  Schedule.init(app);
+  Vacation.init(app);
 }
 
 export { initRoutes };

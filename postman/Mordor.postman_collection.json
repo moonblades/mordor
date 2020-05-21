@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "8121d20b-fd16-4aff-8bf4-7ac40fa6b657",
+		"_postman_id": "26eaa98e-7dd1-4fe2-b62b-9db7bd0b32c1",
 		"name": "Mordor",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -14,7 +14,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "98ff4026-a15b-4f44-a30d-9f113a11d7a7",
+								"id": "f7d023b0-cf96-4ebb-8372-286786055ac6",
 								"exec": [
 									"pm.test(\"Successful POST request\", function () {",
 									"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
@@ -68,7 +68,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b6a57481-e9bd-4001-a1a5-44a23ae56b3f",
+								"id": "d07cabaf-9a72-445e-a281-7babdee6464d",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -112,7 +112,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4d703dc9-43fb-422e-8c52-04fbecde895e",
+								"id": "ae108d29-cb52-4e2b-85a1-c505bef81273",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -146,7 +146,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "aa90e748-d9bf-46a8-98bc-405404a54d9c",
+						"id": "70ca0226-86bf-404e-bc94-90312ba70f06",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -156,7 +156,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "13f9c600-5eb8-433d-8a79-79a5c13e7076",
+						"id": "fbd12b5f-c3b6-436e-9212-dba22c65100f",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -175,7 +175,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4aafdda5-e192-4c6d-8b73-96c95df9906a",
+								"id": "dddcc93c-eedf-48df-9e34-31b9969c2eb1",
 								"exec": [
 									"pm.test(\"Succesfull POST request\", function () {\r",
 									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
@@ -219,7 +219,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a2dc11fe-a406-4491-aa31-3162dbef4973",
+								"id": "7d84df0a-e6b9-4f78-be5e-809bb8324232",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
@@ -259,7 +259,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c843dad7-cffc-4c7e-8281-5bd868433816",
+								"id": "3238380e-d23a-46a3-95c6-17474542cf43",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
@@ -294,7 +294,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1ab514b8-7f99-410f-b485-e4911def4c78",
+								"id": "f9d6897f-0d8b-46b8-b939-6dd041fea507",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
@@ -338,7 +338,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "41d61611-3fc1-459a-984f-56aeeeb21c96",
+								"id": "2d9cb1f1-f5c5-4e35-abf2-62a2777353a2",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
@@ -379,7 +379,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "36b20b4f-b116-4100-88c6-bfaf7c00f508",
+								"id": "25de1e4d-c401-4a66-904b-0eb029242689",
 								"exec": [
 									"pm.test(\"Succesfull POST request\", function () {\r",
 									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
@@ -470,7 +470,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6105b91c-8928-47bd-ae16-23f4a3bc9f6e",
+								"id": "dbd4cbfa-3842-4d5a-8fa0-84c16e12ee91",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
@@ -536,12 +536,286 @@
 			"name": "Business",
 			"item": [
 				{
+					"name": "Schedule",
+					"item": [
+						{
+							"name": "Create Schedule",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"dayOfWeek\": 1,\n\t\"startTime\": \"23:59:59\",\n\t\"time\": 240\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/business/2/schedule",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"business",
+										"2",
+										"schedule"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find all schedules",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/business/2/schedule",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"business",
+										"2",
+										"schedule"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find schedule",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/business/2/schedule/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"business",
+										"2",
+										"schedule",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update schedule",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"dayOfWeek\": 2,\n\t\"startTime\": \"12:59:59\",\n\t\"time\": 480\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/business/2/schedule/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"business",
+										"2",
+										"schedule",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete all schedules",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/business/2/schedule",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"business",
+										"2",
+										"schedule"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Vacation",
+					"item": [
+						{
+							"name": "Create Vacation",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"dateStart\": \"2020-05-26\",\n\t\"dateEnd\": \"2020-05-30\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/business/2/vacation",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"business",
+										"2",
+										"vacation"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find all vacations",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/business/2/vacation",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"business",
+										"2",
+										"vacation"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find vacation",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/business/2/vacation/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"business",
+										"2",
+										"vacation",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update vacation",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"dateStart\": \"2020-05-26\",\n\t\"dateEnd\": \"2021-05-30\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/business/2/vacation/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"business",
+										"2",
+										"vacation",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete all vacations",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/business/2/vacation",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"business",
+										"2",
+										"vacation"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
 					"name": "Create business",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "2437ad41-942e-4610-99b2-26841188f7a4",
+								"id": "8f74be01-de63-4a39-939e-09faa45b0f9e",
 								"exec": [
 									"pm.test(\"Succesfull POST request\", function () {\r",
 									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
@@ -585,7 +859,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "422770d4-a05d-4026-a6a4-e6c881476e1e",
+								"id": "0b0154c2-3ef2-4ecb-a69a-4b151a08a63c",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
@@ -620,7 +894,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "cc84bfae-0bdf-4e69-b0d4-afbb85bbb6d7",
+								"id": "6675fc77-b966-4c0c-b122-c1500f6b7fa0",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
@@ -655,7 +929,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d8b5f1ed-76a9-43bc-880a-bd03f9a1b5c8",
+								"id": "286b5335-40e9-43be-b852-b8df04258174",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
@@ -699,7 +973,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "02519c3c-0d26-46db-a13a-40406df00d2c",
+								"id": "a95ee299-333f-4302-a917-6e9632c0dc18",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
@@ -727,124 +1001,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "Create Schedule",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"dayOfWeek\": 1,\n\t\"startTime\": \"23:59:59\",\n\t\"time\": 240\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/business/2/schedule",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"business",
-								"2",
-								"schedule"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Find all schedules",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/business/2/schedule",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"business",
-								"2",
-								"schedule"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Find schedule",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": ""
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update schedule",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"dayOfWeek\": 2,\n\t\"startTime\": \"12:59:59\",\n\t\"time\": 480\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/business/2/schedule/3",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"business",
-								"2",
-								"schedule",
-								"3"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete all schedules",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/business/2/schedule",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"business",
-								"2",
-								"schedule"
-							]
-						}
-					},
-					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -855,7 +1011,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "7abc005b-563d-458b-9620-522aeaba1aad",
+						"id": "a2eeb291-dd1c-47f4-ab32-38830326197f",
 						"exec": [
 							"pm.test(\"Status test\", function () {",
 							"    pm.response.to.have.status(200);",

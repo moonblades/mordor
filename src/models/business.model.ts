@@ -13,6 +13,7 @@ import { Product } from "./product.model";
 import { Vendor } from "./vendor.model";
 import { Client } from "./client.model";
 import { Schedule } from "./schedule.model";
+import { Vacation } from "./vacation.model";
 
 class Business extends Model {
   public id!: number;
@@ -46,11 +47,20 @@ class Business extends Model {
   public countSchedules!: HasManyCountAssociationsMixin;
   public createSchedule!: HasManyCreateAssociationMixin<Schedule>;
 
-  public readonly schedules?: Product[]; // Note this is optional since it's only populated when explicitly requested in code
+  public readonly schedules?: Schedule[]; // Note this is optional since it's only populated when explicitly requested in code
+
+  public getVacations!: HasManyGetAssociationsMixin<Vacation>; // Note the null assertions!
+  public addVacation!: HasManyAddAssociationMixin<Vacation, number>;
+  public hasVacation!: HasManyHasAssociationMixin<Vacation, number>;
+  public countVacations!: HasManyCountAssociationsMixin;
+  public createVacation!: HasManyCreateAssociationMixin<Vacation>;
+
+  public readonly vacations?: Vacation[]; // Note this is optional since it's only populated when explicitly requested in code
 
   public static associations: {
     products: Association<Business, Product>;
     schedules: Association<Business, Schedule>;
+    vacations: Association<Business, Vacation>;
   };
 }
 
@@ -92,6 +102,7 @@ function defineRelations() {
   Business.hasMany(Product);
   Business.belongsToMany(Client, { through: "business_client" });
   Business.hasMany(Schedule);
+  Business.hasMany(Vacation);
 }
 
 export { init, defineRelations, Business };

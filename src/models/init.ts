@@ -5,6 +5,7 @@ import * as Business from "./business.model";
 import * as Product from "./product.model";
 import * as Reservation from "./reservation.model";
 import * as Schedule from "./schedule.model";
+import * as Vacation from "./vacation.model";
 import { Sequelize } from "sequelize";
 
 ///
@@ -15,6 +16,7 @@ function initModels(sequelize: Sequelize) {
   Business.init(sequelize);
   Product.init(sequelize);
   Schedule.init(sequelize);
+  Vacation.init(sequelize);
 }
 
 ///
@@ -25,6 +27,7 @@ function defineRelations() {
   Business.defineRelations();
   Product.defineRelations();
   Schedule.defineRelations();
+  Vacation.defineRelations();
 }
 
 export { initModels, defineRelations };
