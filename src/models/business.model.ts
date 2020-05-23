@@ -14,6 +14,7 @@ import { Vendor } from "./vendor.model";
 import { Client } from "./client.model";
 import { Schedule } from "./schedule.model";
 import { Vacation } from "./vacation.model";
+import { Reservation } from "./reservation.model";
 
 class Business extends Model {
   public id!: number;
@@ -57,10 +58,19 @@ class Business extends Model {
 
   public readonly vacations?: Vacation[]; // Note this is optional since it's only populated when explicitly requested in code
 
+  public getReservations!: HasManyGetAssociationsMixin<Reservation>; // Note the null assertions!
+  public addReservation!: HasManyAddAssociationMixin<Reservation, number>;
+  public hasReservation!: HasManyHasAssociationMixin<Reservation, number>;
+  public countReservations!: HasManyCountAssociationsMixin;
+  public createReservation!: HasManyCreateAssociationMixin<Reservation>;
+
+  public readonly reservations?: Reservation[];
+
   public static associations: {
     products: Association<Business, Product>;
     schedules: Association<Business, Schedule>;
     vacations: Association<Business, Vacation>;
+    reservations: Association<Business, Reservation>;
   };
 }
 
@@ -93,8 +103,6 @@ function init(sequelize: Sequelize) {
       sequelize: sequelize,
     }
   );
-
-  // Business.hasMany(Product);
 }
 
 function defineRelations() {
@@ -103,6 +111,7 @@ function defineRelations() {
   Business.belongsToMany(Client, { through: "business_client" });
   Business.hasMany(Schedule);
   Business.hasMany(Vacation);
+  Business.hasMany(Reservation);
 }
 
 export { init, defineRelations, Business };

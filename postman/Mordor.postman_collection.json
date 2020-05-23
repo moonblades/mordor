@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "26eaa98e-7dd1-4fe2-b62b-9db7bd0b32c1",
+		"_postman_id": "63bf9aa2-7ebb-4f7e-973a-abb963c907dd",
 		"name": "Mordor",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -14,7 +14,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f7d023b0-cf96-4ebb-8372-286786055ac6",
+								"id": "dc26bf2d-c387-4cec-a616-93d5307e826c",
 								"exec": [
 									"pm.test(\"Successful POST request\", function () {",
 									"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
@@ -68,7 +68,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d07cabaf-9a72-445e-a281-7babdee6464d",
+								"id": "747598d4-49b1-4000-9cc9-7d02a8276258",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -112,7 +112,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ae108d29-cb52-4e2b-85a1-c505bef81273",
+								"id": "2e60e856-2cc5-45c4-8bc9-5a349ee21723",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -146,7 +146,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "70ca0226-86bf-404e-bc94-90312ba70f06",
+						"id": "4c3a5bc3-2650-4ae3-bfd7-3135e6bd67e3",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -156,7 +156,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "fbd12b5f-c3b6-436e-9212-dba22c65100f",
+						"id": "8a9d864d-9367-411f-95a9-9fedb1c88c7e",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -178,7 +178,7 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "47e8acf6-2f57-42fc-ab55-93b6c74079f2",
+										"id": "66994cce-8dc5-45ae-9b99-e6d5a7e46f10",
 										"exec": [
 											"pm.test(\"Status code is 200\", function () {\r",
 											"    pm.response.to.have.status(200);\r",
@@ -215,7 +215,7 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "8f74be01-de63-4a39-939e-09faa45b0f9e",
+										"id": "8808f07b-213f-404b-b6d5-b1b8fcdea284",
 										"exec": [
 											"pm.test(\"Succesfull POST request\", function () {\r",
 											"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
@@ -260,7 +260,7 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "286b5335-40e9-43be-b852-b8df04258174",
+										"id": "ed9c10ca-8c71-4309-8dc9-f32f06c80359",
 										"exec": [
 											"pm.test(\"Status code is 200\", function () {\r",
 											"    pm.response.to.have.status(200);\r",
@@ -306,7 +306,7 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "a95ee299-333f-4302-a917-6e9632c0dc18",
+										"id": "2098d4a8-4754-483e-8495-3cbd9443fb0a",
 										"exec": [
 											"pm.test(\"Status code is 200\", function () {\r",
 											"    pm.response.to.have.status(200);\r",
@@ -343,7 +343,7 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "bc4cb47e-96bd-4781-a1ae-75b2c40e5227",
+										"id": "e81676f0-7275-4c0a-a77f-9c21a2c0d661",
 										"exec": [
 											"pm.test(\"Status code is 200\", function () {\r",
 											"    pm.response.to.have.status(200);\r",
@@ -383,7 +383,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "dddcc93c-eedf-48df-9e34-31b9969c2eb1",
+								"id": "0dd59dd1-c601-492f-a378-74411ba7fa6e",
 								"exec": [
 									"pm.test(\"Succesfull POST request\", function () {\r",
 									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
@@ -427,7 +427,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7d84df0a-e6b9-4f78-be5e-809bb8324232",
+								"id": "0bf692cf-f003-4127-9dbe-df1454e08569",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
@@ -461,7 +461,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3238380e-d23a-46a3-95c6-17474542cf43",
+								"id": "87cefaff-6c63-4633-bd9b-4b0cfd4543a8",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
@@ -475,7 +475,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/vendor/1",
+							"raw": "http://localhost:3000/api/vendor/564564",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -484,7 +484,7 @@
 							"path": [
 								"api",
 								"vendor",
-								"1"
+								"564564"
 							]
 						}
 					},
@@ -496,7 +496,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f9d6897f-0d8b-46b8-b939-6dd041fea507",
+								"id": "5465a9d5-4121-4779-9dc6-db67cf429ced",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
@@ -540,7 +540,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2d9cb1f1-f5c5-4e35-abf2-62a2777353a2",
+								"id": "40d2d4d4-1b56-46de-ab99-7a6efd33193f",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
@@ -576,12 +576,203 @@
 			"name": "Client",
 			"item": [
 				{
+					"name": "Reservation",
+					"item": [
+						{
+							"name": "Create reservation",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "efcb8aeb-1b3f-4e14-a48f-ec1024c6c524",
+										"exec": [
+											"pm.test(\"Successful POST request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"businessId\": 2,\n\t\"date\": \"2020-05-22 18:00:00\",\n\t\"reminderToClient\": true,\n\t\"cancelable\": true,\n\t\"completed\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/client/1/reservation/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"client",
+										"1",
+										"reservation",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find all reservations",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2e11b7ca-1baf-4a69-a39f-70bc9c571441",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/client/1/reservation/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"client",
+										"1",
+										"reservation",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find reservation",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "399f9aaa-fb11-4a0d-b0c2-ea7e18174474",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/client/1/reservation/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"client",
+										"1",
+										"reservation",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update reservation",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"date\": \"2020-05-22 18:00:00\",\n\t\"reminderToClient\": false,\n\t\"cancelable\": false,\n\t\"completed\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/client/1/reservation/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"client",
+										"1",
+										"reservation",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete reservation",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"date\": \"2020-05-22 18:00:00\",\n\t\"reminderToClient\": false,\n\t\"cancelable\": false,\n\t\"completed\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/client/1/reservation/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"client",
+										"1",
+										"reservation",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
 					"name": "Create client",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "25de1e4d-c401-4a66-904b-0eb029242689",
+								"id": "0064ed8a-50cc-4ee1-a9fd-6f68679c23a4",
 								"exec": [
 									"pm.test(\"Succesfull POST request\", function () {\r",
 									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
@@ -672,7 +863,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "dbd4cbfa-3842-4d5a-8fa0-84c16e12ee91",
+								"id": "fba02206-b09c-425b-89b4-335523abcf1b",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
@@ -1012,12 +1203,203 @@
 					"_postman_isSubFolder": true
 				},
 				{
+					"name": "Reservation",
+					"item": [
+						{
+							"name": "Create reservation",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "0ed2a54c-635e-4c7a-b225-43b69efbabba",
+										"exec": [
+											"pm.test(\"Successful POST request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"clientId\": 1,\n\t\"date\": \"2020-05-22 18:00:00\",\n\t\"reminderToClient\": true,\n\t\"cancelable\": true,\n\t\"completed\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/business/2/reservation/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"business",
+										"2",
+										"reservation",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find all reservations",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "9aeae0f1-b18a-498d-832f-04f6a3f3ebf7",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/business/2/reservation/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"business",
+										"2",
+										"reservation",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find reservation",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "061b2217-aba1-44d7-bb80-202d9374cc0b",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/business/2/reservation/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"business",
+										"2",
+										"reservation",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update reservation",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"date\": \"2020-05-22 18:00:00\",\n\t\"reminderToClient\": false,\n\t\"cancelable\": false,\n\t\"completed\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/business/2/reservation/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"business",
+										"2",
+										"reservation",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete reservation",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"date\": \"2020-05-22 18:00:00\",\n\t\"reminderToClient\": false,\n\t\"cancelable\": false,\n\t\"completed\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/business/2/reservation/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"business",
+										"2",
+										"reservation",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
 					"name": "Find all businesses",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "0b0154c2-3ef2-4ecb-a69a-4b151a08a63c",
+								"id": "03d10774-f4ff-444a-918d-fa65892c5ffe",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
@@ -1052,7 +1434,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6675fc77-b966-4c0c-b122-c1500f6b7fa0",
+								"id": "9773cb0d-960f-4bab-8d52-170005729282",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
@@ -1085,12 +1467,40 @@
 			"protocolProfileBehavior": {}
 		},
 		{
+			"name": "Reservation",
+			"item": [
+				{
+					"name": "Find all reservation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find reservation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
 			"name": "Api test",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "a2eeb291-dd1c-47f4-ab32-38830326197f",
+						"id": "f9680e65-b97f-4763-8656-7a0e07655cd8",
 						"exec": [
 							"pm.test(\"Status test\", function () {",
 							"    pm.response.to.have.status(200);",

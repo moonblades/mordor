@@ -1,10 +1,12 @@
 import { Model, Sequelize, DataTypes } from "sequelize";
 import { Client } from "./client.model";
+import { Business } from "./business.model";
 import { Product } from ".";
 
 class Reservation extends Model {
   public id!: number;
   public clientId!: number;
+  public businessId!: number;
   public date: Date;
   public reminderToClient: boolean;
   public cancelable: boolean;
@@ -39,6 +41,7 @@ function init(sequelize: Sequelize) {
 
 function defineRelations() {
   Reservation.belongsTo(Client);
+  Reservation.belongsTo(Business);
 
   Reservation.belongsToMany(Product, { through: "reservation_product" });
 }

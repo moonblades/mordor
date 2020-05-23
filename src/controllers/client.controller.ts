@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Client } from "../models";
+import { Client, Reservation } from "../models";
 
 // Create and save a new Client
 function create(req: Request, res: Response) {
@@ -139,4 +139,179 @@ function deleteAll(req: Request, res: Response) {
     });
 }
 
-export { create, findAll, findOne, update, deleteOne, deleteAll };
+function findAllReservation(req: Request, res: Response) {
+  const { id: clientId } = req.params;
+
+  Reservation.findAll({
+    where: { clientId: clientId },
+  })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message,
+      });
+    });
+}
+
+function findOneReservation(req: Request, res: Response) {
+  const { id: clientId, reservationId } = req.params;
+
+  Client.findByPk(clientId)
+    .then((client: Client) => {
+      if (!client) {
+        res
+          .status(404)
+          .send({ message: `Cannot find client with id ${clientId}.` });
+      }
+
+      Reservation.findByPk(reservationId)
+        .then((data) => {
+          res.send(data);
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message: err.message,
+          });
+        });
+    })
+    .catch((err) => {
+      res.status(500).send({ message: err.message });
+    });
+}
+
+function createReservation(req: Request, res: Response) {
+  const { id: clientId } = req.params;
+
+  Client.findByPk(clientId)
+    .then((client: Client) => {
+      if (!client) {
+        res
+          .status(404)
+          .send({ message: `Cannot find client with id ${clientId}.` });
+      }
+
+      const reservation = {
+        businessId: req.body.businessId,
+        date: req.body.date,
+        reminderToClient: req.body.reminderToClient,
+        cancelable: req.body.cancelable,
+        completed: req.body.completed,
+      };
+
+      client
+        .createReservation(reservation)
+        .then((data) => {
+          res.status(201).send(data);
+        })
+        .catch((err) => {
+          res.status(500).send({ message: err.message });
+        });
+    })
+    .catch((err) => {
+      res.status(500).send({ message: err.message });
+    });
+}
+
+function updateReservation(req: Request, res: Response) {
+  const { id: clientId, reservationId } = req.params;
+
+  Client.findByPk(clientId).then((client: Client) => {
+    client.hasReservation(parseInt(reservationId)).then((value: boolean) => {
+      if (!value) {
+        res.status(404).send({
+          message: `Reservation with id ${reservationId} not found in client with id ${clientId}`,
+        });
+        return;
+      }
+
+      Reservation.update(req.body, {
+        where: { id: reservationId },
+      })
+        .then((num) => {
+          if (num == 1) {
+            res.send({
+              message: "Reservation was updated successfully.",
+            });
+          } else {
+            res.send({
+              message: `Cannot update Reservation with id=${reservationId}. Maybe Reservation was not found or req.body is empty!`,
+            });
+          }
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message: err.message,
+          });
+        });
+    });
+  });
+}
+
+function deleteOneReservation(req: Request, res: Response) {
+  const { id: clientId, reservationId } = req.params;
+
+  Client.findByPk(clientId).then((client: Client) => {
+    client.hasReservation(parseInt(reservationId)).then((value) => {
+      if (!value) {
+        res.status(404).send({
+          message: `Reservation with id ${reservationId} not found in client with id ${clientId}`,
+        });
+        return;
+      }
+
+      Reservation.destroy({
+        where: { id: reservationId },
+      })
+        .then((num) => {
+          if (num == 1) {
+            res.send({
+              message: "Reservation was deleted successfully!",
+            });
+          } else {
+            res.send({
+              message: `Cannot delete Reservation with id=${reservationId}. Maybe Reservation was not found!`,
+            });
+          }
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message: err.message,
+          });
+        });
+    });
+  });
+}
+
+function deleteAllReservation(req: Request, res: Response) {
+  const { id: clientId } = req.params;
+
+  Reservation.destroy({
+    where: { clientId: clientId },
+    truncate: false,
+  })
+    .then((nums) => {
+      res.send({ message: `${nums} Reservations were deleted successfully!` });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message,
+      });
+    });
+}
+
+export {
+  create,
+  findAll,
+  findOne,
+  update,
+  deleteOne,
+  deleteAll,
+  findAllReservation,
+  findOneReservation,
+  createReservation,
+  updateReservation,
+  deleteOneReservation,
+  deleteAllReservation,
+};
