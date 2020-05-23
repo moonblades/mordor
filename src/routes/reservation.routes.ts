@@ -10,6 +10,13 @@ function init(app: Express) {
   // Retrieve reservation
   router.get("/:id", reservation.findOne);
 
+  // Add product to reservation
+  router.post("/:id/product/:productId", reservation.addProduct);
+
+  // TODO:
+  // // Remove product from reservation
+  // router.delete("/:id/product/:productId", reservation.removeProduct);
+
   app.use("/api/reservation", router);
 }
 

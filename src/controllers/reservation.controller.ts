@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Reservation } from "../models";
+import { Reservation, Product } from "../models";
 
 function findAll(req: Request, res: Response) {
   Reservation.findAll()
@@ -27,4 +27,51 @@ function findOne(req: Request, res: Response) {
     });
 }
 
-export { findAll, findOne };
+function addProduct(req: Request, res: Response) {
+  const { id: reservationId, productId } = req.params;
+
+  Reservation.findByPk(reservationId).then((reservation: Reservation) => {
+    if (!reservation) {
+      res
+        .status(404)
+        .send({ message: `Cannot find reservation with id ${reservationId}.` });
+    }
+    Product.findByPk(productId).then((product: Product) => {
+      if (!product) {
+        res
+          .status(404)
+          .send({ message: `Cannot find product with id ${productId}.` });
+      }
+
+      reservation.addProduct(product);
+      res.status(201).send({
+        message: `Product ${productId} added to Reservation ${reservationId}`,
+      });
+    });
+  });
+}
+
+// function removeProduct(req: Request, res: Response) {
+//   const { id: reservationId, productId } = req.params;
+
+//   Reservation.findByPk(reservationId).then((reservation: Reservation) => {
+//     if (!reservation) {
+//       res
+//         .status(404)
+//         .send({ message: `Cannot find reservation with id ${reservationId}.` });
+//     }
+//     Product.findByPk(productId).then((product: Product) => {
+//       if (!product) {
+//         res
+//           .status(404)
+//           .send({ message: `Cannot find product with id ${productId}.` });
+//       }
+
+//       res.status(201).send({
+//         message: `Product ${productId} deleted from Reservation ${reservationId}`,
+//       });
+//     });
+//   });
+// }
+
+export { findAll, findOne, addProduct };

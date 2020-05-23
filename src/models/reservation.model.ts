@@ -1,4 +1,14 @@
-import { Model, Sequelize, DataTypes } from "sequelize";
+import {
+  Model,
+  Sequelize,
+  DataTypes,
+  HasManyGetAssociationsMixin,
+  HasManyAddAssociationMixin,
+  HasManyHasAssociationMixin,
+  HasManyCountAssociationsMixin,
+  HasManyCreateAssociationMixin,
+  Association,
+} from "sequelize";
 import { Client } from "./client.model";
 import { Business } from "./business.model";
 import { Product } from ".";
@@ -14,6 +24,18 @@ class Reservation extends Model {
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+
+  public getProducts!: HasManyGetAssociationsMixin<Product>; // Note the null assertions!
+  public addProduct!: HasManyAddAssociationMixin<Product, number>;
+  public hasProduct!: HasManyHasAssociationMixin<Product, number>;
+  public countProducts!: HasManyCountAssociationsMixin;
+  public createProduct!: HasManyCreateAssociationMixin<Product>;
+
+  public readonly products?: Product[]; // Note this is optional since it's only populated when explicitly requested in code
+
+  public static associations: {
+    products: Association<Reservation, Product>;
+  };
 }
 
 function init(sequelize: Sequelize) {
