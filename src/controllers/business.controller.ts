@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Business, Reservation } from "../models";
+import { Business, Reservation, Product } from "../models";
 
 function findAll(req: Request, res: Response) {
   //   const displayName = req.query.displayName;
@@ -195,6 +195,172 @@ function deleteAllReservation(req: Request, res: Response) {
     });
 }
 
+function createProduct(req: Request, res: Response) {
+  const { id: businessId } = req.params;
+
+  Business.findByPk(businessId)
+    .then((business: Business) => {
+      if (!business) {
+        res
+          .status(404)
+          .send({ message: `Cannot find Business with id ${businessId}.` });
+      }
+
+      const product = {
+        name: req.body.name,
+        description: req.body.description,
+        price: req.body.price,
+        duration: req.body.duration,
+        weight: req.body.weight,
+        sale: req.body.sale,
+        salePercentage: req.body.salePercentage,
+        available: req.body.available,
+        whenAvailable: req.body.whenAvailable,
+      };
+
+      business
+        .createProduct(product)
+        .then((data) => {
+          res.status(201).send(data);
+        })
+        .catch((err) => {
+          res.status(500).send({ message: err.message });
+        });
+    })
+    .catch((err) => {
+      res.status(500).send({ message: err.message });
+    });
+}
+
+function findAllProduct(req: Request, res: Response) {
+  const { id: businessId } = req.params;
+
+  Product.findAll({
+    where: { businessId: businessId },
+  })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message,
+      });
+    });
+}
+
+function findOneProduct(req: Request, res: Response) {
+  const { id: businessId, productId } = req.params;
+
+  Business.findByPk(businessId)
+    .then((business: Business) => {
+      if (!business) {
+        res
+          .status(404)
+          .send({ message: `Cannot find Business with id ${businessId}.` });
+      }
+
+      Product.findByPk(productId)
+        .then((data) => {
+          res.send(data);
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message: err.message,
+          });
+        });
+    })
+    .catch((err) => {
+      res.status(500).send({ message: err.message });
+    });
+}
+
+function updateProduct(req: Request, res: Response) {
+  const { id: businessId, productId } = req.params;
+
+  Business.findByPk(businessId).then((business: Business) => {
+    business.hasProduct(parseInt(productId)).then((value: boolean) => {
+      if (!value) {
+        res.status(404).send({
+          message: `Product with id ${productId} not found in Business with id ${businessId}`,
+        });
+        return;
+      }
+
+      Product.update(req.body, {
+        where: { id: productId },
+      })
+        .then((num) => {
+          if (num == 1) {
+            res.send({
+              message: "Product was updated successfully.",
+            });
+          } else {
+            res.send({
+              message: `Cannot update Product with id=${productId}. Maybe Product was not found or req.body is empty!`,
+            });
+          }
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message: err.message,
+          });
+        });
+    });
+  });
+}
+
+function deleteOneProduct(req: Request, res: Response) {
+  const { id: businessId, productId } = req.params;
+
+  Business.findByPk(businessId).then((business: Business) => {
+    business.hasProduct(parseInt(productId)).then((value) => {
+      if (!value) {
+        res.status(404).send({
+          message: `Product with id ${productId} not found in Business with id ${businessId}`,
+        });
+        return;
+      }
+
+      Product.destroy({
+        where: { id: productId },
+      })
+        .then((num) => {
+          if (num == 1) {
+            res.send({
+              message: "Product was deleted successfully!",
+            });
+          } else {
+            res.send({
+              message: `Cannot delete Product with id=${productId}. Maybe Product was not found!`,
+            });
+          }
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message: err.message,
+          });
+        });
+    });
+  });
+}
+
+function deleteAllProduct(req: Request, res: Response) {
+  const { id: businessId } = req.params;
+
+  Product.destroy({
+    where: { businessId: businessId },
+    truncate: false,
+  })
+    .then((nums) => {
+      res.send({ message: `${nums} Products were deleted successfully!` });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message,
+      });
+    });
+}
+
 export {
   findAll,
   findOne,
@@ -204,4 +370,10 @@ export {
   updateReservation,
   deleteOneReservation,
   deleteAllReservation,
+  createProduct,
+  findAllProduct,
+  findOneProduct,
+  updateProduct,
+  deleteOneProduct,
+  deleteAllProduct,
 };

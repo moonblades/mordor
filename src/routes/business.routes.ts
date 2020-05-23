@@ -31,6 +31,24 @@ function init(app: Express) {
   // Delte all reservation for business
   router.delete("/:id/reservation", business.deleteAllReservation);
 
+  // Create a new product for client
+  router.post("/:id/product", business.createProduct);
+
+  // Retrieve all product for business
+  router.get("/:id/product", business.findAllProduct);
+
+  // Retrieve a product for business
+  router.get("/:id/product/:productId", business.findOneProduct);
+
+  // Update a product for business
+  router.put("/:id/product/:productId", business.updateProduct);
+
+  // Delete a product for business
+  router.delete("/:id/product/:productId", business.deleteOneProduct);
+
+  // Delte all product for business
+  router.delete("/:id/product", business.deleteAllProduct);
+
   app.use("/api/business", router);
 }
 
