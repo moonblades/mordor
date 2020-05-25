@@ -17,5 +17,10 @@
   "strict": true,
   "alwaysStrict": true,
   "exclude": ["node_modules", "dist"],
-  "include": ["src/**/*.ts", "tests/**/*.spec.ts"]
+  "include": ["src/**/*.ts", "tests/**/*.spec.ts"],
+  "typedocOptions": {
+    "mode": "modules",
+    "out": "docs",
+    "includeVersion": true
+  }
 }
