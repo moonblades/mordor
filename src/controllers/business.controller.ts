@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Business, Reservation, Product } from "../models";
+import { Business, Reservation, Product, Client } from "../models";
 
 function findAll(req: Request, res: Response) {
   //   const displayName = req.query.displayName;
@@ -361,6 +361,42 @@ function deleteAllProduct(req: Request, res: Response) {
     });
 }
 
+function addClient(req: Request, res: Response) {
+  const { id: businessId, clientId } = req.params;
+
+  Business.findByPk(businessId)
+    .then((business: Business) => {
+      if (!business) {
+        res
+          .status(404)
+          .send({ message: `Cannot find Business with id ${businessId}.` });
+      }
+      Client.findByPk(clientId)
+        .then((client: Client) => {
+          if (!client) {
+            res.status(404).send({
+              message: `Cannot find Client with id ${clientId}.`,
+            });
+          }
+
+          business.addClient(client);
+          res.status(201).send({
+            message: `Client ${clientId} added to Business ${businessId}`,
+          });
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message: err.message,
+          });
+        });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message,
+      });
+    });
+}
+
 export {
   findAll,
   findOne,
@@ -376,4 +412,5 @@ export {
   updateProduct,
   deleteOneProduct,
   deleteAllProduct,
+  addClient,
 };

@@ -66,11 +66,20 @@ class Business extends Model {
 
   public readonly reservations?: Reservation[];
 
+  public getClients!: HasManyGetAssociationsMixin<Client>; // Note the null assertions!
+  public addClient!: HasManyAddAssociationMixin<Client, number>;
+  public hasClient!: HasManyHasAssociationMixin<Client, number>;
+  public countClients!: HasManyCountAssociationsMixin;
+  public createClient!: HasManyCreateAssociationMixin<Client>;
+
+  public readonly clients?: Client[];
+
   public static associations: {
     products: Association<Business, Product>;
     schedules: Association<Business, Schedule>;
     vacations: Association<Business, Vacation>;
     reservations: Association<Business, Reservation>;
+    clients: Association<Business, Client>;
   };
 }
 

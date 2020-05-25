@@ -49,6 +49,9 @@ function init(app: Express) {
   // Delte all product for business
   router.delete("/:id/product", business.deleteAllProduct);
 
+  // Add client to business
+  router.post("/:id/client/:clientId", business.addClient);
+
   app.use("/api/business", router);
 }
 
