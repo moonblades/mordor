@@ -20,6 +20,12 @@ const PORT = process.env.SERVER_PORT || 8080;
 const server = app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}...`);
   console.log("Press CTRL-C to stop\n");
+
+  process.on("SIGINT", function () {
+    console.log("\nCaught interrupt signal");
+
+    process.exit();
+  });
 });
 
 export default server;
