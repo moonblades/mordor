@@ -40,13 +40,13 @@ function init(sequelize: Sequelize) {
         type: DataTypes.FLOAT,
       },
       duration: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.INTEGER.UNSIGNED,
       },
       preparation: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.INTEGER.UNSIGNED,
       },
       postProcessing: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.INTEGER.UNSIGNED,
       },
       weight: {
         type: DataTypes.FLOAT,
