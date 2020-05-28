@@ -65,7 +65,10 @@ function defineRelations() {
   Reservation.belongsTo(Client);
   Reservation.belongsTo(Business);
 
-  Reservation.belongsToMany(Product, { through: "reservation_product" });
+  Reservation.belongsToMany(Product, {
+    through: "reservation_product",
+    onDelete: "cascade",
+  });
 }
 
 export { init, defineRelations, Reservation };

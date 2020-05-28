@@ -66,7 +66,10 @@ function init(sequelize: Sequelize) {
 function defineRelations() {
   Product.belongsTo(Business);
 
-  Product.belongsToMany(Reservation, { through: "reservation_product" });
+  Product.belongsToMany(Reservation, {
+    through: "reservation_product",
+    onDelete: "cascade",
+  });
 }
 
 export { init, defineRelations, Product };

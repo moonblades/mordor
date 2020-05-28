@@ -29,7 +29,8 @@ class Business extends Model {
   public streetAndNumber: string;
   public postalCode: string;
   public city: string;
-  //   public openingTime: string;
+  public industry: string;
+  public cancellationTime: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -105,6 +106,8 @@ function init(sequelize: Sequelize) {
       streetAndNumber: { type: DataTypes.STRING },
       postalCode: { type: DataTypes.STRING },
       city: { type: DataTypes.STRING },
+      industry: { type: DataTypes.STRING },
+      cancellationTime: { type: DataTypes.INTEGER.UNSIGNED },
     },
     {
       tableName: "business",
@@ -117,7 +120,10 @@ function init(sequelize: Sequelize) {
 function defineRelations() {
   Business.belongsTo(Vendor);
   Business.hasMany(Product);
-  Business.belongsToMany(Client, { through: "business_client" });
+  Business.belongsToMany(Client, {
+    through: "business_client",
+    onDelete: "cascade",
+  });
   Business.hasMany(Schedule);
   Business.hasMany(Vacation);
   Business.hasMany(Reservation);

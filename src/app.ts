@@ -22,9 +22,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // update existing tables
 // db.sequelize.sync();
 // // drop the tables if it already exists
-db.sequelize.sync({ force: false }).then(() => {
-  console.log("Drop and re-sync db.");
-});
+db.sequelize
+  .query("SET FOREIGN_KEY_CHECKS = 0", { raw: true }) // <- must be removed
+  .then(function () {
+    db.sequelize.sync({ force: true }).then(() => {
+      console.log("Drop and re-sync db.");
+    });
+  });
 
 // simple route
 app.get("/", (req, res) => {

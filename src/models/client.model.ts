@@ -99,7 +99,10 @@ function init(sequelize: Sequelize) {
 
 function defineRelations() {
   Client.hasMany(Reservation);
-  Client.belongsToMany(Business, { through: "business_client" });
+  Client.belongsToMany(Business, {
+    through: "business_client",
+    onDelete: "cascade",
+  });
 }
 
 export { init, defineRelations, Client };

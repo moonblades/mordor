@@ -171,6 +171,8 @@ function createBusiness(req: Request, res: Response) {
         streetAndNumber: req.body.streetAndNumber,
         postalCode: req.body.postalCode,
         city: req.body.city,
+        industry: req.body.industry,
+        cancelationTime: req.body.cancelationTime,
       };
 
       vendor
