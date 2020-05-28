@@ -1,5 +1,9 @@
 import { Express, Router } from "express";
+import { check, validationResult, param } from "express-validator";
 import * as business from "../controllers/business.controller";
+import { reservationSchema } from "../schemas/reservation.schema";
+import { productSchema } from "../schemas/product_schema";
+import { typeValidation } from "../middlewares/validation";
 
 function init(app: Express) {
   var router = Router();
@@ -8,49 +12,116 @@ function init(app: Express) {
   router.get("/", business.findAll);
 
   // Retrieve a single business with id
-  router.get("/:id", business.findOne);
+  router.get(
+    "/:id",
+    [param("id").isNumeric()],
+    typeValidation,
+    business.findOne
+  );
 
   // Create a new reservation for client
-  router.post("/:id/reservation", business.createReservation);
+  router.post(
+    "/:id/reservation",
+    reservationSchema(),
+    typeValidation,
+    business.createReservation
+  );
 
   // Retrieve all reservation for business
-  router.get("/:id/reservation", business.findAllReservation);
+  router.get(
+    "/:id/reservation",
+    [param("id").isNumeric()],
+    typeValidation,
+    business.findAllReservation
+  );
 
   // Retrieve a reservation for business
-  router.get("/:id/reservation/:reservationId", business.findOneReservation);
+  router.get(
+    "/:id/reservation/:reservationId",
+    [param("id").isNumeric(), param("reservationId").isNumeric()],
+    typeValidation,
+    business.findOneReservation
+  );
 
   // Update a reservation for business
-  router.put("/:id/reservation/:reservationId", business.updateReservation);
+  router.put(
+    "/:id/reservation/:reservationId",
+    reservationSchema(),
+    typeValidation,
+    business.updateReservation
+  );
 
   // Delete a reservation for business
   router.delete(
     "/:id/reservation/:reservationId",
+    [param("id").isNumeric(), param("reservationId").isNumeric()],
+    typeValidation,
     business.deleteOneReservation
   );
 
   // Delte all reservation for business
-  router.delete("/:id/reservation", business.deleteAllReservation);
+  router.delete(
+    "/:id/reservation",
+    [param("id").isNumeric()],
+    typeValidation,
+    business.deleteAllReservation
+  );
 
   // Create a new product for client
-  router.post("/:id/product", business.createProduct);
+  router.post(
+    "/:id/product",
+    productSchema(),
+    typeValidation,
+    business.createProduct
+  );
 
   // Retrieve all product for business
-  router.get("/:id/product", business.findAllProduct);
+  router.get(
+    "/:id/product",
+    [param("id").isNumeric()],
+    typeValidation,
+    business.findAllProduct
+  );
 
   // Retrieve a product for business
-  router.get("/:id/product/:productId", business.findOneProduct);
+  router.get(
+    "/:id/product/:productId",
+    [param("id").isNumeric(), param("productId").isNumeric()],
+    typeValidation,
+    business.findOneProduct
+  );
 
   // Update a product for business
-  router.put("/:id/product/:productId", business.updateProduct);
+  router.put(
+    "/:id/product/:productId",
+    [param("id").isNumeric(), param("productId").isNumeric()],
+    typeValidation,
+    business.updateProduct
+  );
 
   // Delete a product for business
-  router.delete("/:id/product/:productId", business.deleteOneProduct);
+  router.delete(
+    "/:id/product/:productId",
+    [param("id").isNumeric(), param("productId").isNumeric()],
+    typeValidation,
+    business.deleteOneProduct
+  );
 
   // Delte all product for business
-  router.delete("/:id/product", business.deleteAllProduct);
+  router.delete(
+    "/:id/product",
+    [param("id").isNumeric()],
+    typeValidation,
+    business.deleteAllProduct
+  );
 
   // Add client to business
-  router.post("/:id/client/:clientId", business.addClient);
+  router.post(
+    "/:id/client/:clientId",
+    [param("id").isNumeric(), param("clientId").isNumeric()],
+    typeValidation,
+    business.addClient
+  );
 
   app.use("/api/business", router);
 }

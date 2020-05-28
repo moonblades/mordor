@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { Business, Reservation, Product, Client } from "../models";
+import { validationResult } from "express-validator";
 
 function findAll(req: Request, res: Response) {
   //   const displayName = req.query.displayName;
@@ -34,6 +35,11 @@ function findOne(req: Request, res: Response) {
 }
 
 function findAllReservation(req: Request, res: Response) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   const { id: businessId } = req.params;
 
   Reservation.findAll({
@@ -50,6 +56,11 @@ function findAllReservation(req: Request, res: Response) {
 }
 
 function findOneReservation(req: Request, res: Response) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   const { id: businessId, reservationId } = req.params;
 
   Business.findByPk(businessId)
@@ -76,6 +87,11 @@ function findOneReservation(req: Request, res: Response) {
 }
 
 function createReservation(req: Request, res: Response) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   const { id: businessId } = req.params;
 
   Business.findByPk(businessId)
@@ -144,6 +160,11 @@ function updateReservation(req: Request, res: Response) {
 }
 
 function deleteOneReservation(req: Request, res: Response) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   const { id: businessId, reservationId } = req.params;
 
   Business.findByPk(businessId).then((business: Business) => {
