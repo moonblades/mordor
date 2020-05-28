@@ -9,11 +9,14 @@ class Product extends Model {
   public description: string;
   public price: number;
   public duration: number;
+  public preparation: number;
+  public postProcessing: number;
   public weight: number;
   public sale: boolean;
   public salePercentage: number;
   public available: boolean;
   public whenAvailable: Date;
+  public cancelationTime: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -39,6 +42,12 @@ function init(sequelize: Sequelize) {
       duration: {
         type: DataTypes.FLOAT,
       },
+      preparation: {
+        type: DataTypes.FLOAT,
+      },
+      postProcessing: {
+        type: DataTypes.FLOAT,
+      },
       weight: {
         type: DataTypes.FLOAT,
       },
@@ -53,6 +62,9 @@ function init(sequelize: Sequelize) {
       },
       whenAvailable: {
         type: DataTypes.DATE,
+      },
+      cancelationTime: {
+        type: DataTypes.INTEGER.UNSIGNED,
       },
     },
     {
