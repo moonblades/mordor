@@ -73,7 +73,7 @@ function update(req: Request, res: Response) {
     where: { id: id },
   })
     .then((num) => {
-      if (num == 1) {
+      if (num[0] === 1) {
         res.send({
           message: "User was updated successfully.",
         });
@@ -211,7 +211,7 @@ function updateBusiness(req: Request, res: Response) {
         where: { id: businessId },
       })
         .then((num) => {
-          if (num == 1) {
+          if (num[0] === 1) {
             res.send({
               message: "Business was updated successfully.",
             });
@@ -373,7 +373,7 @@ function updateReservation(req: Request, res: Response) {
         where: { id: reservationId },
       })
         .then((num) => {
-          if (num == 1) {
+          if (num[0] === 1) {
             res.send({
               message: "Reservation was updated successfully.",
             });

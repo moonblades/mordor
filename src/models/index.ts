@@ -1,4 +1,4 @@
-import { config } from "../config/db.config";
+import { config, IDBConfigEntry } from "../config/db.config";
 import { Sequelize } from "sequelize";
 import { initModels, defineRelations } from "./init";
 import { Dummy } from "./dummy.model";
@@ -8,33 +8,62 @@ import { Product } from "./product.model";
 import { Schedule } from "./schedule.model";
 import { Vacation } from "./vacation.model";
 import { Reservation } from "./reservation.model";
+import logger from "../logger";
 
-const sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
-  host: config.HOST,
-  dialect: "mariadb",
-  pool: {
-    max: config.pool.max,
-    min: config.pool.min,
-    acquire: config.pool.acquire,
-    idle: config.pool.idle,
-  },
-});
+const dbTimezone = "GMT";
+const dbConfig = config[process.env.SERVER_ENVIRONMENT] as IDBConfigEntry;
+const sequelize = new Sequelize(
+  dbConfig.database,
+  dbConfig.username,
+  dbConfig.password,
+  {
+    host: dbConfig.host,
+    dialect: dbConfig.dialect,
+    dialectOptions: {
+      timezone: dbTimezone,
+    },
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000,
+    },
+    logging: (sql: string) => logger.info(sql),
+  }
+);
 
-// make sure the connection is successful
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log("Connection has been established successfully.");
-  })
-  .catch((err) => {
-    console.error("Unable to connect to the database:", err);
-  });
+async function connect(sequelizeInstance: Sequelize) {
+  try {
+    await sequelizeInstance.authenticate();
 
-initModels(sequelize);
-defineRelations();
+    if (
+      process.env.SERVER_ENVIRONMENT === "development" ||
+      process.env.SERVER_ENVIRONMENT === "test"
+    ) {
+      await sequelizeInstance.query("SET FOREIGN_KEY_CHECKS = 0", {
+        raw: true,
+      }); // <- must be removed
 
-const db = {
-  sequelize,
+      logger.info("Syncing database...");
+      await sequelizeInstance.sync({ force: true });
+    }
+
+    initModels(sequelizeInstance);
+    defineRelations();
+  } catch (err) {
+    logger.error("Unable to connect to the database:", err);
+  }
+}
+
+export default sequelize;
+
+export {
+  connect,
+  Dummy,
+  User,
+  Business,
+  Product,
+  Schedule,
+  Vacation,
+  Reservation,
 };
-
-export { db, Dummy, User, Business, Product, Schedule, Vacation, Reservation };

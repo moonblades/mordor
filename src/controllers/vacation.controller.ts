@@ -95,7 +95,7 @@ function update(req: Request, res: Response) {
         where: { id: vacationId },
       })
         .then((num) => {
-          if (num == 1) {
+          if (num[0] == 1) {
             res.send({
               message: "Vacation was updated successfully.",
             });
@@ -135,7 +135,7 @@ function deleteOne(req: Request, res: Response) {
         where: { id: vacationId },
       })
         .then((num) => {
-          if (num == 1) {
+          if (num[0] == 1) {
             res.send({
               message: "Vacation was deleted successfully.",
             });
@@ -170,7 +170,7 @@ function deleteAll(req: Request, res: Response) {
             vacation
               .destroy()
               .then((num) => {
-                if (num == 1) {
+                if (num[0] == 1) {
                   res.send({
                     message: "Vacation was deleted successfully.",
                   });

@@ -1,14 +1,19 @@
-import express from "express";
 import * as bodyParser from "body-parser";
 import cors, { CorsOptions } from "cors";
-
-import { db } from "./models";
+import * as dotenv from "dotenv";
+import errorHandler from "errorhandler";
+import express from "express";
+import { config, IDBConfigEntry } from "./config/db.config";
+import sequelize, { connect } from "./models";
 import { initRoutes } from "./routes/initRoutes";
+import logger from "./logger";
+dotenv.config();
+
+const dbConfig = config[process.env.SERVER_ENVIRONMENT] as IDBConfigEntry;
 
 const app = express();
-
-var corsOptions: CorsOptions = {
-  origin: `http://${process.env.DB_HOST}:${process.env.DB_PORT}`,
+const corsOptions: CorsOptions = {
+  origin: `http://${dbConfig.host}:${dbConfig.port}`,
 };
 
 app.use(cors(corsOptions));
@@ -19,22 +24,22 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// update existing tables
-// db.sequelize.sync();
-// // drop the tables if it already exists
-db.sequelize
-  .query("SET FOREIGN_KEY_CHECKS = 0", { raw: true }) // <- must be removed
-  .then(function () {
-    db.sequelize.sync({ force: true }).then(() => {
-      console.log("Drop and re-sync db.");
-    });
-  });
+if (process.env.SERVER_ENVIRONMENT !== "test") {
+  connect(sequelize);
+}
 
-// simple route
+// provides full stack - remove for production
+if (process.env.SERVER_ENVIRONMENT !== "production") {
+  app.use(errorHandler());
+}
+
+// api test route
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to Mordor!" });
 });
 
 initRoutes(app);
+
+logger.info("App initialized");
 
 export default app;

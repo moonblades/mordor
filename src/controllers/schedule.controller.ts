@@ -97,7 +97,7 @@ function update(req: Request, res: Response) {
         where: { id: scheduleId },
       })
         .then((num) => {
-          if (num == 1) {
+          if (num[0] == 1) {
             res.send({
               message: "Schedule was updated successfully.",
             });
@@ -137,7 +137,7 @@ function deleteOne(req: Request, res: Response) {
         where: { id: scheduleId },
       })
         .then((num) => {
-          if (num == 1) {
+          if (num[0] == 1) {
             res.send({
               message: "Schedule was deleted successfully.",
             });
@@ -172,7 +172,7 @@ function deleteAll(req: Request, res: Response) {
             schedule
               .destroy()
               .then((num) => {
-                if (num == 1) {
+                if (num[0] == 1) {
                   res.send({
                     message: "Schedule was deleted successfully.",
                   });

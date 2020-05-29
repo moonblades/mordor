@@ -73,7 +73,7 @@ function update(req: Request, res: Response) {
     where: { id: id },
   })
     .then((num) => {
-      if (num == 1) {
+      if (num[0] == 1) {
         res.send({
           message: "Dummy was updated successfully.",
         });
@@ -98,7 +98,7 @@ function deleteOne(req: Request, res: Response) {
     where: { id: id },
   })
     .then((num) => {
-      if (num == 1) {
+      if (num[0] == 1) {
         res.send({
           message: "Dummy was deleted successfully!",
         });

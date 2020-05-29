@@ -1,14 +1,19 @@
-const config = {
-  HOST: process.env.DB_HOST || "localhost",
-  USER: process.env.DB_USER || "root",
-  PASSWORD: process.env.DB_PASSWORD || "password",
-  DB: process.env.DB_NAME || "test",
-  pool: {
-    max: 5,
-    min: 0,
-    acquire: 30000,
-    idle: 10000,
-  },
-};
+import * as config from "./config.js";
+import { Dialect } from "sequelize/types";
 
-export { config };
+interface IDBConfigEntry {
+  username: string;
+  password: string | null;
+  database: string;
+  host: string;
+  port: string | number;
+  dialect: Dialect;
+}
+
+interface IDBConfig {
+  development: IDBConfigEntry;
+  test: IDBConfigEntry;
+  production: IDBConfigEntry;
+}
+
+export { config, IDBConfigEntry, IDBConfig };

@@ -140,7 +140,7 @@ function updateReservation(req: Request, res: Response) {
         where: { id: reservationId },
       })
         .then((num) => {
-          if (num == 1) {
+          if (num[0] == 1) {
             res.send({
               message: "Reservation was updated successfully.",
             });
@@ -180,7 +180,7 @@ function deleteOneReservation(req: Request, res: Response) {
         where: { id: reservationId },
       })
         .then((num) => {
-          if (num == 1) {
+          if (num[0] == 1) {
             res.send({
               message: "Reservation was deleted successfully!",
             });
@@ -311,7 +311,7 @@ function updateProduct(req: Request, res: Response) {
         where: { id: productId },
       })
         .then((num) => {
-          if (num == 1) {
+          if (num[0] == 1) {
             res.send({
               message: "Product was updated successfully.",
             });
@@ -346,7 +346,7 @@ function deleteOneProduct(req: Request, res: Response) {
         where: { id: productId },
       })
         .then((num) => {
-          if (num == 1) {
+          if (num[0] == 1) {
             res.send({
               message: "Product was deleted successfully!",
             });
