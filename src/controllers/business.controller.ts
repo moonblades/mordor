@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Business, Reservation, Product, Client } from "../models";
+import { Business, Reservation, Product, User } from "../models";
 import { validationResult } from "express-validator";
 
 function findAll(req: Request, res: Response) {
@@ -103,9 +103,9 @@ function createReservation(req: Request, res: Response) {
       }
 
       const reservation = {
-        clientId: req.body.clientId,
+        userId: req.body.userId,
         date: req.body.date,
-        reminderToClient: req.body.reminderToClient,
+        reminderToUser: req.body.reminderToUser,
         cancelable: req.body.cancelable,
         completed: req.body.completed,
       };
@@ -382,8 +382,8 @@ function deleteAllProduct(req: Request, res: Response) {
     });
 }
 
-function addClient(req: Request, res: Response) {
-  const { id: businessId, clientId } = req.params;
+function addUser(req: Request, res: Response) {
+  const { id: businessId, userId } = req.params;
 
   Business.findByPk(businessId)
     .then((business: Business) => {
@@ -392,17 +392,17 @@ function addClient(req: Request, res: Response) {
           .status(404)
           .send({ message: `Cannot find Business with id ${businessId}.` });
       }
-      Client.findByPk(clientId)
-        .then((client: Client) => {
-          if (!client) {
+      User.findByPk(userId)
+        .then((user: User) => {
+          if (!user) {
             res.status(404).send({
-              message: `Cannot find Client with id ${clientId}.`,
+              message: `Cannot find User with id ${userId}.`,
             });
           }
 
-          business.addClient(client);
+          business.addUser(user);
           res.status(201).send({
-            message: `Client ${clientId} added to Business ${businessId}`,
+            message: `User ${userId} added to Business ${businessId}`,
           });
         })
         .catch((err) => {
@@ -433,5 +433,5 @@ export {
   updateProduct,
   deleteOneProduct,
   deleteAllProduct,
-  addClient,
+  addUser,
 };

@@ -2,8 +2,7 @@ import { config } from "../config/db.config";
 import { Sequelize } from "sequelize";
 import { initModels, defineRelations } from "./init";
 import { Dummy } from "./dummy.model";
-import { Client } from "./client.model";
-import { Vendor } from "./vendor.model";
+import { User } from "./user.model";
 import { Business } from "./business.model";
 import { Product } from "./product.model";
 import { Schedule } from "./schedule.model";
@@ -38,14 +37,4 @@ const db = {
   sequelize,
 };
 
-export {
-  db,
-  Dummy,
-  Client,
-  Vendor,
-  Business,
-  Product,
-  Schedule,
-  Vacation,
-  Reservation,
-};
+export { db, Dummy, User, Business, Product, Schedule, Vacation, Reservation };

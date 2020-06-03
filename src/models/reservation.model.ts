@@ -9,16 +9,16 @@ import {
   HasManyCreateAssociationMixin,
   Association,
 } from "sequelize";
-import { Client } from "./client.model";
+import { User } from "./user.model";
 import { Business } from "./business.model";
 import { Product } from ".";
 
 class Reservation extends Model {
   public id!: number;
-  public clientId!: number;
+  public userId!: number;
   public businessId!: number;
   public date: Date;
-  public reminderToClient: boolean;
+  public reminderToUser: boolean;
   public cancelable: boolean;
   public completed: boolean;
 
@@ -49,7 +49,7 @@ function init(sequelize: Sequelize) {
       date: {
         type: DataTypes.DATE,
       },
-      reminderToClient: { type: DataTypes.BOOLEAN },
+      reminderToUser: { type: DataTypes.BOOLEAN },
       cancelable: { type: DataTypes.BOOLEAN },
       completed: { type: DataTypes.BOOLEAN },
     },
@@ -62,7 +62,7 @@ function init(sequelize: Sequelize) {
 }
 
 function defineRelations() {
-  Reservation.belongsTo(Client);
+  Reservation.belongsTo(User);
   Reservation.belongsTo(Business);
 
   Reservation.belongsToMany(Product, {

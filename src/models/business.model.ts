@@ -10,15 +10,14 @@ import {
   HasManyCreateAssociationMixin,
 } from "sequelize";
 import { Product } from "./product.model";
-import { Vendor } from "./vendor.model";
-import { Client } from "./client.model";
+import { User } from "./user.model";
 import { Schedule } from "./schedule.model";
 import { Vacation } from "./vacation.model";
 import { Reservation } from "./reservation.model";
 
 class Business extends Model {
   public id!: number;
-  public vendorId!: number;
+  public userId!: number;
   public vatNumber: string;
   public phoneNumber: string;
   public name: string;
@@ -67,20 +66,20 @@ class Business extends Model {
 
   public readonly reservations?: Reservation[];
 
-  public getClients!: HasManyGetAssociationsMixin<Client>; // Note the null assertions!
-  public addClient!: HasManyAddAssociationMixin<Client, number>;
-  public hasClient!: HasManyHasAssociationMixin<Client, number>;
-  public countClients!: HasManyCountAssociationsMixin;
-  public createClient!: HasManyCreateAssociationMixin<Client>;
+  public getUsers!: HasManyGetAssociationsMixin<User>; // Note the null assertions!
+  public addUser!: HasManyAddAssociationMixin<User, number>;
+  public hasUser!: HasManyHasAssociationMixin<User, number>;
+  public countUsers!: HasManyCountAssociationsMixin;
+  public createUser!: HasManyCreateAssociationMixin<User>;
 
-  public readonly clients?: Client[];
+  public readonly users?: User[];
 
   public static associations: {
     products: Association<Business, Product>;
     schedules: Association<Business, Schedule>;
     vacations: Association<Business, Vacation>;
     reservations: Association<Business, Reservation>;
-    clients: Association<Business, Client>;
+    users: Association<Business, User>;
   };
 }
 
@@ -118,15 +117,17 @@ function init(sequelize: Sequelize) {
 }
 
 function defineRelations() {
-  Business.belongsTo(Vendor);
+  Business.belongsTo(User);
+
   Business.hasMany(Product);
-  Business.belongsToMany(Client, {
-    through: "business_client",
-    onDelete: "cascade",
-  });
   Business.hasMany(Schedule);
   Business.hasMany(Vacation);
   Business.hasMany(Reservation);
+
+  Business.belongsToMany(User, {
+    through: "customer",
+    onDelete: "cascade",
+  });
 }
 
 export { init, defineRelations, Business };

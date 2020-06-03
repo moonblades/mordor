@@ -19,7 +19,7 @@ function init(app: Express) {
     business.findOne
   );
 
-  // Create a new reservation for client
+  // Create a new reservation for user
   router.post(
     "/:id/reservation",
     reservationSchema(),
@@ -67,7 +67,7 @@ function init(app: Express) {
     business.deleteAllReservation
   );
 
-  // Create a new product for client
+  // Create a new product for user
   router.post(
     "/:id/product",
     productSchema(),
@@ -115,12 +115,12 @@ function init(app: Express) {
     business.deleteAllProduct
   );
 
-  // Add client to business
+  // Add user to business
   router.post(
-    "/:id/client/:clientId",
-    [param("id").isNumeric(), param("clientId").isNumeric()],
+    "/:id/user/:userId",
+    [param("id").isNumeric(), param("userId").isNumeric()],
     typeValidation,
-    business.addClient
+    business.addUser
   );
 
   app.use("/api/business", router);

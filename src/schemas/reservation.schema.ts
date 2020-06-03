@@ -7,7 +7,7 @@ function reservationSchema() {
       isInt: true,
       toInt: true,
     },
-    clientId: {
+    userId: {
       in: ["body"],
       isInt: true,
       toInt: true,
@@ -18,7 +18,7 @@ function reservationSchema() {
       toDate: true,
       exists: true,
     },
-    reminderToClient: {
+    reminderToUser: {
       in: ["body"],
       isBoolean: true,
     },

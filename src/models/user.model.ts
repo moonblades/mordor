@@ -12,7 +12,7 @@ import {
 import { Reservation } from "./reservation.model";
 import { Business } from "./business.model";
 
-class Client extends Model {
+class User extends Model {
   public id!: number;
   public email!: string;
   public displayName: string;
@@ -38,13 +38,22 @@ class Client extends Model {
 
   public readonly reservations?: Reservation[]; // Note this is optional since it's only populated when explicitly requested in code
 
+  public getBusinesses!: HasManyGetAssociationsMixin<Business>; // Note the null assertions!
+  public addBusiness!: HasManyAddAssociationMixin<Business, number>;
+  public hasBusiness!: HasManyHasAssociationMixin<Business, number>;
+  public countBusinesses!: HasManyCountAssociationsMixin;
+  public createBusiness!: HasManyCreateAssociationMixin<Business>;
+
+  public readonly businesses?: Business[]; // Note this is optional since it's only populated when explicitly requested in code
+
   public static associations: {
-    businesses: Association<Client, Reservation>;
+    reservations: Association<User, Reservation>;
+    businesses: Association<User, Business>;
   };
 }
 
 function init(sequelize: Sequelize) {
-  Client.init(
+  User.init(
     {
       id: {
         type: DataTypes.INTEGER.UNSIGNED,
@@ -90,19 +99,20 @@ function init(sequelize: Sequelize) {
       },
     },
     {
-      tableName: "client",
-      modelName: "client",
+      tableName: "user",
+      modelName: "user",
       sequelize: sequelize,
     }
   );
 }
 
 function defineRelations() {
-  Client.hasMany(Reservation);
-  Client.belongsToMany(Business, {
-    through: "business_client",
+  User.hasMany(Reservation);
+  User.hasMany(Business);
+  User.belongsToMany(Business, {
+    through: "customer",
     onDelete: "cascade",
   });
 }
 
-export { init, defineRelations, Client };
+export { init, defineRelations, User };
