@@ -163,7 +163,7 @@ function createBusiness(req: Request, res: Response) {
   User.findByPk(userId)
     .then((user: User) => {
       if (!user) {
-        res
+        return res
           .status(404)
           .send({ message: `Cannot find user with id ${userId}.` });
       }
@@ -312,7 +312,7 @@ function findOneReservation(req: Request, res: Response) {
   User.findByPk(userId)
     .then((user: User) => {
       if (!user) {
-        res
+        return res
           .status(404)
           .send({ message: `Cannot find user with id ${userId}.` });
       }
@@ -338,7 +338,7 @@ function createReservation(req: Request, res: Response) {
   User.findByPk(userId)
     .then((user: User) => {
       if (!user) {
-        res
+        return res
           .status(404)
           .send({ message: `Cannot find user with id ${userId}.` });
       }

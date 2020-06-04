@@ -32,13 +32,13 @@ function addProduct(req: Request, res: Response) {
 
   Reservation.findByPk(reservationId).then((reservation: Reservation) => {
     if (!reservation) {
-      res
+      return res
         .status(404)
         .send({ message: `Cannot find reservation with id ${reservationId}.` });
     }
     Product.findByPk(productId).then((product: Product) => {
       if (!product) {
-        res
+        return res
           .status(404)
           .send({ message: `Cannot find product with id ${productId}.` });
       }
@@ -56,13 +56,13 @@ function addProduct(req: Request, res: Response) {
 
 //   Reservation.findByPk(reservationId).then((reservation: Reservation) => {
 //     if (!reservation) {
-//       res
+//      return res
 //         .status(404)
 //         .send({ message: `Cannot find reservation with id ${reservationId}.` });
 //     }
 //     Product.findByPk(productId).then((product: Product) => {
 //       if (!product) {
-//         res
+//        return res
 //           .status(404)
 //           .send({ message: `Cannot find product with id ${productId}.` });
 //       }

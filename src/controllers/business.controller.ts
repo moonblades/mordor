@@ -65,7 +65,7 @@ function findOneReservation(req: Request, res: Response) {
   Business.findByPk(businessId)
     .then((business: Business) => {
       if (!business) {
-        res
+        return res
           .status(404)
           .send({ message: `Cannot find Business with id ${businessId}.` });
       }
@@ -96,7 +96,7 @@ function createReservation(req: Request, res: Response) {
   Business.findByPk(businessId)
     .then((business: Business) => {
       if (!business) {
-        res
+        return res
           .status(404)
           .send({ message: `Cannot find Business with id ${businessId}.` });
       }
@@ -225,7 +225,7 @@ function createProduct(req: Request, res: Response) {
   Business.findByPk(businessId)
     .then((business: Business) => {
       if (!business) {
-        res
+        return res
           .status(404)
           .send({ message: `Cannot find Business with id ${businessId}.` });
       }
@@ -278,7 +278,7 @@ function findOneProduct(req: Request, res: Response) {
   Business.findByPk(businessId)
     .then((business: Business) => {
       if (!business) {
-        res
+        return res
           .status(404)
           .send({ message: `Cannot find Business with id ${businessId}.` });
       }
@@ -393,7 +393,7 @@ function addUser(req: Request, res: Response) {
   Business.findByPk(businessId)
     .then((business: Business) => {
       if (!business) {
-        res
+        return res
           .status(404)
           .send({ message: `Cannot find Business with id ${businessId}.` });
       }
