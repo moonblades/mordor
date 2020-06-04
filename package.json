@@ -47,8 +47,8 @@
     "node": "node dist/bundle.js",
     "nodemon": "nodemon --inspect dist/bundle.js",
     "docs": "rimraf docs && typedoc src",
-    "test": "cross-env NODE_ENV=test SERVER_ENVIRONMENT=test jest --runInBand --detectOpenHandles",
-    "coverage": "cross-env NODE_ENV=test SERVER_ENVIRONMENT=test jest --runInBand --coverage"
+    "test": "cross-env NODE_ENV=test SERVER_ENVIRONMENT=test jest --runInBand --detectOpenHandles --forceExit",
+    "coverage": "cross-env NODE_ENV=test SERVER_ENVIRONMENT=test jest --runInBand --forceExit --coverage"
   },
   "repository": {
     "type": "git",
