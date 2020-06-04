@@ -21,6 +21,7 @@ const sequelize = new Sequelize(
     dialect: dbConfig.dialect,
     dialectOptions: {
       timezone: dbTimezone,
+      connectTimeout: 30000,
     },
     pool: {
       max: 5,
@@ -34,6 +35,9 @@ const sequelize = new Sequelize(
 
 async function connect(sequelizeInstance: Sequelize) {
   try {
+    initModels(sequelizeInstance);
+    defineRelations();
+
     await sequelizeInstance.authenticate();
 
     if (
@@ -44,12 +48,10 @@ async function connect(sequelizeInstance: Sequelize) {
         raw: true,
       }); // <- must be removed
 
-      logger.info("Syncing database...");
+      logger.info(`Syncing database ${dbConfig.database}...`);
       await sequelizeInstance.sync({ force: true });
+      logger.info("Synced.");
     }
-
-    initModels(sequelizeInstance);
-    defineRelations();
   } catch (err) {
     logger.error("Unable to connect to the database:", err);
   }
