@@ -35,7 +35,7 @@ if (process.env.SERVER_ENVIRONMENT !== "production") {
 
 // api test route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to Mordor!" });
+  return res.json({ message: "Welcome to Mordor!" });
 });
 
 initRoutes(app);

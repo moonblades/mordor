@@ -1,8 +1,9 @@
 import * as winston from "winston";
 const { combine, timestamp, label, printf } = winston.format;
 
-const logFormat = printf(({ lvl, msg, lbl, ts }) => {
-  return `${ts} [${lbl}] ${lvl}: ${msg}`;
+// tslint:disable-next-line: no-shadowed-variable
+const logFormat = printf(({ level, message, label, timestamp }) => {
+  return `${timestamp} [${label}] ${level}: ${message}`;
 });
 
 const logger = winston.createLogger({

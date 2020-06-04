@@ -4,7 +4,7 @@ import { Business, Schedule } from "../models";
 function create(req: Request, res: Response) {
   // Validate request
   if (!req.params.id) {
-    res.status(400).send({
+    return res.status(400).send({
       message: "BusinessId can not be empty!",
     });
     return;
@@ -21,10 +21,10 @@ function create(req: Request, res: Response) {
 
   Schedule.create(schedule)
     .then((data) => {
-      res.status(201).send(data);
+      return res.status(201).send(data);
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });
@@ -39,10 +39,10 @@ function findAll(req: Request, res: Response) {
     },
   })
     .then((data) => {
-      res.send(data);
+      return res.send(data);
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });
@@ -54,7 +54,7 @@ function findOne(req: Request, res: Response) {
   Business.findByPk(id)
     .then((business: Business) => {
       if (!business) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Error retrieving Business with id=" + id,
         });
 
@@ -63,16 +63,16 @@ function findOne(req: Request, res: Response) {
 
       Schedule.findByPk(scheduleId).then((schedule: Schedule) => {
         if (!schedule) {
-          res.status(404).send({
+          return res.status(404).send({
             message: "Schedule with id " + scheduleId + " not found!",
           });
           return;
         }
-        res.send(schedule);
+        return res.send(schedule);
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });
@@ -84,7 +84,7 @@ function update(req: Request, res: Response) {
   Business.findByPk(id)
     .then((business: Business) => {
       if (!business) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Error retrieving Business with id=" + id,
         });
 
@@ -96,23 +96,23 @@ function update(req: Request, res: Response) {
       })
         .then((num) => {
           if (num[0] === 1) {
-            res.send({
+            return res.send({
               message: "Schedule was updated successfully.",
             });
           } else {
-            res.send({
+            return res.send({
               message: `Cannot update Schedule with id=${scheduleId}. Maybe Schedule was not found or req.body is empty!`,
             });
           }
         })
         .catch((err) => {
-          res.status(500).send({
+          return res.status(500).send({
             message: err.message,
           });
         });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });
@@ -124,7 +124,7 @@ function deleteOne(req: Request, res: Response) {
   Business.findByPk(id)
     .then((business: Business) => {
       if (!business) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Error retrieving Business with id=" + id,
         });
 
@@ -136,23 +136,23 @@ function deleteOne(req: Request, res: Response) {
       })
         .then((num) => {
           if (num[0] === 1) {
-            res.send({
+            return res.send({
               message: "Schedule was deleted successfully.",
             });
           } else {
-            res.send({
+            return res.send({
               message: `Cannot delete Schedule with id=${scheduleId}. Maybe Schedule was not found!`,
             });
           }
         })
         .catch((err) => {
-          res.status(500).send({
+          return res.status(500).send({
             message: err.message,
           });
         });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });
@@ -171,30 +171,30 @@ function deleteAll(req: Request, res: Response) {
               .destroy()
               .then((num) => {
                 if (num[0] === 1) {
-                  res.send({
+                  return res.send({
                     message: "Schedule was deleted successfully.",
                   });
                 } else {
-                  res.send({
+                  return res.send({
                     message: `Cannot delete Schedule with scheduleId=${schedule.id}. Maybe Schedule was not found!`,
                   });
                 }
               })
               .catch((err) => {
-                res.status(500).send({
+                return res.status(500).send({
                   message: err.message,
                 });
               });
           });
         })
         .catch((err) => {
-          res.status(500).send({
+          return res.status(500).send({
             message: err.message,
           });
         });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });
@@ -204,10 +204,12 @@ function deleteAll(req: Request, res: Response) {
     truncate: false,
   })
     .then((nums) => {
-      res.send({ message: `${nums} Schedules were deleted successfully!` });
+      return res.send({
+        message: `${nums} Schedules were deleted successfully!`,
+      });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });

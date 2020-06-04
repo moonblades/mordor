@@ -4,10 +4,10 @@ import { Product, Reservation } from "../models";
 function findAll(req: Request, res: Response) {
   Reservation.findAll()
     .then((data) => {
-      res.send(data);
+      return res.send(data);
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });
@@ -18,10 +18,10 @@ function findOne(req: Request, res: Response) {
 
   Reservation.findByPk(id)
     .then((data) => {
-      res.send(data);
+      return res.send(data);
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });
@@ -44,7 +44,7 @@ function addProduct(req: Request, res: Response) {
       }
 
       reservation.addProduct(product);
-      res.status(201).send({
+      return res.status(201).send({
         message: `Product ${productId} added to Reservation ${reservationId}`,
       });
     });
@@ -67,7 +67,7 @@ function addProduct(req: Request, res: Response) {
 //           .send({ message: `Cannot find product with id ${productId}.` });
 //       }
 
-//       res.status(201).send({
+//       return res.status(201).send({
 //         message: `Product ${productId} deleted from Reservation ${reservationId}`,
 //       });
 //     });

@@ -11,10 +11,10 @@ function findAll(req: Request, res: Response) {
     // },
   })
     .then((data) => {
-      res.send(data);
+      return res.send(data);
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });
@@ -24,10 +24,10 @@ function findOne(req: Request, res: Response) {
   const id = req.params.id;
   Business.findByPk(id)
     .then((data) => {
-      res.send(data);
+      return res.send(data);
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });
@@ -45,10 +45,10 @@ function findAllReservation(req: Request, res: Response) {
     where: { businessId },
   })
     .then((data) => {
-      res.send(data);
+      return res.send(data);
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });
@@ -72,16 +72,16 @@ function findOneReservation(req: Request, res: Response) {
 
       Reservation.findByPk(reservationId)
         .then((data) => {
-          res.send(data);
+          return res.send(data);
         })
         .catch((err) => {
-          res.status(500).send({
+          return res.status(500).send({
             message: err.message,
           });
         });
     })
     .catch((err) => {
-      res.status(500).send({ message: err.message });
+      return res.status(500).send({ message: err.message });
     });
 }
 
@@ -112,14 +112,14 @@ function createReservation(req: Request, res: Response) {
       business
         .createReservation(reservation)
         .then((data) => {
-          res.status(201).send(data);
+          return res.status(201).send(data);
         })
         .catch((err) => {
-          res.status(500).send({ message: err.message });
+          return res.status(500).send({ message: err.message });
         });
     })
     .catch((err) => {
-      res.status(500).send({ message: err.message });
+      return res.status(500).send({ message: err.message });
     });
 }
 
@@ -131,7 +131,7 @@ function updateReservation(req: Request, res: Response) {
       .hasReservation(parseInt(reservationId, 10))
       .then((value: boolean) => {
         if (!value) {
-          res.status(404).send({
+          return res.status(404).send({
             message: `Reservation with id ${reservationId} not found in Business with id ${businessId}`,
           });
           return;
@@ -142,17 +142,17 @@ function updateReservation(req: Request, res: Response) {
         })
           .then((num) => {
             if (num[0] === 1) {
-              res.send({
+              return res.send({
                 message: "Reservation was updated successfully.",
               });
             } else {
-              res.send({
+              return res.send({
                 message: `Cannot update Reservation with id=${reservationId}. Maybe Reservation was not found or req.body is empty!`,
               });
             }
           })
           .catch((err) => {
-            res.status(500).send({
+            return res.status(500).send({
               message: err.message,
             });
           });
@@ -171,7 +171,7 @@ function deleteOneReservation(req: Request, res: Response) {
   Business.findByPk(businessId).then((business: Business) => {
     business.hasReservation(parseInt(reservationId, 10)).then((value) => {
       if (!value) {
-        res.status(404).send({
+        return res.status(404).send({
           message: `Reservation with id ${reservationId} not found in Business with id ${businessId}`,
         });
         return;
@@ -182,17 +182,17 @@ function deleteOneReservation(req: Request, res: Response) {
       })
         .then((num) => {
           if (num[0] === 1) {
-            res.send({
+            return res.send({
               message: "Reservation was deleted successfully!",
             });
           } else {
-            res.send({
+            return res.send({
               message: `Cannot delete Reservation with id=${reservationId}. Maybe Reservation was not found!`,
             });
           }
         })
         .catch((err) => {
-          res.status(500).send({
+          return res.status(500).send({
             message: err.message,
           });
         });
@@ -208,10 +208,12 @@ function deleteAllReservation(req: Request, res: Response) {
     truncate: false,
   })
     .then((nums) => {
-      res.send({ message: `${nums} Reservations were deleted successfully!` });
+      return res.send({
+        message: `${nums} Reservations were deleted successfully!`,
+      });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });
@@ -243,14 +245,14 @@ function createProduct(req: Request, res: Response) {
       business
         .createProduct(product)
         .then((data) => {
-          res.status(201).send(data);
+          return res.status(201).send(data);
         })
         .catch((err) => {
-          res.status(500).send({ message: err.message });
+          return res.status(500).send({ message: err.message });
         });
     })
     .catch((err) => {
-      res.status(500).send({ message: err.message });
+      return res.status(500).send({ message: err.message });
     });
 }
 
@@ -261,10 +263,10 @@ function findAllProduct(req: Request, res: Response) {
     where: { businessId },
   })
     .then((data) => {
-      res.send(data);
+      return res.send(data);
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });
@@ -283,16 +285,16 @@ function findOneProduct(req: Request, res: Response) {
 
       Product.findByPk(productId)
         .then((data) => {
-          res.send(data);
+          return res.send(data);
         })
         .catch((err) => {
-          res.status(500).send({
+          return res.status(500).send({
             message: err.message,
           });
         });
     })
     .catch((err) => {
-      res.status(500).send({ message: err.message });
+      return res.status(500).send({ message: err.message });
     });
 }
 
@@ -302,7 +304,7 @@ function updateProduct(req: Request, res: Response) {
   Business.findByPk(businessId).then((business: Business) => {
     business.hasProduct(parseInt(productId, 10)).then((value: boolean) => {
       if (!value) {
-        res.status(404).send({
+        return res.status(404).send({
           message: `Product with id ${productId} not found in Business with id ${businessId}`,
         });
         return;
@@ -313,17 +315,17 @@ function updateProduct(req: Request, res: Response) {
       })
         .then((num) => {
           if (num[0] === 1) {
-            res.send({
+            return res.send({
               message: "Product was updated successfully.",
             });
           } else {
-            res.send({
+            return res.send({
               message: `Cannot update Product with id=${productId}. Maybe Product was not found or req.body is empty!`,
             });
           }
         })
         .catch((err) => {
-          res.status(500).send({
+          return res.status(500).send({
             message: err.message,
           });
         });
@@ -337,7 +339,7 @@ function deleteOneProduct(req: Request, res: Response) {
   Business.findByPk(businessId).then((business: Business) => {
     business.hasProduct(parseInt(productId, 10)).then((value) => {
       if (!value) {
-        res.status(404).send({
+        return res.status(404).send({
           message: `Product with id ${productId} not found in Business with id ${businessId}`,
         });
         return;
@@ -348,17 +350,17 @@ function deleteOneProduct(req: Request, res: Response) {
       })
         .then((num) => {
           if (num[0] === 1) {
-            res.send({
+            return res.send({
               message: "Product was deleted successfully!",
             });
           } else {
-            res.send({
+            return res.send({
               message: `Cannot delete Product with id=${productId}. Maybe Product was not found!`,
             });
           }
         })
         .catch((err) => {
-          res.status(500).send({
+          return res.status(500).send({
             message: err.message,
           });
         });
@@ -374,10 +376,12 @@ function deleteAllProduct(req: Request, res: Response) {
     truncate: false,
   })
     .then((nums) => {
-      res.send({ message: `${nums} Products were deleted successfully!` });
+      return res.send({
+        message: `${nums} Products were deleted successfully!`,
+      });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });
@@ -396,24 +400,24 @@ function addUser(req: Request, res: Response) {
       User.findByPk(userId)
         .then((user: User) => {
           if (!user) {
-            res.status(404).send({
+            return res.status(404).send({
               message: `Cannot find User with id ${userId}.`,
             });
           }
 
           business.addUser(user);
-          res.status(201).send({
+          return res.status(201).send({
             message: `User ${userId} added to Business ${businessId}`,
           });
         })
         .catch((err) => {
-          res.status(500).send({
+          return res.status(500).send({
             message: err.message,
           });
         });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });

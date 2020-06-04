@@ -4,7 +4,7 @@ import { Business, Vacation } from "../models";
 function create(req: Request, res: Response) {
   // Validate request
   if (!req.params.id) {
-    res.status(400).send({
+    return res.status(400).send({
       message: "BusinessId can not be empty!",
     });
     return;
@@ -19,10 +19,10 @@ function create(req: Request, res: Response) {
 
   Vacation.create(vacation)
     .then((data) => {
-      res.status(201).send(data);
+      return res.status(201).send(data);
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });
@@ -37,10 +37,10 @@ function findAll(req: Request, res: Response) {
     },
   })
     .then((data) => {
-      res.send(data);
+      return res.send(data);
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });
@@ -52,7 +52,7 @@ function findOne(req: Request, res: Response) {
   Business.findByPk(id)
     .then((business: Business) => {
       if (!business) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Error retrieving Business with id=" + id,
         });
 
@@ -61,16 +61,16 @@ function findOne(req: Request, res: Response) {
 
       Vacation.findByPk(vacationId).then((vacation: Vacation) => {
         if (!vacation) {
-          res.status(404).send({
+          return res.status(404).send({
             message: "Vacation with id " + vacationId + " not found!",
           });
           return;
         }
-        res.send(vacation);
+        return res.send(vacation);
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });
@@ -82,7 +82,7 @@ function update(req: Request, res: Response) {
   Business.findByPk(id)
     .then((business: Business) => {
       if (!business) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Error retrieving Business with id=" + id,
         });
 
@@ -94,23 +94,23 @@ function update(req: Request, res: Response) {
       })
         .then((num) => {
           if (num[0] === 1) {
-            res.send({
+            return res.send({
               message: "Vacation was updated successfully.",
             });
           } else {
-            res.send({
+            return res.send({
               message: `Cannot update Vacation with id=${vacationId}. Maybe Vacation was not found or req.body is empty!`,
             });
           }
         })
         .catch((err) => {
-          res.status(500).send({
+          return res.status(500).send({
             message: err.message,
           });
         });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });
@@ -122,7 +122,7 @@ function deleteOne(req: Request, res: Response) {
   Business.findByPk(id)
     .then((business: Business) => {
       if (!business) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Error retrieving Business with id=" + id,
         });
 
@@ -134,23 +134,23 @@ function deleteOne(req: Request, res: Response) {
       })
         .then((num) => {
           if (num[0] === 1) {
-            res.send({
+            return res.send({
               message: "Vacation was deleted successfully.",
             });
           } else {
-            res.send({
+            return res.send({
               message: `Cannot delete Vacation with id=${vacationId}. Maybe Vacation was not found!`,
             });
           }
         })
         .catch((err) => {
-          res.status(500).send({
+          return res.status(500).send({
             message: err.message,
           });
         });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });
@@ -169,30 +169,30 @@ function deleteAll(req: Request, res: Response) {
               .destroy()
               .then((num) => {
                 if (num[0] === 1) {
-                  res.send({
+                  return res.send({
                     message: "Vacation was deleted successfully.",
                   });
                 } else {
-                  res.send({
+                  return res.send({
                     message: `Cannot delete Vacation with vacationId=${vacation.id}. Maybe Vacation was not found!`,
                   });
                 }
               })
               .catch((err) => {
-                res.status(500).send({
+                return res.status(500).send({
                   message: err.message,
                 });
               });
           });
         })
         .catch((err) => {
-          res.status(500).send({
+          return res.status(500).send({
             message: err.message,
           });
         });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });
@@ -202,10 +202,12 @@ function deleteAll(req: Request, res: Response) {
     truncate: false,
   })
     .then((nums) => {
-      res.send({ message: `${nums} Vacations were deleted successfully!` });
+      return res.send({
+        message: `${nums} Vacations were deleted successfully!`,
+      });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message:
           err.message || "Some error occurred while removing all Vacations.",
       });

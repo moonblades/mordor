@@ -5,7 +5,7 @@ import { Business, Reservation, User } from "../models";
 function create(req: Request, res: Response) {
   // Validate request
   if (!req.body.email) {
-    res.status(400).send({
+    return res.status(400).send({
       message: "Email can not be empty!",
     });
     return;
@@ -29,10 +29,10 @@ function create(req: Request, res: Response) {
 
   User.create(user)
     .then((data) => {
-      res.status(201).send(data);
+      return res.status(201).send(data);
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });
@@ -42,10 +42,10 @@ function create(req: Request, res: Response) {
 function findAll(req: Request, res: Response) {
   User.findAll()
     .then((data) => {
-      res.send(data);
+      return res.send(data);
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });
@@ -55,11 +55,17 @@ function findAll(req: Request, res: Response) {
 function findOne(req: Request, res: Response) {
   const id = req.params.id;
   User.findByPk(id)
-    .then((data) => {
-      res.send(data);
+    .then((user) => {
+      if (!user) {
+        return res
+          .status(404)
+          .send({ message: `Cannot find User with id ${id}.` });
+      }
+
+      return res.send(user);
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });
@@ -74,17 +80,17 @@ function update(req: Request, res: Response) {
   })
     .then((num) => {
       if (num[0] === 1) {
-        res.send({
+        return res.send({
           message: "User was updated successfully.",
         });
       } else {
-        res.send({
+        return res.send({
           message: `Cannot update User with id=${id}. Maybe User was not found or req.body is empty!`,
         });
       }
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });
@@ -99,17 +105,17 @@ function deleteOne(req: Request, res: Response) {
   })
     .then((num) => {
       if (num === 1) {
-        res.send({
+        return res.send({
           message: "User was deleted successfully!",
         });
       } else {
-        res.send({
+        return res.send({
           message: `Cannot delete User with id=${id}. Maybe User was not found!`,
         });
       }
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });
@@ -122,10 +128,10 @@ function deleteAll(req: Request, res: Response) {
     truncate: false,
   })
     .then((nums) => {
-      res.send({ message: `${nums} Users were deleted successfully!` });
+      return res.send({ message: `${nums} Users were deleted successfully!` });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });
@@ -141,10 +147,10 @@ function findAllBusinesses(req: Request, res: Response) {
     },
   })
     .then((data) => {
-      res.send(data);
+      return res.send(data);
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });
@@ -180,16 +186,16 @@ function createBusiness(req: Request, res: Response) {
       user
         .createBusiness(business)
         .then((data) => {
-          res.send(data);
+          return res.send(data);
         })
         .catch((err) => {
-          res.status(500).send({
+          return res.status(500).send({
             message: err.message,
           });
         });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });
@@ -201,7 +207,7 @@ function updateBusiness(req: Request, res: Response) {
   User.findByPk(userId).then((user: User) => {
     user.hasBusiness(parseInt(businessId, 10)).then((value) => {
       if (!value) {
-        res.status(404).send({
+        return res.status(404).send({
           message: `Business with id ${businessId} not found in user with id ${userId}`,
         });
         return;
@@ -212,17 +218,17 @@ function updateBusiness(req: Request, res: Response) {
       })
         .then((num) => {
           if (num[0] === 1) {
-            res.send({
+            return res.send({
               message: "Business was updated successfully.",
             });
           } else {
-            res.send({
+            return res.send({
               message: `Cannot update Business with id=${businessId}. Maybe Business was not found or req.body is empty!`,
             });
           }
         })
         .catch((err) => {
-          res.status(500).send({
+          return res.status(500).send({
             message: err.message,
           });
         });
@@ -236,7 +242,7 @@ function deleteOneBusiness(req: Request, res: Response) {
   User.findByPk(userId).then((user: User) => {
     user.hasBusiness(parseInt(businessId, 10)).then((value) => {
       if (!value) {
-        res.status(404).send({
+        return res.status(404).send({
           message: `Business with id ${businessId} not found in user with id ${userId}`,
         });
         return;
@@ -247,17 +253,17 @@ function deleteOneBusiness(req: Request, res: Response) {
       })
         .then((num) => {
           if (num === 1) {
-            res.send({
+            return res.send({
               message: "Business was deleted successfully!",
             });
           } else {
-            res.send({
+            return res.send({
               message: `Cannot delete Business with id=${businessId}. Maybe Business was not found!`,
             });
           }
         })
         .catch((err) => {
-          res.status(500).send({
+          return res.status(500).send({
             message: err.message,
           });
         });
@@ -273,10 +279,12 @@ function deleteAllBusinesses(req: Request, res: Response) {
     truncate: false,
   })
     .then((nums) => {
-      res.send({ message: `${nums} Businesses were deleted successfully!` });
+      return res.send({
+        message: `${nums} Businesses were deleted successfully!`,
+      });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });
@@ -289,10 +297,10 @@ function findAllReservation(req: Request, res: Response) {
     where: { userId },
   })
     .then((data) => {
-      res.send(data);
+      return res.send(data);
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });
@@ -311,16 +319,16 @@ function findOneReservation(req: Request, res: Response) {
 
       Reservation.findByPk(reservationId)
         .then((data) => {
-          res.send(data);
+          return res.send(data);
         })
         .catch((err) => {
-          res.status(500).send({
+          return res.status(500).send({
             message: err.message,
           });
         });
     })
     .catch((err) => {
-      res.status(500).send({ message: err.message });
+      return res.status(500).send({ message: err.message });
     });
 }
 
@@ -346,14 +354,14 @@ function createReservation(req: Request, res: Response) {
       user
         .createReservation(reservation)
         .then((data) => {
-          res.status(201).send(data);
+          return res.status(201).send(data);
         })
         .catch((err) => {
-          res.status(500).send({ message: err.message });
+          return res.status(500).send({ message: err.message });
         });
     })
     .catch((err) => {
-      res.status(500).send({ message: err.message });
+      return res.status(500).send({ message: err.message });
     });
 }
 
@@ -363,7 +371,7 @@ function updateReservation(req: Request, res: Response) {
   User.findByPk(userId).then((user: User) => {
     user.hasReservation(parseInt(reservationId, 10)).then((value: boolean) => {
       if (!value) {
-        res.status(404).send({
+        return res.status(404).send({
           message: `Reservation with id ${reservationId} not found in user with id ${userId}`,
         });
         return;
@@ -374,17 +382,17 @@ function updateReservation(req: Request, res: Response) {
       })
         .then((num) => {
           if (num[0] === 1) {
-            res.send({
+            return res.send({
               message: "Reservation was updated successfully.",
             });
           } else {
-            res.send({
+            return res.send({
               message: `Cannot update Reservation with id=${reservationId}. Maybe Reservation was not found or req.body is empty!`,
             });
           }
         })
         .catch((err) => {
-          res.status(500).send({
+          return res.status(500).send({
             message: err.message,
           });
         });
@@ -398,7 +406,7 @@ function deleteOneReservation(req: Request, res: Response) {
   User.findByPk(userId).then((user: User) => {
     user.hasReservation(parseInt(reservationId, 10)).then((value) => {
       if (!value) {
-        res.status(404).send({
+        return res.status(404).send({
           message: `Reservation with id ${reservationId} not found in user with id ${userId}`,
         });
         return;
@@ -409,17 +417,17 @@ function deleteOneReservation(req: Request, res: Response) {
       })
         .then((num) => {
           if (num === 1) {
-            res.send({
+            return res.send({
               message: "Reservation was deleted successfully!",
             });
           } else {
-            res.send({
+            return res.send({
               message: `Cannot delete Reservation with id=${reservationId}. Maybe Reservation was not found!`,
             });
           }
         })
         .catch((err) => {
-          res.status(500).send({
+          return res.status(500).send({
             message: err.message,
           });
         });
@@ -435,10 +443,12 @@ function deleteAllReservation(req: Request, res: Response) {
     truncate: false,
   })
     .then((nums) => {
-      res.send({ message: `${nums} Reservations were deleted successfully!` });
+      return res.send({
+        message: `${nums} Reservations were deleted successfully!`,
+      });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message,
       });
     });
