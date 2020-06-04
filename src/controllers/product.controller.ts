@@ -30,8 +30,7 @@ function create(req: Request, res: Response) {
     })
     .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Product.",
+        message: err.message,
       });
     });
 }
@@ -43,7 +42,7 @@ function findAll(req: Request, res: Response) {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Some error occurred while retrieving Products",
+        message: err.message,
       });
     });
 }
@@ -57,7 +56,7 @@ function findOne(req: Request, res: Response) {
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error retrieving Product with id=" + id,
+        message: err.message,
       });
     });
 }
@@ -81,7 +80,7 @@ function update(req: Request, res: Response) {
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error updating Product with id=" + id,
+        message: err.message,
       });
     });
 }
@@ -105,7 +104,7 @@ function deleteOne(req: Request, res: Response) {
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Could not delete Product with id=" + id,
+        message: err.message,
       });
     });
 }
@@ -120,8 +119,7 @@ function deleteAll(req: Request, res: Response) {
     })
     .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while removing all Products.",
+        message: err.message,
       });
     });
 }

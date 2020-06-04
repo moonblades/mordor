@@ -15,8 +15,7 @@ function findAll(req: Request, res: Response) {
     })
     .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving Businesses",
+        message: err.message,
       });
     });
 }
@@ -29,7 +28,7 @@ function findOne(req: Request, res: Response) {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Error retrieving Business with id=" + id,
+        message: err.message,
       });
     });
 }

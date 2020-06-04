@@ -25,8 +25,7 @@ function create(req: Request, res: Response) {
     })
     .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Schedule.",
+        message: err.message,
       });
     });
 }
@@ -44,8 +43,7 @@ function findAll(req: Request, res: Response) {
     })
     .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving Schedules",
+        message: err.message,
       });
     });
 }
@@ -184,20 +182,20 @@ function deleteAll(req: Request, res: Response) {
               })
               .catch((err) => {
                 res.status(500).send({
-                  message: err.message || "Error deleting Schedules",
+                  message: err.message,
                 });
               });
           });
         })
         .catch((err) => {
           res.status(500).send({
-            message: err.message || "Error deleting Schedules",
+            message: err.message,
           });
         });
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Error deleting Schedules",
+        message: err.message,
       });
     });
 
@@ -210,8 +208,7 @@ function deleteAll(req: Request, res: Response) {
     })
     .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while removing all Schedules.",
+        message: err.message,
       });
     });
 }

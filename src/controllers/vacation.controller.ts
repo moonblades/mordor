@@ -23,8 +23,7 @@ function create(req: Request, res: Response) {
     })
     .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Vacation.",
+        message: err.message,
       });
     });
 }
@@ -42,8 +41,7 @@ function findAll(req: Request, res: Response) {
     })
     .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving Vacations",
+        message: err.message,
       });
     });
 }
@@ -182,20 +180,20 @@ function deleteAll(req: Request, res: Response) {
               })
               .catch((err) => {
                 res.status(500).send({
-                  message: err.message || "Error deleting Vacations",
+                  message: err.message,
                 });
               });
           });
         })
         .catch((err) => {
           res.status(500).send({
-            message: err.message || "Error deleting Vacations",
+            message: err.message,
           });
         });
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Error deleting Vacations",
+        message: err.message,
       });
     });
 

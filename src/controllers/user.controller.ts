@@ -33,7 +33,7 @@ function create(req: Request, res: Response) {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Some error occurred while creating the user.",
+        message: err.message,
       });
     });
 }
@@ -46,7 +46,7 @@ function findAll(req: Request, res: Response) {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Some error occurred while retrieving Users",
+        message: err.message,
       });
     });
 }
@@ -60,7 +60,7 @@ function findOne(req: Request, res: Response) {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Error retrieving User with id=" + id,
+        message: err.message,
       });
     });
 }
@@ -85,7 +85,7 @@ function update(req: Request, res: Response) {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Error updating User with id=" + id,
+        message: err.message,
       });
     });
 }
@@ -110,7 +110,7 @@ function deleteOne(req: Request, res: Response) {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Could not delete User with id=" + id,
+        message: err.message,
       });
     });
 }
@@ -126,7 +126,7 @@ function deleteAll(req: Request, res: Response) {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Some error occurred while removing all Users.",
+        message: err.message,
       });
     });
 }
