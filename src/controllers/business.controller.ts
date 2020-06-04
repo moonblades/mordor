@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { Business, Reservation, Product, User } from "../models";
 import { validationResult } from "express-validator";
+import { Business, Product, Reservation, User } from "../models";
 
 function findAll(req: Request, res: Response) {
   //   const displayName = req.query.displayName;

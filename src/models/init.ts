@@ -1,10 +1,10 @@
-import * as User from "./user.model";
+import { Sequelize } from "sequelize";
 import * as Business from "./business.model";
 import * as Product from "./product.model";
 import * as Reservation from "./reservation.model";
 import * as Schedule from "./schedule.model";
+import * as User from "./user.model";
 import * as Vacation from "./vacation.model";
-import { Sequelize } from "sequelize";
 
 ///
 function initModels(sequelize: Sequelize) {

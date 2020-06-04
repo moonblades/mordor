@@ -1,19 +1,19 @@
 import {
-  Model,
-  Sequelize,
-  DataTypes,
   Association,
+  DataTypes,
   HasManyAddAssociationMixin,
   HasManyCountAssociationsMixin,
+  HasManyCreateAssociationMixin,
   HasManyGetAssociationsMixin,
   HasManyHasAssociationMixin,
-  HasManyCreateAssociationMixin,
+  Model,
+  Sequelize,
 } from "sequelize";
 import { Product } from "./product.model";
-import { User } from "./user.model";
-import { Schedule } from "./schedule.model";
-import { Vacation } from "./vacation.model";
 import { Reservation } from "./reservation.model";
+import { Schedule } from "./schedule.model";
+import { User } from "./user.model";
+import { Vacation } from "./vacation.model";
 
 class Business extends Model {
   public id!: number;

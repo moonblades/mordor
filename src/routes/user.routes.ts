@@ -1,6 +1,5 @@
 import { Express, Router } from "express";
 import * as user from "../controllers/user.controller";
-import * as reservation from "../controllers/reservation.controller";
 
 function init(app: Express) {
   const router = Router();

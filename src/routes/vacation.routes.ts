@@ -1,5 +1,6 @@
 import { Express, Router } from "express";
 import * as vacation from "../controllers/vacation.controller";
+
 function init(app: Express) {
   const router = Router();
 

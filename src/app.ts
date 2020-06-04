@@ -4,9 +4,9 @@ import * as dotenv from "dotenv";
 import errorHandler from "errorhandler";
 import express from "express";
 import { config, IDBConfigEntry } from "./config/db.config";
+import logger from "./logger";
 import sequelize, { connect } from "./models";
 import { initRoutes } from "./routes/initRoutes";
-import logger from "./logger";
 dotenv.config();
 
 const dbConfig = config[process.env.SERVER_ENVIRONMENT] as IDBConfigEntry;

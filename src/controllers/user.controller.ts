@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { User, Reservation, Business } from "../models";
+import { Business, Reservation, User } from "../models";
 
 // Create and save a new User
 function create(req: Request, res: Response) {

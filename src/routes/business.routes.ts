@@ -1,9 +1,9 @@
 import { Express, Router } from "express";
-import { check, validationResult, param } from "express-validator";
+import { param } from "express-validator";
 import * as business from "../controllers/business.controller";
-import { reservationSchema } from "../schemas/reservation.schema";
-import { productSchema } from "../schemas/product_schema";
 import { typeValidation } from "../middlewares/validation";
+import { productSchema } from "../schemas/product_schema";
+import { reservationSchema } from "../schemas/reservation.schema";
 
 function init(app: Express) {
   const router = Router();

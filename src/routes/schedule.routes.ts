@@ -1,5 +1,6 @@
 import { Express, Router } from "express";
 import * as schedule from "../controllers/schedule.controller";
+
 function init(app: Express) {
   const router = Router();
 

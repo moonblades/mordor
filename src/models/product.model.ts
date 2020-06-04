@@ -1,4 +1,4 @@
-import { Model, Sequelize, DataTypes } from "sequelize";
+import { DataTypes, Model, Sequelize } from "sequelize";
 import { Business } from "./business.model";
 import { Reservation } from "./reservation.model";
 

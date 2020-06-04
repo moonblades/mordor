@@ -1,5 +1,5 @@
-import * as config from "./config.js";
 import { Dialect } from "sequelize/types";
+import * as config from "./config.js";
 
 interface IDBConfigEntry {
   username: string;

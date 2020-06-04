@@ -1,17 +1,17 @@
 import {
-  Model,
-  Sequelize,
+  Association,
   DataTypes,
-  HasManyGetAssociationsMixin,
   HasManyAddAssociationMixin,
-  HasManyHasAssociationMixin,
   HasManyCountAssociationsMixin,
   HasManyCreateAssociationMixin,
-  Association,
+  HasManyGetAssociationsMixin,
+  HasManyHasAssociationMixin,
+  Model,
+  Sequelize,
 } from "sequelize";
-import { User } from "./user.model";
-import { Business } from "./business.model";
 import { Product } from ".";
+import { Business } from "./business.model";
+import { User } from "./user.model";
 
 class Reservation extends Model {
   public id!: number;

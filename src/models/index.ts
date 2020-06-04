@@ -1,13 +1,13 @@
-import { config, IDBConfigEntry } from "../config/db.config";
 import { Sequelize } from "sequelize";
-import { initModels, defineRelations } from "./init";
-import { User } from "./user.model";
-import { Business } from "./business.model";
-import { Product } from "./product.model";
-import { Schedule } from "./schedule.model";
-import { Vacation } from "./vacation.model";
-import { Reservation } from "./reservation.model";
+import { config, IDBConfigEntry } from "../config/db.config";
 import logger from "../logger";
+import { Business } from "./business.model";
+import { defineRelations, initModels } from "./init";
+import { Product } from "./product.model";
+import { Reservation } from "./reservation.model";
+import { Schedule } from "./schedule.model";
+import { User } from "./user.model";
+import { Vacation } from "./vacation.model";
 
 const dbTimezone = "GMT";
 const dbConfig = config[process.env.SERVER_ENVIRONMENT] as IDBConfigEntry;

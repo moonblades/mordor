@@ -1,4 +1,4 @@
-import { Model, Sequelize, DataTypes, Association } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { Business } from "./business.model";
 
 class Schedule extends Model {

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Reservation, Product } from "../models";
+import { Product, Reservation } from "../models";
 
 function findAll(req: Request, res: Response) {
   Reservation.findAll()

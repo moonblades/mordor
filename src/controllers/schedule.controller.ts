@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Schedule, Business } from "../models";
+import { Business, Schedule } from "../models";
 
 function create(req: Request, res: Response) {
   // Validate request
