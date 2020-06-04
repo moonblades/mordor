@@ -1,4 +1,3 @@
-import * as Dummy from "./dummy.model";
 import * as User from "./user.model";
 import * as Business from "./business.model";
 import * as Product from "./product.model";

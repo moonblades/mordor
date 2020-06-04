@@ -1,7 +1,6 @@
 import { config, IDBConfigEntry } from "../config/db.config";
 import { Sequelize } from "sequelize";
 import { initModels, defineRelations } from "./init";
-import { Dummy } from "./dummy.model";
 import { User } from "./user.model";
 import { Business } from "./business.model";
 import { Product } from "./product.model";
@@ -59,13 +58,4 @@ async function connect(sequelizeInstance: Sequelize) {
 
 export default sequelize;
 
-export {
-  connect,
-  Dummy,
-  User,
-  Business,
-  Product,
-  Schedule,
-  Vacation,
-  Reservation,
-};
+export { connect, User, Business, Product, Schedule, Vacation, Reservation };
