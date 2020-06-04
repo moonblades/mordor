@@ -1,40 +1,38 @@
 import * as winston from "winston";
-const { combine, timestamp, label, printf } = winston.format;
+import "winston-daily-rotate-file";
+const { combine, timestamp, label, printf, colorize } = winston.format;
 
 // tslint:disable-next-line: no-shadowed-variable
 const logFormat = printf(({ level, message, label, timestamp }) => {
   return `${timestamp} [${label}] ${level}: ${message}`;
+});
+var transportError = new winston.transports.DailyRotateFile({
+  filename: "mordor-%DATE%-error.log",
+  datePattern: "YYYY-MM-DD-HH",
+  maxSize: "20m",
+  dirname: "logs",
+  level: "error",
+});
+var transportCombined = new winston.transports.DailyRotateFile({
+  filename: "mordor-%DATE%-combined.log",
+  datePattern: "YYYY-MM-DD-HH",
+  maxSize: "20m",
+  dirname: "logs",
 });
 
 const logger = winston.createLogger({
   level: "info",
   format: combine(label({ label: "MORDOR" }), timestamp(), logFormat),
   defaultMeta: { service: "user-service" },
-  transports: [
-    //
-    // - Write to all logs with level `info` and below to `combined.log`
-    // - Write all logs error (and below) to `error.log`.
-    //
-    new winston.transports.File({
-      filename: "logs/error.log",
-      level: "error",
-    }),
-    new winston.transports.File({
-      filename: "logs/combined.log",
-    }),
-  ],
+  transports: [transportError, transportCombined],
 });
 
-//
-// If we're not in production then log to the `console` with the format:
-// `${info.level}: ${info.message} JSON.stringify({ ...rest }) `
-//
-// if (process.env.NODE_ENV !== "production") {
-//   logger.add(
-//     new winston.transports.Console({
-//       format: winston.format.simple(),
-//     })
-//   );
-// }
+if (process.env.SERVER_ENVIRONMENT === "development") {
+  logger.add(
+    new winston.transports.Console({
+      format: combine(colorize(), winston.format.simple()),
+    })
+  );
+}
 
 export default logger;
