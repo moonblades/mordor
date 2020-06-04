@@ -37,7 +37,7 @@ function findAll(req: Request, res: Response) {
 
   Dummy.findAll({
     where: {
-      title: title,
+      title,
     },
   })
     .then((data) => {
@@ -70,10 +70,10 @@ function update(req: Request, res: Response) {
   const id = req.params.id;
 
   Dummy.update(req.body, {
-    where: { id: id },
+    where: { id },
   })
     .then((num) => {
-      if (num[0] == 1) {
+      if (num[0] === 1) {
         res.send({
           message: "Dummy was updated successfully.",
         });
@@ -95,10 +95,10 @@ function deleteOne(req: Request, res: Response) {
   const id = req.params.id;
 
   Dummy.destroy({
-    where: { id: id },
+    where: { id },
   })
     .then((num) => {
-      if (num[0] == 1) {
+      if (num[0] === 1) {
         res.send({
           message: "Dummy was deleted successfully!",
         });

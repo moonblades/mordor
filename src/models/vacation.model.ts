@@ -22,8 +22,8 @@ function init(sequelize) {
     },
     {
       tableName: "vacation",
-      sequelize: sequelize,
       modelName: "vacation",
+      sequelize,
     }
   );
 }

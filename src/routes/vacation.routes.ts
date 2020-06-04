@@ -1,7 +1,7 @@
 import { Express, Router } from "express";
 import * as vacation from "../controllers/vacation.controller";
 function init(app: Express) {
-  var router = Router();
+  const router = Router();
 
   // Create a new vacation
   router.post("/:id/vacation", vacation.create);

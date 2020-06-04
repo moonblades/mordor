@@ -66,10 +66,10 @@ function update(req: Request, res: Response) {
   const id = req.params.id;
 
   Product.update(req.body, {
-    where: { id: id },
+    where: { id },
   })
     .then((num) => {
-      if (num[0] == 1) {
+      if (num[0] === 1) {
         res.send({
           message: "Product was updated successfully.",
         });
@@ -90,10 +90,10 @@ function deleteOne(req: Request, res: Response) {
   const id = req.params.id;
 
   Product.destroy({
-    where: { id: id },
+    where: { id },
   })
     .then((num) => {
-      if (num[0] == 1) {
+      if (num[0] === 1) {
         res.send({
           message: "Product was deleted successfully!",
         });

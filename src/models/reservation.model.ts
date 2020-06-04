@@ -31,7 +31,8 @@ class Reservation extends Model {
   public countProducts!: HasManyCountAssociationsMixin;
   public createProduct!: HasManyCreateAssociationMixin<Product>;
 
-  public readonly products?: Product[]; // Note this is optional since it's only populated when explicitly requested in code
+  // Note this is optional since it's only populated when explicitly requested in code
+  public readonly products?: Product[];
 
   public static associations: {
     products: Association<Reservation, Product>;
@@ -55,8 +56,8 @@ function init(sequelize: Sequelize) {
     },
     {
       tableName: "reservation",
-      sequelize: sequelize,
       modelName: "reservation",
+      sequelize,
     }
   );
 }

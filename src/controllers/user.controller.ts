@@ -70,7 +70,7 @@ function update(req: Request, res: Response) {
   const id = req.params.id;
 
   User.update(req.body, {
-    where: { id: id },
+    where: { id },
   })
     .then((num) => {
       if (num[0] === 1) {
@@ -95,10 +95,10 @@ function deleteOne(req: Request, res: Response) {
   const id = req.params.id;
 
   User.destroy({
-    where: { id: id },
+    where: { id },
   })
     .then((num) => {
-      if (num == 1) {
+      if (num === 1) {
         res.send({
           message: "User was deleted successfully!",
         });
@@ -137,7 +137,7 @@ function findAllBusinesses(req: Request, res: Response) {
 
   Business.findAll({
     where: {
-      userId: userId,
+      userId,
     },
   })
     .then((data) => {
@@ -199,7 +199,7 @@ function updateBusiness(req: Request, res: Response) {
   const { id: userId, businessId } = req.params;
 
   User.findByPk(userId).then((user: User) => {
-    user.hasBusiness(parseInt(businessId)).then((value) => {
+    user.hasBusiness(parseInt(businessId, 10)).then((value) => {
       if (!value) {
         res.status(404).send({
           message: `Business with id ${businessId} not found in user with id ${userId}`,
@@ -234,7 +234,7 @@ function deleteOneBusiness(req: Request, res: Response) {
   const { id: userId, businessId } = req.params;
 
   User.findByPk(userId).then((user: User) => {
-    user.hasBusiness(parseInt(businessId)).then((value) => {
+    user.hasBusiness(parseInt(businessId, 10)).then((value) => {
       if (!value) {
         res.status(404).send({
           message: `Business with id ${businessId} not found in user with id ${userId}`,
@@ -246,7 +246,7 @@ function deleteOneBusiness(req: Request, res: Response) {
         where: { id: businessId },
       })
         .then((num) => {
-          if (num == 1) {
+          if (num === 1) {
             res.send({
               message: "Business was deleted successfully!",
             });
@@ -269,7 +269,7 @@ function deleteAllBusinesses(req: Request, res: Response) {
   const { id: userId } = req.params;
 
   Business.destroy({
-    where: { userId: userId },
+    where: { userId },
     truncate: false,
   })
     .then((nums) => {
@@ -286,7 +286,7 @@ function findAllReservation(req: Request, res: Response) {
   const { id: userId } = req.params;
 
   Reservation.findAll({
-    where: { userId: userId },
+    where: { userId },
   })
     .then((data) => {
       res.send(data);
@@ -361,7 +361,7 @@ function updateReservation(req: Request, res: Response) {
   const { id: userId, reservationId } = req.params;
 
   User.findByPk(userId).then((user: User) => {
-    user.hasReservation(parseInt(reservationId)).then((value: boolean) => {
+    user.hasReservation(parseInt(reservationId, 10)).then((value: boolean) => {
       if (!value) {
         res.status(404).send({
           message: `Reservation with id ${reservationId} not found in user with id ${userId}`,
@@ -396,7 +396,7 @@ function deleteOneReservation(req: Request, res: Response) {
   const { id: userId, reservationId } = req.params;
 
   User.findByPk(userId).then((user: User) => {
-    user.hasReservation(parseInt(reservationId)).then((value) => {
+    user.hasReservation(parseInt(reservationId, 10)).then((value) => {
       if (!value) {
         res.status(404).send({
           message: `Reservation with id ${reservationId} not found in user with id ${userId}`,
@@ -408,7 +408,7 @@ function deleteOneReservation(req: Request, res: Response) {
         where: { id: reservationId },
       })
         .then((num) => {
-          if (num == 1) {
+          if (num === 1) {
             res.send({
               message: "Reservation was deleted successfully!",
             });
@@ -431,7 +431,7 @@ function deleteAllReservation(req: Request, res: Response) {
   const { id: userId } = req.params;
 
   Reservation.destroy({
-    where: { userId: userId },
+    where: { userId },
     truncate: false,
   })
     .then((nums) => {

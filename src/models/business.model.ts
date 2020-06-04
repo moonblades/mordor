@@ -40,7 +40,8 @@ class Business extends Model {
   public countProducts!: HasManyCountAssociationsMixin;
   public createProduct!: HasManyCreateAssociationMixin<Product>;
 
-  public readonly products?: Product[]; // Note this is optional since it's only populated when explicitly requested in code
+  // Note this is optional since it's only populated when explicitly requested in code
+  public readonly products?: Product[];
 
   public getSchedules!: HasManyGetAssociationsMixin<Schedule>; // Note the null assertions!
   public addSchedule!: HasManyAddAssociationMixin<Schedule, number>;
@@ -48,7 +49,8 @@ class Business extends Model {
   public countSchedules!: HasManyCountAssociationsMixin;
   public createSchedule!: HasManyCreateAssociationMixin<Schedule>;
 
-  public readonly schedules?: Schedule[]; // Note this is optional since it's only populated when explicitly requested in code
+  // Note this is optional since it's only populated when explicitly requested in code
+  public readonly schedules?: Schedule[];
 
   public getVacations!: HasManyGetAssociationsMixin<Vacation>; // Note the null assertions!
   public addVacation!: HasManyAddAssociationMixin<Vacation, number>;
@@ -56,7 +58,8 @@ class Business extends Model {
   public countVacations!: HasManyCountAssociationsMixin;
   public createVacation!: HasManyCreateAssociationMixin<Vacation>;
 
-  public readonly vacations?: Vacation[]; // Note this is optional since it's only populated when explicitly requested in code
+  // Note this is optional since it's only populated when explicitly requested in code
+  public readonly vacations?: Vacation[];
 
   public getReservations!: HasManyGetAssociationsMixin<Reservation>; // Note the null assertions!
   public addReservation!: HasManyAddAssociationMixin<Reservation, number>;
@@ -111,7 +114,7 @@ function init(sequelize: Sequelize) {
     {
       tableName: "business",
       modelName: "business",
-      sequelize: sequelize,
+      sequelize,
     }
   );
 }

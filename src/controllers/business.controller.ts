@@ -43,7 +43,7 @@ function findAllReservation(req: Request, res: Response) {
   const { id: businessId } = req.params;
 
   Reservation.findAll({
-    where: { businessId: businessId },
+    where: { businessId },
   })
     .then((data) => {
       res.send(data);
@@ -128,34 +128,36 @@ function updateReservation(req: Request, res: Response) {
   const { id: businessId, reservationId } = req.params;
 
   Business.findByPk(businessId).then((business: Business) => {
-    business.hasReservation(parseInt(reservationId)).then((value: boolean) => {
-      if (!value) {
-        res.status(404).send({
-          message: `Reservation with id ${reservationId} not found in Business with id ${businessId}`,
-        });
-        return;
-      }
-
-      Reservation.update(req.body, {
-        where: { id: reservationId },
-      })
-        .then((num) => {
-          if (num[0] == 1) {
-            res.send({
-              message: "Reservation was updated successfully.",
-            });
-          } else {
-            res.send({
-              message: `Cannot update Reservation with id=${reservationId}. Maybe Reservation was not found or req.body is empty!`,
-            });
-          }
-        })
-        .catch((err) => {
-          res.status(500).send({
-            message: err.message,
+    business
+      .hasReservation(parseInt(reservationId, 10))
+      .then((value: boolean) => {
+        if (!value) {
+          res.status(404).send({
+            message: `Reservation with id ${reservationId} not found in Business with id ${businessId}`,
           });
-        });
-    });
+          return;
+        }
+
+        Reservation.update(req.body, {
+          where: { id: reservationId },
+        })
+          .then((num) => {
+            if (num[0] === 1) {
+              res.send({
+                message: "Reservation was updated successfully.",
+              });
+            } else {
+              res.send({
+                message: `Cannot update Reservation with id=${reservationId}. Maybe Reservation was not found or req.body is empty!`,
+              });
+            }
+          })
+          .catch((err) => {
+            res.status(500).send({
+              message: err.message,
+            });
+          });
+      });
   });
 }
 
@@ -168,7 +170,7 @@ function deleteOneReservation(req: Request, res: Response) {
   const { id: businessId, reservationId } = req.params;
 
   Business.findByPk(businessId).then((business: Business) => {
-    business.hasReservation(parseInt(reservationId)).then((value) => {
+    business.hasReservation(parseInt(reservationId, 10)).then((value) => {
       if (!value) {
         res.status(404).send({
           message: `Reservation with id ${reservationId} not found in Business with id ${businessId}`,
@@ -180,7 +182,7 @@ function deleteOneReservation(req: Request, res: Response) {
         where: { id: reservationId },
       })
         .then((num) => {
-          if (num[0] == 1) {
+          if (num[0] === 1) {
             res.send({
               message: "Reservation was deleted successfully!",
             });
@@ -203,7 +205,7 @@ function deleteAllReservation(req: Request, res: Response) {
   const { id: businessId } = req.params;
 
   Reservation.destroy({
-    where: { businessId: businessId },
+    where: { businessId },
     truncate: false,
   })
     .then((nums) => {
@@ -257,7 +259,7 @@ function findAllProduct(req: Request, res: Response) {
   const { id: businessId } = req.params;
 
   Product.findAll({
-    where: { businessId: businessId },
+    where: { businessId },
   })
     .then((data) => {
       res.send(data);
@@ -299,7 +301,7 @@ function updateProduct(req: Request, res: Response) {
   const { id: businessId, productId } = req.params;
 
   Business.findByPk(businessId).then((business: Business) => {
-    business.hasProduct(parseInt(productId)).then((value: boolean) => {
+    business.hasProduct(parseInt(productId, 10)).then((value: boolean) => {
       if (!value) {
         res.status(404).send({
           message: `Product with id ${productId} not found in Business with id ${businessId}`,
@@ -311,7 +313,7 @@ function updateProduct(req: Request, res: Response) {
         where: { id: productId },
       })
         .then((num) => {
-          if (num[0] == 1) {
+          if (num[0] === 1) {
             res.send({
               message: "Product was updated successfully.",
             });
@@ -334,7 +336,7 @@ function deleteOneProduct(req: Request, res: Response) {
   const { id: businessId, productId } = req.params;
 
   Business.findByPk(businessId).then((business: Business) => {
-    business.hasProduct(parseInt(productId)).then((value) => {
+    business.hasProduct(parseInt(productId, 10)).then((value) => {
       if (!value) {
         res.status(404).send({
           message: `Product with id ${productId} not found in Business with id ${businessId}`,
@@ -346,7 +348,7 @@ function deleteOneProduct(req: Request, res: Response) {
         where: { id: productId },
       })
         .then((num) => {
-          if (num[0] == 1) {
+          if (num[0] === 1) {
             res.send({
               message: "Product was deleted successfully!",
             });
@@ -369,7 +371,7 @@ function deleteAllProduct(req: Request, res: Response) {
   const { id: businessId } = req.params;
 
   Product.destroy({
-    where: { businessId: businessId },
+    where: { businessId },
     truncate: false,
   })
     .then((nums) => {

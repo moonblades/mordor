@@ -6,7 +6,7 @@ import { productSchema } from "../schemas/product_schema";
 import { typeValidation } from "../middlewares/validation";
 
 function init(app: Express) {
-  var router = Router();
+  const router = Router();
 
   // Retrieve all businesss
   router.get("/", business.findAll);

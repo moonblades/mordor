@@ -1,7 +1,7 @@
 import { Express, Router } from "express";
 import * as schedule from "../controllers/schedule.controller";
 function init(app: Express) {
-  var router = Router();
+  const router = Router();
 
   // Create a new schedule
   router.post("/:id/schedule", schedule.create);

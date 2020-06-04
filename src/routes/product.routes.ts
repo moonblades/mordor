@@ -2,7 +2,7 @@ import { Express, Router } from "express";
 import * as product from "../controllers/product.controller";
 
 function init(app: Express) {
-  var router = Router();
+  const router = Router();
 
   // Create a new Dummy
   router.post("/", product.create);

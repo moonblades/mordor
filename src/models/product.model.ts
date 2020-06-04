@@ -69,8 +69,8 @@ function init(sequelize: Sequelize) {
     },
     {
       tableName: "product",
-      sequelize: sequelize,
       modelName: "product",
+      sequelize,
     }
   );
 }

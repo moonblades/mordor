@@ -3,7 +3,7 @@ import * as user from "../controllers/user.controller";
 import * as reservation from "../controllers/reservation.controller";
 
 function init(app: Express) {
-  var router = Router();
+  const router = Router();
 
   // Create a new user
   router.post("/", user.create);

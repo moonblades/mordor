@@ -36,7 +36,8 @@ class User extends Model {
   public countReservations!: HasManyCountAssociationsMixin;
   public createReservation!: HasManyCreateAssociationMixin<Reservation>;
 
-  public readonly reservations?: Reservation[]; // Note this is optional since it's only populated when explicitly requested in code
+  // Note this is optional since it's only populated when explicitly requested in code
+  public readonly reservations?: Reservation[];
 
   public getBusinesses!: HasManyGetAssociationsMixin<Business>; // Note the null assertions!
   public addBusiness!: HasManyAddAssociationMixin<Business, number>;
@@ -44,7 +45,8 @@ class User extends Model {
   public countBusinesses!: HasManyCountAssociationsMixin;
   public createBusiness!: HasManyCreateAssociationMixin<Business>;
 
-  public readonly businesses?: Business[]; // Note this is optional since it's only populated when explicitly requested in code
+  // Note this is optional since it's only populated when explicitly requested in code
+  public readonly businesses?: Business[];
 
   public static associations: {
     reservations: Association<User, Reservation>;
@@ -101,7 +103,7 @@ function init(sequelize: Sequelize) {
     {
       tableName: "user",
       modelName: "user",
-      sequelize: sequelize,
+      sequelize,
     }
   );
 }

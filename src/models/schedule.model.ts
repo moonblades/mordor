@@ -29,7 +29,7 @@ function init(sequelize) {
     {
       tableName: "schedule",
       modelName: "schedule",
-      sequelize: sequelize,
+      sequelize,
     }
   );
 }
