@@ -8,14 +8,14 @@ const logFormat = printf(({ level, message, label, timestamp }) => {
 });
 const transportError = new winston.transports.DailyRotateFile({
   filename: "mordor-%DATE%-error.log",
-  datePattern: "YYYY-MM-DD-HH",
+  datePattern: "YYYY-MM-DD",
   maxSize: "20m",
   dirname: "logs",
   level: "error",
 });
 const transportCombined = new winston.transports.DailyRotateFile({
   filename: "mordor-%DATE%-combined.log",
-  datePattern: "YYYY-MM-DD-HH",
+  datePattern: "YYYY-MM-DD",
   maxSize: "20m",
   dirname: "logs",
 });
