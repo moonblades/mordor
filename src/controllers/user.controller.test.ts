@@ -1,44 +1,8 @@
 import request from "supertest";
 import app from "../app";
 import logger from "../logger";
-import { Business, User, Reservation } from "../models";
-
-const user = {
-  email: "foo.bar@baz.com",
-  displayName: "foo",
-  imageUrl: "",
-  name: "foo",
-  surname: "bar",
-  password: "foobared",
-  phoneNumber: "1234567890",
-  streetAndNumber: "Street 1",
-  city: "City",
-  postalCode: "0000",
-  receiveNotification: true,
-  anonymous: false,
-};
-
-const business = {
-  vatNumber: "VAT-1234",
-  phoneNumber: "1234567890",
-  name: "Oceanic Airlines",
-  description: "Lorem ipsum",
-  imageUrl: "https://picsum.photos/200",
-  currency: "EUR",
-  timeZone: "IT",
-  streetAndNumber: "Nowhere 1",
-  postalCode: "0001",
-  city: "City",
-  industry: "Traeveling",
-  cancelationTime: 10,
-};
-
-const reservation = {
-  date: "2004-09-22",
-  reminderToUser: true,
-  cancelable: false,
-  completed: false,
-};
+import { Business, Reservation, User } from "../models";
+import { business, reservation, user } from "../test/testdata";
 
 beforeEach(async (done) => {
   await Reservation.destroy({
@@ -67,8 +31,6 @@ beforeEach(async (done) => {
   });
 
   logger.info(`Cleaned up Business table`);
-
-  done();
 
   done();
 });
