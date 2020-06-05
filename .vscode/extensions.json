@@ -5,8 +5,6 @@
   // List of extensions which should be recommended for users of this workspace.
   "recommendations": [
     "esbenp.prettier-vscode",
-    "mtxr.sqltools",
-    "mtxr.sqltools-driver-mysql",
     "wayou.vscode-todo-highlight",
     "ms-vscode.vscode-typescript-tslint-plugin"
   ],
