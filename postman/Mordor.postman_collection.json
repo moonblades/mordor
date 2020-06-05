@@ -167,48 +167,11 @@
 			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "Vendor",
+			"name": "User",
 			"item": [
 				{
 					"name": "Business",
 					"item": [
-						{
-							"name": "Get all businesses",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "66994cce-8dc5-45ae-9b99-e6d5a7e46f10",
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:3000/api/vendor/2/business/",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"vendor",
-										"2",
-										"business",
-										""
-									]
-								}
-							},
-							"response": []
-						},
 						{
 							"name": "Create business",
 							"event": [
@@ -238,7 +201,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:3000/api/vendor/2/business",
+									"raw": "http://localhost:3000/api/user/1/business",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -246,9 +209,46 @@
 									"port": "3000",
 									"path": [
 										"api",
-										"vendor",
-										"2",
+										"user",
+										"1",
 										"business"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all businesses",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "66994cce-8dc5-45ae-9b99-e6d5a7e46f10",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/user/1/business/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"user",
+										"1",
+										"business",
+										""
 									]
 								}
 							},
@@ -283,7 +283,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:3000/api/vendor/2/business/3",
+									"raw": "http://localhost:3000/api/user/1/business/1",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -291,10 +291,10 @@
 									"port": "3000",
 									"path": [
 										"api",
-										"vendor",
-										"2",
+										"user",
+										"1",
 										"business",
-										"3"
+										"1"
 									]
 								}
 							},
@@ -320,7 +320,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/api/vendor/2/business/7",
+									"raw": "http://localhost:3000/api/user/1/business/1",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -328,10 +328,10 @@
 									"port": "3000",
 									"path": [
 										"api",
-										"vendor",
-										"2",
+										"user",
+										"1",
 										"business",
-										"7"
+										"1"
 									]
 								}
 							},
@@ -357,7 +357,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/api/vendor/2/business",
+									"raw": "http://localhost:3000/api/user/2/business",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -365,7 +365,7 @@
 									"port": "3000",
 									"path": [
 										"api",
-										"vendor",
+										"user",
 										"2",
 										"business"
 									]
@@ -377,204 +377,6 @@
 					"protocolProfileBehavior": {},
 					"_postman_isSubFolder": true
 				},
-				{
-					"name": "Create vendor",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "0dd59dd1-c601-492f-a378-74411ba7fa6e",
-								"exec": [
-									"pm.test(\"Succesfull POST request\", function () {\r",
-									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"email\": \"test@test.com\",\n\t\"displayName\": \"test\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/vendor/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"vendor",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Find all vendors",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "0bf692cf-f003-4127-9dbe-df1454e08569",
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/vendor",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"vendor"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Find vendor",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "87cefaff-6c63-4633-bd9b-4b0cfd4543a8",
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/vendor/564564",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"vendor",
-								"564564"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update vendor",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "5465a9d5-4121-4779-9dc6-db67cf429ced",
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"displayName\" : \"test_updated\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/vendor/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"vendor",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete vendor",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "40d2d4d4-1b56-46de-ab99-7a6efd33193f",
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/vendor/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"vendor",
-								"1"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"protocolProfileBehavior": {}
-		},
-		{
-			"name": "Client",
-			"item": [
 				{
 					"name": "Reservation",
 					"item": [
@@ -599,7 +401,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"businessId\": 2,\n\t\"date\": \"2020-05-22 18:00:00\",\n\t\"reminderToClient\": true,\n\t\"cancelable\": true,\n\t\"completed\": false\n}",
+									"raw": "{\n\t\"businessId\": 1,\n\t\"date\": \"2020-05-22 18:00:00\",\n\t\"reminderToClient\": true,\n\t\"cancelable\": true,\n\t\"completed\": false\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -607,7 +409,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:3000/api/client/1/reservation/",
+									"raw": "http://localhost:3000/api/user/1/reservation/",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -615,7 +417,7 @@
 									"port": "3000",
 									"path": [
 										"api",
-										"client",
+										"user",
 										"1",
 										"reservation",
 										""
@@ -644,7 +446,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/api/client/1/reservation/",
+									"raw": "http://localhost:3000/api/user/1/reservation/",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -652,7 +454,7 @@
 									"port": "3000",
 									"path": [
 										"api",
-										"client",
+										"user",
 										"1",
 										"reservation",
 										""
@@ -681,7 +483,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/api/client/1/reservation/1",
+									"raw": "http://localhost:3000/api/user/1/reservation/5",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -689,10 +491,10 @@
 									"port": "3000",
 									"path": [
 										"api",
-										"client",
+										"user",
 										"1",
 										"reservation",
-										"1"
+										"5"
 									]
 								}
 							},
@@ -713,7 +515,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:3000/api/client/1/reservation/1",
+									"raw": "http://localhost:3000/api/user/1/reservation/5",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -721,10 +523,10 @@
 									"port": "3000",
 									"path": [
 										"api",
-										"client",
+										"user",
 										"1",
 										"reservation",
-										"1"
+										"5"
 									]
 								}
 							},
@@ -745,7 +547,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:3000/api/client/1/reservation/1",
+									"raw": "http://localhost:3000/api/user/1/reservation/5",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -753,10 +555,10 @@
 									"port": "3000",
 									"path": [
 										"api",
-										"client",
+										"user",
 										"1",
 										"reservation",
-										"1"
+										"5"
 									]
 								}
 							},
@@ -767,7 +569,7 @@
 					"_postman_isSubFolder": true
 				},
 				{
-					"name": "Create client",
+					"name": "Create user",
 					"event": [
 						{
 							"listen": "test",
@@ -795,7 +597,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/client/",
+							"raw": "http://localhost:3000/api/user/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -803,7 +605,7 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"client",
+								"user",
 								""
 							]
 						}
@@ -811,12 +613,12 @@
 					"response": []
 				},
 				{
-					"name": "Find all clients",
+					"name": "Find all users",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/client?displayName=test",
+							"raw": "http://localhost:3000/api/user",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -824,25 +626,19 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"client"
-							],
-							"query": [
-								{
-									"key": "displayName",
-									"value": "test"
-								}
+								"user"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Find client",
+					"name": "Find user",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/client/1",
+							"raw": "http://localhost:3000/api/user/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -850,7 +646,7 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"client",
+								"user",
 								"1"
 							]
 						}
@@ -886,7 +682,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/client/1",
+							"raw": "http://localhost:3000/api/user/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -894,7 +690,7 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"client",
+								"user",
 								"1"
 							]
 						}
@@ -907,7 +703,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/client/1",
+							"raw": "http://localhost:3000/api/user/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -915,7 +711,7 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"client",
+								"user",
 								"1"
 							]
 						}
@@ -1271,7 +1067,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/api/business/2/reservation/",
+									"raw": "http://localhost:3000/api/business/d/reservation/",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1280,7 +1076,7 @@
 									"path": [
 										"api",
 										"business",
-										"2",
+										"d",
 										"reservation",
 										""
 									]
@@ -1372,7 +1168,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:3000/api/business/2/reservation/2",
+									"raw": "http://localhost:3000/api/business/2/reservation/20",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1383,7 +1179,7 @@
 										"business",
 										"2",
 										"reservation",
-										"2"
+										"20"
 									]
 								}
 							},
@@ -1649,6 +1445,43 @@
 								"api",
 								"business",
 								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add client",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "87cb0026-26f5-47a3-b32e-81db19c8054e",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/business/2/client/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"business",
+								"2",
+								"client",
+								"1"
 							]
 						}
 					},
