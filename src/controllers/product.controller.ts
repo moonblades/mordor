@@ -11,7 +11,6 @@ function create(req: Request, res: Response) {
   }
 
   const product = {
-    id: req.body.id,
     businessId: req.body.businessId,
     name: req.body.name,
     description: req.body.description,

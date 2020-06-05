@@ -1,8 +1,8 @@
 import request from "supertest";
 import app from "../app";
 import logger from "../logger";
-import { Reservation, User, Business, Product } from "../models";
-import { business, reservation, user, product } from "../test/testdata";
+import { Business, Product, Reservation, User } from "../models";
+import { product, reservation } from "../test/testdata";
 
 beforeEach(async (done) => {
   await Reservation.destroy({
@@ -13,6 +13,15 @@ beforeEach(async (done) => {
   });
 
   logger.info(`Cleaned up Reservation table`);
+
+  await Product.destroy({
+    where: {},
+    truncate: true,
+    cascade: true,
+    force: true,
+  });
+
+  logger.info(`Cleaned up Product table`);
 
   await User.destroy({
     where: {},
@@ -85,8 +94,7 @@ describe("Reservation controller", () => {
       done();
     });
 
-    // FIXME: doesn't work
-    it.skip("should add a product to a reservation", async (done) => {
+    it("should add a product to a reservation", async (done) => {
       const newReservation = await Reservation.create(reservation);
       const newProduct = await Product.create(product);
 
@@ -96,8 +104,9 @@ describe("Reservation controller", () => {
 
       expect(res.status).toEqual(201);
 
-      const num = await newReservation.countProducts();
-      expect(num).toEqual(1);
+      // TODO: check why newReservation.countProducts() is returni 0 elements
+      const products = await newReservation.getProducts();
+      expect(products.length).toEqual(1);
       done();
     });
   });

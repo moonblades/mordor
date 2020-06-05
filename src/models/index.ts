@@ -48,7 +48,7 @@ async function connect(sequelizeInstance: Sequelize) {
       }); // <- must be removed
 
       logger.info(`Syncing database ${dbConfig.database}...`);
-      await sequelizeInstance.sync({ force: true });
+      await sequelizeInstance.sync({ force: false });
       logger.info("Synced.");
     }
   } catch (err) {

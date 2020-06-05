@@ -8,7 +8,6 @@ function create(req: Request, res: Response) {
     return res.status(400).send({
       message: "Email can not be empty!",
     });
-    return;
   }
 
   const user = {
@@ -186,7 +185,7 @@ function createBusiness(req: Request, res: Response) {
       user
         .createBusiness(business)
         .then((data) => {
-          return res.send(data);
+          return res.status(201).send(data);
         })
         .catch((err) => {
           return res.status(500).send({
@@ -242,10 +241,9 @@ function deleteOneBusiness(req: Request, res: Response) {
   User.findByPk(userId).then((user: User) => {
     user.hasBusiness(parseInt(businessId, 10)).then((value) => {
       if (!value) {
-        return res.status(404).send({
+        return res.status(400).send({
           message: `Business with id ${businessId} not found in user with id ${userId}`,
         });
-        return;
       }
 
       Business.destroy({

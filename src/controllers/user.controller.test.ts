@@ -55,7 +55,7 @@ describe("User controller", () => {
   });
 
   describe("get", () => {
-    it("should retrieve three user", async (done) => {
+    it("should retrieve three users", async (done) => {
       await User.create(user);
       await User.create(user);
       await User.create(user);
@@ -146,7 +146,7 @@ describe("User controller", () => {
         .post(`/api/user/${newUser.id}/business/`)
         .send(business);
 
-      expect(res.status).toEqual(200);
+      expect(res.status).toEqual(201);
 
       const num = await newUser.countBusinesses();
       expect(num).toEqual(1);
@@ -162,9 +162,7 @@ describe("User controller", () => {
       const res = await request(app).get(`/api/user/${newUser.id}/business/`);
 
       expect(res.status).toEqual(200);
-
-      const num = await newUser.countBusinesses();
-      expect(num).toEqual(3);
+      expect(res.body).toHaveLength(3);
       done();
     });
 
@@ -173,7 +171,7 @@ describe("User controller", () => {
       const newBusiness = await newUser.createBusiness(business);
 
       const res = await request(app)
-        .put(`/api/user/${newUser.id}/business/1`)
+        .put(`/api/user/${newUser.id}/business/${newBusiness.id}`)
         .send({ name: "Oceanic Airways" });
 
       expect(res.status).toEqual(200);
@@ -191,7 +189,7 @@ describe("User controller", () => {
       const res = await request(app).delete(
         `/api/user/${newUser.id}/business/${newBusiness.id}`
       );
-      expect(res.status).toEqual(404);
+      expect(res.status).toEqual(400);
 
       const num = await anotherUser.countBusinesses();
       expect(num).toEqual(1);
@@ -259,6 +257,7 @@ describe("User controller", () => {
     it("should find three reservations for the user", async (done) => {
       const newUser = await User.create(user);
       const newBusiness = await newUser.createBusiness(business);
+
       await newUser.createReservation({
         businessId: newBusiness.id,
         ...reservation,
