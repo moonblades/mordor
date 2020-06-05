@@ -14,6 +14,7 @@ import { Reservation } from "./reservation.model";
 import { Schedule } from "./schedule.model";
 import { User } from "./user.model";
 import { Vacation } from "./vacation.model";
+import { Employee } from "./employee.model";
 
 class Business extends Model {
   public id!: number;
@@ -75,6 +76,14 @@ class Business extends Model {
   public countUsers!: HasManyCountAssociationsMixin;
   public createUser!: HasManyCreateAssociationMixin<User>;
 
+  public readonly employees?: Employee[];
+
+  public getEmployees!: HasManyGetAssociationsMixin<Employee>; // Note the null assertions!
+  public addEmployee!: HasManyAddAssociationMixin<Employee, number>;
+  public hasEmployee!: HasManyHasAssociationMixin<Employee, number>;
+  public countEmployees!: HasManyCountAssociationsMixin;
+  public createEmployee!: HasManyCreateAssociationMixin<Employee>;
+
   public readonly users?: User[];
 
   public static associations: {
@@ -83,6 +92,7 @@ class Business extends Model {
     vacations: Association<Business, Vacation>;
     reservations: Association<Business, Reservation>;
     users: Association<Business, User>;
+    employess: Association<Business, Employee>;
   };
 }
 
@@ -126,6 +136,7 @@ function defineRelations() {
   Business.hasMany(Schedule);
   Business.hasMany(Vacation);
   Business.hasMany(Reservation);
+  Business.hasMany(Employee);
 
   Business.belongsToMany(User, {
     through: "customer",

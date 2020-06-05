@@ -8,6 +8,7 @@ import { Reservation } from "./reservation.model";
 import { Schedule } from "./schedule.model";
 import { User } from "./user.model";
 import { Vacation } from "./vacation.model";
+import { Employee } from "./employee.model";
 
 const dbTimezone = "GMT";
 const dbConfig = config[process.env.SERVER_ENVIRONMENT] as IDBConfigEntry;
@@ -58,4 +59,13 @@ async function connect(sequelizeInstance: Sequelize) {
 
 export default sequelize;
 
-export { connect, User, Business, Product, Schedule, Vacation, Reservation };
+export {
+  connect,
+  User,
+  Business,
+  Product,
+  Schedule,
+  Vacation,
+  Reservation,
+  Employee,
+};

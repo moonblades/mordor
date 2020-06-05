@@ -1,6 +1,7 @@
 import { DataTypes, Model, Sequelize } from "sequelize";
 import { Business } from "./business.model";
 import { Reservation } from "./reservation.model";
+import { Employee } from "./employee.model";
 
 class Product extends Model {
   public id!: number;
@@ -80,6 +81,11 @@ function defineRelations() {
 
   Product.belongsToMany(Reservation, {
     through: "reservation_product",
+    onDelete: "cascade",
+  });
+
+  Product.belongsToMany(Employee, {
+    through: "product_employee",
     onDelete: "cascade",
   });
 }
