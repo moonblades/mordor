@@ -7,6 +7,8 @@ import { config, IDBConfigEntry } from "./config/db.config";
 import logger from "./logger";
 import sequelize, { connect } from "./models";
 import { initRoutes } from "./routes/initRoutes";
+import helmet from "helmet";
+
 dotenv.config();
 
 const dbConfig = config[process.env.SERVER_ENVIRONMENT] as IDBConfigEntry;
@@ -15,6 +17,8 @@ const app = express();
 const corsOptions: CorsOptions = {
   origin: `http://${dbConfig.host}:${dbConfig.port}`,
 };
+
+app.use(helmet());
 
 app.use(cors(corsOptions));
 

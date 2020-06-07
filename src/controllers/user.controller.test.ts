@@ -1,36 +1,11 @@
 import request from "supertest";
 import app from "../app";
-import logger from "../logger";
 import { Business, Reservation, User } from "../models";
 import { business, reservation, user } from "../test/testdata";
+import { truncateAllTables } from "../test/truncateTables";
 
 beforeEach(async (done) => {
-  await Reservation.destroy({
-    where: {},
-    truncate: true,
-    cascade: true,
-    force: true,
-  });
-
-  logger.info(`Cleaned up Reservation table`);
-
-  await User.destroy({
-    where: {},
-    truncate: true,
-    cascade: true,
-    force: true,
-  });
-
-  logger.info(`Cleaned up User table`);
-
-  await Business.destroy({
-    where: {},
-    truncate: true,
-    cascade: true,
-    force: true,
-  });
-
-  logger.info(`Cleaned up Business table`);
+  await truncateAllTables();
 
   done();
 });
