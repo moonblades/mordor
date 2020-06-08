@@ -1,6 +1,17 @@
-import { DataTypes, Model, Sequelize } from "sequelize";
+import {
+  DataTypes,
+  Model,
+  Sequelize,
+  HasManyGetAssociationsMixin,
+  HasManyAddAssociationMixin,
+  HasManyHasAssociationMixin,
+  HasManyCountAssociationsMixin,
+  HasManyCreateAssociationMixin,
+  Association,
+} from "sequelize";
 import { Business } from "./business.model";
 import { Reservation } from "./reservation.model";
+import { Reminder } from "./reminder.model";
 
 class Product extends Model {
   public id!: number;
@@ -20,6 +31,19 @@ class Product extends Model {
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+
+  public getReminders!: HasManyGetAssociationsMixin<Reminder>; // Note the null assertions!
+  public addReminder!: HasManyAddAssociationMixin<Reminder, number>;
+  public hasReminder!: HasManyHasAssociationMixin<Reminder, number>;
+  public countReminders!: HasManyCountAssociationsMixin;
+  public createReminder!: HasManyCreateAssociationMixin<Reminder>;
+
+  // Note this is optional since it's only populated when explicitly requested in code
+  public readonly products?: Product[];
+
+  public static associations: {
+    products: Association<Product, Reminder>;
+  };
 }
 
 function init(sequelize: Sequelize) {
@@ -82,6 +106,8 @@ function defineRelations() {
     through: "reservation_product",
     onDelete: "cascade",
   });
+
+  Product.hasMany(Reminder);
 }
 
 export { init, defineRelations, Product };
