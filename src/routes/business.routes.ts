@@ -115,6 +115,54 @@ function init(app: Express) {
     business.deleteAllProduct
   );
 
+  // Retrieve all employee for business
+  router.get(
+    "/:id/employee",
+    [param("id").isNumeric()],
+    typeValidation,
+    business.findAllEmployees
+  );
+
+  // Retrieve an employee for business
+  router.get(
+    "/:id/employee/:employeeId",
+    [param("id").isNumeric(), param("employeeId").isNumeric()],
+    typeValidation,
+    business.findOneEmployee
+  );
+
+  // Create an employee for business
+  router.post(
+    "/:id/employee",
+    [param("id").isNumeric()],
+    typeValidation,
+    business.createEmployee
+  );
+
+  // Update an employee for business
+  router.put(
+    "/:id/employee/:employeeId",
+    [param("id").isNumeric(), param("employeeId").isNumeric()],
+    typeValidation,
+    business.updateEmployee
+  );
+
+  // Delete an employee for business
+  router.delete(
+    "/:id/employee/:employeeId",
+    [param("id").isNumeric(), param("employeeId").isNumeric()],
+    typeValidation,
+    business.deleteOneEmployee
+  );
+
+  // Delte all employee for business
+  router.delete(
+    "/:id/employee",
+    [param("id").isNumeric()],
+    typeValidation,
+    business.deleteAllEmployees
+  );
+
   // Add user to business
   router.post(
     "/:id/user/:userId",

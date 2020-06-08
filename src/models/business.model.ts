@@ -76,7 +76,7 @@ class Business extends Model {
   public countUsers!: HasManyCountAssociationsMixin;
   public createUser!: HasManyCreateAssociationMixin<User>;
 
-  public readonly employees?: Employee[];
+  public readonly users?: User[];
 
   public getEmployees!: HasManyGetAssociationsMixin<Employee>; // Note the null assertions!
   public addEmployee!: HasManyAddAssociationMixin<Employee, number>;
@@ -84,7 +84,7 @@ class Business extends Model {
   public countEmployees!: HasManyCountAssociationsMixin;
   public createEmployee!: HasManyCreateAssociationMixin<Employee>;
 
-  public readonly users?: User[];
+  public readonly employees?: Employee[];
 
   public static associations: {
     products: Association<Business, Product>;

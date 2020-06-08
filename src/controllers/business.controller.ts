@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { validationResult } from "express-validator";
-import { Business, Product, Reservation, User } from "../models";
+import { Business, Product, Reservation, User, Employee } from "../models";
 
 function findAll(req: Request, res: Response) {
   //   const displayName = req.query.displayName;
@@ -387,7 +387,162 @@ function deleteAllProduct(req: Request, res: Response) {
     });
 }
 
-function addUser(req: Request, res: Response) {
+function createEmployee(req: Request, res: Response) {
+  const { id: businessId } = req.params;
+
+  Business.findByPk(businessId)
+    .then((business: Business) => {
+      if (!business) {
+        return res
+          .status(404)
+          .send({ message: `Cannot find Business with id ${businessId}.` });
+      }
+
+      const employee = {
+        name: req.body.name,
+        surname: req.body.surname,
+      };
+
+      business
+        .createEmployee(employee)
+        .then((data) => {
+          return res.status(201).send(data);
+        })
+        .catch((err) => {
+          return res.status(500).send({ message: err.message });
+        });
+    })
+    .catch((err) => {
+      return res.status(500).send({ message: err.message });
+    });
+}
+
+function findAllEmployees(req: Request, res: Response) {
+  const { id: businessId } = req.params;
+
+  Employee.findAll({ where: { businessId } })
+    .then((data) => {
+      return res.status(200).send(data);
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message,
+      });
+    });
+}
+
+function findOneEmployee(req: Request, res: Response) {
+  const { id: businessId, employeeId } = req.params;
+
+  Business.findByPk(businessId)
+    .then((business: Business) => {
+      if (!business) {
+        return res
+          .status(404)
+          .send({ message: `Cannot find Business with id ${businessId}.` });
+      }
+
+      Employee.findByPk(employeeId)
+        .then((data) => {
+          return res.status(200).send(data);
+        })
+        .catch((err) => {
+          return res.status(500).send({
+            message: err.message,
+          });
+        });
+    })
+    .catch((err) => {
+      return res.status(500).send({ message: err.message });
+    });
+}
+
+function updateEmployee(req: Request, res: Response) {
+  const { id: businessId, employeeId } = req.params;
+
+  Business.findByPk(businessId).then((business: Business) => {
+    business
+      .hasEmployee(parseInt(employeeId, 10))
+      .then((value: boolean) => {
+        if (!value) {
+          return res.status(404).send({
+            message: `Employee with id ${employeeId} not found in Business with id ${businessId}`,
+          });
+        }
+        Employee.update(req.body, { where: { id: employeeId } }).then((num) => {
+          if (num[0] === 1) {
+            return res.send({
+              message: "Employee was updated successfully.",
+            });
+          } else {
+            return res.send({
+              message: `Cannot update Employee with id=${employeeId}. Maybe Employee was not found or req.body is empty!`,
+            });
+          }
+        });
+      })
+      .catch((err) => {
+        return res.status(500).send({
+          message: err.message,
+        });
+      });
+  });
+}
+
+function deleteOneEmployee(req: Request, res: Response) {
+  const { id: businessId, employeeId } = req.params;
+
+  Business.findByPk(businessId).then((business: Business) => {
+    business.hasEmployee(parseInt(employeeId, 10)).then((value) => {
+      if (!value) {
+        return res.status(400).send({
+          message: `Employee with id ${employeeId} not found in business with id ${businessId}`,
+        });
+      }
+
+      Employee.destroy({
+        where: { id: employeeId },
+      })
+        .then((num) => {
+          if (num === 1) {
+            return res.send({
+              message: "Employee was deleted successfully!",
+            });
+          } else {
+            return res.send({
+              message: `Cannot delete Employee with id=${employeeId}. Maybe Employee was not found!`,
+            });
+          }
+        })
+        .catch((err) => {
+          return res.status(500).send({
+            message: err.message,
+          });
+        });
+    });
+  });
+}
+
+function deleteAllEmployees(req: Request, res: Response) {
+  const { id: businessId } = req.params;
+
+  Employee.destroy({
+    where: { businessId: businessId },
+    truncate: false,
+  })
+    .then((nums) => {
+      return res.send({
+        message: `${nums} Employee were deleted successfully!`,
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message,
+      });
+    });
+}
+
+function addCustomer(req: Request, res: Response) {
   const { id: businessId, userId } = req.params;
 
   Business.findByPk(businessId)
@@ -438,5 +593,11 @@ export {
   updateProduct,
   deleteOneProduct,
   deleteAllProduct,
-  addUser,
+  findAllEmployees,
+  findOneEmployee,
+  createEmployee,
+  updateEmployee,
+  deleteOneEmployee,
+  deleteAllEmployees,
+  addCustomer as addUser,
 };
