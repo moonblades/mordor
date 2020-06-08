@@ -6,8 +6,9 @@
   "recommendations": [
     "esbenp.prettier-vscode",
     "wayou.vscode-todo-highlight",
-    "ms-vscode.vscode-typescript-tslint-plugin"
+    "ms-vscode.vscode-typescript-tslint-plugin",
+    "dbaeumer.vscode-eslint"
   ],
   // List of extensions recommended by VS Code that should not be recommended for users of this workspace.
-  "unwantedRecommendations": []
+  "unwantedRecommendations": ["ms-vscode.vscode-typescript-tslint-plugin"]
 }
