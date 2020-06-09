@@ -1,0 +1,29 @@
+name: Jest tests
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: "14"
+      - run: npm install
+      - run: npm run build
+      - run: npm run test
+        env:
+          DB_HOST_TEST: "${{ secrets.DB_HOST_TEST }}"
+          DB_PORT_TEST: "${{ secrets.DB_PORT_TEST }}"
+          DB_NAME_TEST: "${{ secrets.DB_NAME_TEST }}"
+          DB_USER_TEST: "${{ secrets.DB_USER_TEST }}"
+          DB_PASSWORD_TEST: "${{ secrets.DB_PASSWORD_TEST }}"
+          SERVER_PORT: "test"
+          SERVER_ENVIRONMENT: "test"
+          NODE_ENV: "test"
