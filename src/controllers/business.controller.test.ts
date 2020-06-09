@@ -1,6 +1,6 @@
 import request from "supertest";
 import app from "../app";
-import { Business } from "../models";
+import { Business, Employee } from "../models";
 import { business, employee } from "../test/testdata";
 import { truncateAllTables } from "../test/truncateTables";
 
@@ -45,12 +45,12 @@ describe("Business controller", () => {
       // Update employee
       const res = await request(app)
         .put(`/api/business/${newBusiness.id}/employee/${newEmployee.id}`)
-        .send(employee);
+        .send({ name: "Bob" });
 
       expect(res.status).toEqual(200);
 
-      const num = await newBusiness.countEmployees();
-      expect(num).toEqual(1);
+      const modifiedEmployee = await Employee.findByPk(newEmployee.id);
+      expect(modifiedEmployee.name).toEqual("Bob");
       done();
     });
 
@@ -61,9 +61,9 @@ describe("Business controller", () => {
       await newBusiness.createEmployee(employee);
 
       // Update employee
-      const res = await request(app)
-        .get(`/api/business/${newBusiness.id}/employee/`)
-        .send(employee);
+      const res = await request(app).get(
+        `/api/business/${newBusiness.id}/employee/`
+      );
 
       expect(res.status).toEqual(200);
 
@@ -77,14 +77,12 @@ describe("Business controller", () => {
       const newEmployee = await newBusiness.createEmployee(employee);
 
       // Update employee
-      const res = await request(app)
-        .get(`/api/business/${newBusiness.id}/employee/${newEmployee.id}`)
-        .send(employee);
+      const res = await request(app).get(
+        `/api/business/${newBusiness.id}/employee/${newEmployee.id}`
+      );
 
       expect(res.status).toEqual(200);
-
-      const num = await newBusiness.countEmployees();
-      expect(num).toEqual(1);
+      expect(res.body).toMatchObject(employee);
       done();
     });
 
