@@ -1,4 +1,10 @@
-import sequelize, { Reservation, Product, User, Business } from "../models";
+import sequelize, {
+  Reservation,
+  Product,
+  User,
+  Business,
+  Employee,
+} from "../models";
 import logger from "../logger";
 
 async function truncateAllTables() {
@@ -40,6 +46,13 @@ async function truncateAllTables() {
   });
 
   logger.info(`Cleaned up Business table`);
+
+  await Employee.destroy({
+    where: {},
+    truncate: true,
+    cascade: true,
+    force: true,
+  });
 }
 
 export { truncateAllTables };

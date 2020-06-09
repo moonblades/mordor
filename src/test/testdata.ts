@@ -46,4 +46,9 @@ const product = {
   cancelationTime: 72,
 };
 
-export { user, business, reservation, product };
+const employee = {
+  name: "John",
+  surname: "Doe",
+};
+
+export { user, business, reservation, product, employee };
