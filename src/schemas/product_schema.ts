@@ -30,9 +30,18 @@ function productSchema() {
       in: ["body"],
       isInt: true,
     },
+    preparation: {
+      in: ["body"],
+      isInt: true,
+    },
+    postProcessing: {
+      in: ["body"],
+      isInt: true,
+    },
     weight: {
       in: ["body"],
       isInt: true,
+      optional: true,
     },
     sale: {
       in: ["body"],
@@ -42,7 +51,7 @@ function productSchema() {
     salePercentage: {
       in: ["body"],
       isInt: { options: { min: 0, max: 100 } },
-      exists: true,
+      optional: true,
     },
     available: {
       in: ["body"],
@@ -53,7 +62,11 @@ function productSchema() {
       in: ["body"],
       isISO8601: true,
       toDate: true,
-      exists: true,
+      optional: true,
+    },
+    cancelationTime: {
+      in: ["body"],
+      isInt: true,
     },
   });
 }

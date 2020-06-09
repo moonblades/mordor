@@ -38,10 +38,11 @@ const reservation = {
 const product = {
   name: "Flight 815",
   description: "Lorem ipsum",
-  price: 150,
+  price: 150.0,
   duration: 360,
-  preparation: 120,
-  postProcessing: 30,
+  preparation: 5,
+  postProcessing: 5,
+  sale: false,
   available: true,
   cancelationTime: 72,
 };
