@@ -48,7 +48,7 @@
     "build": "rimraf dist && webpack",
     "watch": "rimraf dist && webpack --watch",
     "node": "node dist/bundle.js",
-    "nodemon": "nodemon --inspect dist/bundle.js",
+    "nodemon": "nodemon",
     "docs": "rimraf docs && typedoc src",
     "test": "cross-env NODE_ENV=test SERVER_ENVIRONMENT=test jest --verbose --runInBand --detectOpenHandles --forceExit",
     "coverage": "cross-env NODE_ENV=test SERVER_ENVIRONMENT=test jest --runInBand --forceExit --coverage"

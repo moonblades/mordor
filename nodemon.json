@@ -1,0 +1,7 @@
+{
+  "verbose": true,
+  "watch": ["dist/", "node_modules/"],
+  "delay": "500ms",
+  "ext": "js,ts",
+  "args": ["--inspect"]
+}
