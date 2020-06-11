@@ -1,0 +1,26 @@
+name: npm audit
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+on:
+  schedule:
+    - cron: '0 0 * * 1'
+
+jobs:
+  scan:
+    name: npm audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: install dependencies
+        run: npm ci
+      - uses: oke-py/npm-audit-action@v1.5.0
+        with:
+          audit_level: low
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          issue_assignees: abianche
+          issue_labels: vulnerability,test
+          dedupe_issues: true
