@@ -40,35 +40,8 @@ npm run docs
 
 ## Environment variables
 An `.env` file can be used to specify environment variables.
-```properties
-# Development settings
-DB_HOST_DEVELOP=127.0.0.1
-DB_PORT_DEVELOP=3306
-DB_NAME_DEVELOP="foo_develop"
-DB_USER_DEVELOP="user"
-DB_PASSWORD_DEVELOP="pass"
+See [sample file](./.env.sample).
 
-# Test settings
-DB_HOST_TEST=127.0.0.1
-DB_PORT_TEST=3306
-DB_NAME_TEST="foo_test"
-DB_USER_TEST="user"
-DB_PASSWORD_TEST="pass"
-
-# Production settings
-DB_HOST_PROD=127.0.0.1
-DB_PORT_PROD=3306
-DB_NAME_PROD="foo_prod"
-DB_USER_PROD="user"
-DB_PASSWORD_PROD="pass"
-
-# Sever port (on this machine)
-SERVER_PORT=3000
-
-# Choose <development|test|production>
-SERVER_ENVIRONMENT="development"
-NODE_ENV="development"
-```
 
 > **Please note**: the configured database must exist.
 
