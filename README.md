@@ -1,6 +1,6 @@
 ![Discord](https://img.shields.io/discord/410194658501591056)
-![npm audit](https://github.com/moonblades/mordor/workflows/npm%20audit/badge.svg)
-![Jest tests](https://github.com/moonblades/mordor/workflows/Jest%20tests/badge.svg)
+![npm audit](https://github.com/moonblades/mordor/workflows/audit/badge.svg)
+![Jest tests](https://github.com/moonblades/mordor/workflows/jest/badge.svg)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
 # mordor
