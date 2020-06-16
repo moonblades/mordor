@@ -1,5 +1,6 @@
 import app from "./app";
 import logger from "./logger";
+import "./firebaseApp";
 
 // start Express server.
 const PORT = process.env.SERVER_PORT || 8080;
