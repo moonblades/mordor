@@ -30,7 +30,12 @@ const logger = winston.createLogger({
 if (process.env.SERVER_ENVIRONMENT === "development") {
   logger.add(
     new winston.transports.Console({
-      format: combine(colorize(), winston.format.simple()),
+      format: combine(
+        colorize(),
+        label({ label: "MORDOR" }),
+        timestamp(),
+        logFormat
+      ),
     })
   );
 }
