@@ -8,6 +8,7 @@ import logger from "./logger";
 import sequelize, { connect } from "./models";
 import { initRoutes } from "./routes/initRoutes";
 import helmet from "helmet";
+import { verifyIdToken } from "./middlewares/verifyIdToken";
 
 dotenv.config();
 
@@ -36,6 +37,8 @@ if (process.env.SERVER_ENVIRONMENT !== "test") {
 if (process.env.SERVER_ENVIRONMENT !== "production") {
   app.use(errorHandler());
 }
+
+app.use(verifyIdToken);
 
 // api test route
 app.get("/", (req, res) => {
