@@ -27,4 +27,4 @@ jobs:
           SERVER_PORT: "test"
           SERVER_ENVIRONMENT: "test"
           NODE_ENV: "test"
-          FIREBASE_TOKEN: "${{ secrets.FIREBASE_TOKEN }}"
+          FIREBASE_CONFIG: "${{ secrets.FIREBASE_CONFIG }}"
