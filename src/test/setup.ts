@@ -1,6 +1,7 @@
 import sequelize, { connect } from "../models";
 import * as firebase from "firebase";
 import "../firebaseApp";
+import logger from "../logger";
 
 beforeAll(async (done) => {
   await connect(sequelize);
@@ -22,7 +23,18 @@ beforeAll(async (done) => {
     .signInWithEmailAndPassword(
       process.env.FIREBASE_TEST_EMAIL,
       process.env.FIREBASE_TEST_PASSWORD
-    );
+    )
+    .catch(function (error) {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      if (errorCode === "auth/wrong-password") {
+        logger.error("Wrong password.");
+      } else {
+        logger.error(errorMessage);
+      }
+      logger.error(error);
+    });
 
   done();
 });
