@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 import { config, IDBConfigEntry } from "../config/db.config";
-import logger from "../logger";
+import { logger, sequelizeLogger } from "../logger";
 import { Business } from "./business.model";
 import { defineRelations, initModels } from "./init";
 import { Product } from "./product.model";
@@ -31,7 +31,7 @@ const sequelize = new Sequelize(
       acquire: 30000,
       idle: 10000,
     },
-    logging: (sql: string) => logger.info(sql),
+    logging: (sql: string) => sequelizeLogger.debug(sql),
   }
 );
 

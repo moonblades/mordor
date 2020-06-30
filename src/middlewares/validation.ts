@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { validationResult } from "express-validator";
-import logger from "../logger";
+import { logger } from "../logger";
 
 function typeValidation(req: Request, res: Response, next) {
   const errors = validationResult(req);

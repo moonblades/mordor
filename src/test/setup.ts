@@ -1,7 +1,7 @@
 import sequelize, { connect } from "../models";
 import * as firebase from "firebase";
 import "../firebaseApp";
-import logger from "../logger";
+import { logger } from "../logger";
 
 beforeAll(async (done) => {
   await connect(sequelize);

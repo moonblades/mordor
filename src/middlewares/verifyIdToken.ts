@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import firebaseApp from "../firebaseApp";
-import logger from "../logger";
+import { logger } from "../logger";
 
 function verifyIdToken(req: Request, res: Response, next) {
   const token = req.headers["firebase-token"] as string;

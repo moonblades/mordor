@@ -4,7 +4,7 @@ import * as dotenv from "dotenv";
 import errorHandler from "errorhandler";
 import express from "express";
 import { config, IDBConfigEntry } from "./config/db.config";
-import logger from "./logger";
+import { logger } from "./logger";
 import sequelize, { connect } from "./models";
 import { initRoutes } from "./routes/initRoutes";
 import helmet from "helmet";

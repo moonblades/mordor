@@ -40,4 +40,20 @@ if (process.env.SERVER_ENVIRONMENT === "development") {
   );
 }
 
-export default logger;
+// Sequelize dedicated logs
+const transportSequelize = new winston.transports.DailyRotateFile({
+  filename: "mordor-%DATE%-sequelize.log",
+  datePattern: "YYYY-MM-DD",
+  maxSize: "20m",
+  dirname: "logs",
+  level: "debug",
+});
+
+const sequelizeLogger = winston.createLogger({
+  level: "debug",
+  format: combine(label({ label: "MORDOR" }), timestamp(), logFormat),
+  defaultMeta: { service: "user-service" },
+  transports: [transportSequelize],
+});
+
+export { logger, sequelizeLogger };
