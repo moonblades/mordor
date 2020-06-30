@@ -7,6 +7,8 @@ import * as User from "./user.model";
 import * as Vacation from "./vacation.model";
 import * as Employee from "./employee.model";
 import * as Reminder from "./reminder.model";
+import * as Customer from "./customer.model";
+import * as Favorite from "./favorite.model";
 
 ///
 function initModels(sequelize: Sequelize) {
@@ -18,6 +20,8 @@ function initModels(sequelize: Sequelize) {
   Vacation.init(sequelize);
   Employee.init(sequelize);
   Reminder.init(sequelize);
+  Customer.init(sequelize);
+  Favorite.init(sequelize);
 }
 
 ///

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Business, Reservation, User } from "../models";
+import { Business, Reservation, User, Favorite } from "../models";
 
 // Create and save a new User
 function create(req: Request, res: Response) {
@@ -452,6 +452,60 @@ function deleteAllReservation(req: Request, res: Response) {
     });
 }
 
+function addFavorite(req: Request, res: Response) {
+  const { id: userId, businessId } = req.params;
+
+  User.findByPk(userId)
+    .then((user: User) => {
+      if (!user) {
+        return res
+          .status(404)
+          .send({ message: `Cannot find user with id ${userId}.` });
+      }
+      Business.findByPk(businessId).then((business: Business) => {
+        if (!business) {
+          return res
+            .status(404)
+            .send({ message: `Cannot find business with id ${businessId}` });
+        }
+
+        Favorite.create({
+          userId: user.id,
+          businessId: business.id,
+        }).then((favorite) => {
+          return res.status(201).send(favorite);
+        });
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({ message: err.message });
+    });
+}
+
+function findAllFavorites(req: Request, res: Response) {
+  const { id: userId } = req.params;
+
+  User.findByPk(userId)
+    .then((user: User) => {
+      if (!user) {
+        return res
+          .status(404)
+          .send({ message: `Cannot find user with id ${userId}.` });
+      }
+
+      Favorite.findAll({
+        where: {
+          userId: user.id,
+        },
+      }).then((favorites) => {
+        return res.status(200).send(favorites);
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({ message: err.message });
+    });
+}
+
 export {
   create,
   findAll,
@@ -470,4 +524,6 @@ export {
   updateBusiness,
   deleteOneBusiness,
   deleteAllBusinesses,
+  addFavorite,
+  findAllFavorites,
 };

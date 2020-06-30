@@ -102,8 +102,8 @@ function init(sequelize: Sequelize) {
     },
     {
       tableName: "user",
-      modelName: "user",
       sequelize,
+      modelName: "user",
     }
   );
 }
@@ -111,10 +111,8 @@ function init(sequelize: Sequelize) {
 function defineRelations() {
   User.hasMany(Reservation);
   User.hasMany(Business);
-  User.belongsToMany(Business, {
-    through: "customer",
-    onDelete: "cascade",
-  });
+
+  User.belongsToMany(Business, { through: "customer" });
 }
 
 export { init, defineRelations, User };

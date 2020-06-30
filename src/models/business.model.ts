@@ -139,8 +139,7 @@ function defineRelations() {
   Business.hasMany(Employee);
 
   Business.belongsToMany(User, {
-    through: "customer",
-    onDelete: "cascade",
+    through: "favorite",
   });
 }
 

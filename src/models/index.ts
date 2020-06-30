@@ -9,6 +9,8 @@ import { Schedule } from "./schedule.model";
 import { User } from "./user.model";
 import { Vacation } from "./vacation.model";
 import { Employee } from "./employee.model";
+import { Customer } from "./customer.model";
+import { Favorite } from "./favorite.model";
 
 const dbTimezone = "GMT";
 const dbConfig = config[process.env.SERVER_ENVIRONMENT] as IDBConfigEntry;
@@ -49,7 +51,7 @@ async function connect(sequelizeInstance: Sequelize) {
       }); // <- must be removed
 
       logger.info(`Syncing database ${dbConfig.database}...`);
-      await sequelizeInstance.sync({ force: false });
+      await sequelizeInstance.sync({ force: true });
       logger.info("Synced.");
     }
   } catch (err) {
@@ -68,4 +70,6 @@ export {
   Vacation,
   Reservation,
   Employee,
+  Favorite,
+  Customer,
 };

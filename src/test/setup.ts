@@ -6,6 +6,7 @@ import logger from "../logger";
 beforeAll(async (done) => {
   await connect(sequelize);
 
+  // FIXME: remove?
   const firebaseConfig = {
     apiKey: "AIzaSyAsFotYUCqu9PbKMfL-YEbYt1fIbQfNqZ8",
     authDomain: "reservify-9813e.firebaseapp.com",

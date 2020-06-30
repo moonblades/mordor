@@ -55,6 +55,12 @@ function init(app: Express) {
   // Delete all businesses for user
   router.delete("/:id/business", user.deleteAllBusinesses);
 
+  // Add favorite to business
+  router.post("/:id/favorite/:businessId", user.addFavorite);
+
+  // Retrieve all favorites for user
+  router.get("/:id/favorite", user.findAllFavorites);
+
   app.use("/api/user", router);
 }
 

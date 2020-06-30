@@ -1,6 +1,6 @@
 import request from "supertest";
 import app from "../app";
-import { Business, Reservation, User } from "../models";
+import { Business, Reservation, User, Favorite } from "../models";
 import { business, reservation, user } from "../test/testdata";
 import { truncateAllTables } from "../test/truncateTables";
 import firebase from "firebase";
@@ -414,5 +414,62 @@ describe("User controller", () => {
 
       done();
     });
+  });
+
+  describe("Favorites", () => {
+    it("Create a favorite", async (done) => {
+      const token = await firebase.auth().currentUser.getIdToken();
+      const newUser = await User.create(user);
+      const newBusiness = await newUser.createBusiness(business);
+
+      const res = await request(app)
+        .post(`/api/user/${newUser.id}/favorite/${newBusiness.id}`)
+        .set({ "firebase-token": token });
+
+      expect(res.status).toEqual(201);
+      const favorite = await Favorite.findAll({
+        where: {
+          userId: newUser.id,
+          businessId: newBusiness.id,
+        },
+      });
+
+      expect(favorite).toHaveLength(1);
+
+      done();
+    });
+  });
+
+  it("Find all user's favorites", async (done) => {
+    const token = await firebase.auth().currentUser.getIdToken();
+
+    const newUser = await User.create(user);
+    const newBusinesses = [
+      await newUser.createBusiness(business),
+      await newUser.createBusiness(business),
+      await newUser.createBusiness(business),
+    ];
+
+    await Favorite.create({
+      userId: newUser.id,
+      businessId: newBusinesses[0].id,
+    });
+    await Favorite.create({
+      userId: newUser.id,
+      businessId: newBusinesses[1].id,
+    });
+    await Favorite.create({
+      userId: newUser.id,
+      businessId: newBusinesses[2].id,
+    });
+
+    const res = await request(app)
+      .get(`/api/user/${newUser.id}/favorite`)
+      .set({ "firebase-token": token });
+
+    expect(res.status).toEqual(200);
+    expect(res.body).toHaveLength(3);
+
+    done();
   });
 });

@@ -11,6 +11,12 @@ async function truncateAllTables() {
   await sequelize.query("TRUNCATE `reservation_product`");
   logger.info(`Cleaned up ReservationProduct table`);
 
+  await sequelize.query("TRUNCATE `customer`");
+  logger.info(`Cleaned up Customer table`);
+
+  await sequelize.query("TRUNCATE `favorite`");
+  logger.info(`Cleaned up Favorite table`);
+
   await Reservation.destroy({
     where: {},
     truncate: true,
@@ -53,6 +59,8 @@ async function truncateAllTables() {
     cascade: true,
     force: true,
   });
+
+  logger.info(`Cleaned up Employee table`);
 }
 
 export { truncateAllTables };

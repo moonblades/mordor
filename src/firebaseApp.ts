@@ -5,5 +5,3 @@ const firebaseApp = admin.initializeApp(); // Retrieves credentials in FIREBASE_
 logger.info("Firebase app initialized");
 
 export default firebaseApp;
-
-// passami il json
