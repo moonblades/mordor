@@ -9,6 +9,7 @@ import sequelize, { connect } from "./models";
 import { initRoutes } from "./routes/initRoutes";
 import helmet from "helmet";
 import { verifyIdToken } from "./middlewares/verifyIdToken";
+import compression from "compression";
 
 dotenv.config();
 
@@ -18,6 +19,8 @@ const app = express();
 const corsOptions: CorsOptions = {
   origin: `http://${dbConfig.host}:${dbConfig.port}`,
 };
+
+app.use(compression());
 
 app.use(helmet());
 

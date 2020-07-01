@@ -6,6 +6,7 @@
   "main": "dist/bundle.js",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "errorhandler": "^1.5.1",
@@ -52,7 +53,7 @@
   "scripts": {
     "lint": "eslint . --ext .js,.ts",
     "build": "rimraf dist && webpack",
-    "watch": "rimraf dist && webpack --watch",
+    "watch": "rimraf dist && webpack --watch --node-args=\"--trace-sync-io\"",
     "node": "node dist/bundle.js",
     "nodemon": "nodemon",
     "docs": "rimraf docs && typedoc src",
