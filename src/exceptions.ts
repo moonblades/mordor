@@ -44,13 +44,6 @@ class ProductNotFoundError extends HttpException {
   }
 }
 
-//
-class ReservationNotFoundError extends HttpException {
-  constructor(id: string) {
-    super(404, `Reservation with id ${id} not found`);
-  }
-}
-
 export {
   HttpException,
   BadRequestError,
@@ -58,5 +51,4 @@ export {
   UserNotFoundError,
   BusinessNotFoundError,
   ProductNotFoundError,
-  ReservationNotFoundError,
 };

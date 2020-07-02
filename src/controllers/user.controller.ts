@@ -5,7 +5,6 @@ import {
   InternalServerError,
   BadRequestError,
   UserNotFoundError,
-  ReservationNotFoundError,
   BusinessNotFoundError,
 } from "../exceptions";
 
@@ -143,8 +142,8 @@ function findAllBusinesses(req: Request, res: Response, next: NextFunction) {
       userId,
     },
   })
-    .then((business) => {
-      return res.status(200).send(business);
+    .then((businesses) => {
+      return res.status(200).send(businesses);
     })
     .catch((err) => {
       next(new InternalServerError(err.message));
@@ -183,7 +182,7 @@ function createBusiness(req: Request, res: Response, next: NextFunction) {
           return res.status(201).send(business);
         })
         .catch((err) => {
-          next(new HttpException(400, "Unable to create a Business"));
+          next(new HttpException(400, `Unable to create a Business: ${err}`));
           return;
         });
     })
@@ -207,7 +206,7 @@ function updateBusiness(req: Request, res: Response, next: NextFunction) {
         next(
           new HttpException(
             403,
-            `Business ${businessId} do not belong to User ${userId}`
+            `Business ${businessId} does not belong to User ${userId}`
           )
         );
         return;
@@ -249,7 +248,7 @@ function deleteOneBusiness(req: Request, res: Response, next: NextFunction) {
         next(
           new HttpException(
             403,
-            `Business ${businessId} do not belong to User ${userId}`
+            `Business ${businessId} does not belong to User ${userId}`
           )
         );
         return;
@@ -302,8 +301,8 @@ function findAllReservation(req: Request, res: Response, next: NextFunction) {
   Reservation.findAll({
     where: { userId },
   })
-    .then((reservation) => {
-      return res.send(reservation);
+    .then((reservations) => {
+      return res.send(reservations);
     })
     .catch((err) => {
       next(new InternalServerError(err.message));
@@ -372,7 +371,7 @@ function updateReservation(req: Request, res: Response, next: NextFunction) {
         next(
           new HttpException(
             403,
-            `Reservation ${reservationId} do not belong to User ${userId}`
+            `Reservation ${reservationId} does not belong to User ${userId}`
           )
         );
         return;
@@ -414,7 +413,7 @@ function deleteOneReservation(req: Request, res: Response, next: NextFunction) {
         next(
           new HttpException(
             403,
-            `Reservation ${reservationId} do not belong to User ${userId}`
+            `Reservation ${reservationId} does not belong to User ${userId}`
           )
         );
         return;
