@@ -10,6 +10,7 @@ import { initRoutes } from "./routes/initRoutes";
 import helmet from "helmet";
 import { verifyIdToken } from "./middlewares/verifyIdToken";
 import compression from "compression";
+import errorMiddleware from "./middlewares/errorMiddleware";
 
 dotenv.config();
 
@@ -42,6 +43,7 @@ if (process.env.SERVER_ENVIRONMENT !== "production") {
 }
 
 app.use(verifyIdToken);
+app.use(errorMiddleware);
 
 // api test route
 app.get("/", (req, res) => {
