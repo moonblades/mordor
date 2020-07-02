@@ -64,6 +64,23 @@ describe("Business controller", () => {
       done();
     });
 
+    it("should return 403 when updating a product of another business", async (done) => {
+      const token = await firebase.auth().currentUser.getIdToken();
+
+      const newBusiness = await Business.create(business);
+      const newProduct = await newBusiness.createProduct(product);
+      const anotherBusiness = await Business.create(business);
+
+      const res = await request(app)
+        .put(`/api/business/${anotherBusiness.id}/product/${newProduct.id}`)
+        .set({ "firebase-token": token })
+        .send({ name: "Palantir" });
+
+      expect(res.status).toEqual(403);
+
+      done();
+    });
+
     it("should retrieve all products", async (done) => {
       const token = await firebase.auth().currentUser.getIdToken();
 
@@ -171,6 +188,24 @@ describe("Business controller", () => {
       done();
     });
 
+    it("should return 403 when updating a employee of another business", async (done) => {
+      const token = await firebase.auth().currentUser.getIdToken();
+
+      const newBusiness = await Business.create(business);
+      const newEmployee = await newBusiness.createEmployee(employee);
+      const anotherBusiness = await Business.create(business);
+
+      // Update employee
+      const res = await request(app)
+        .put(`/api/business/${anotherBusiness.id}/employee/${newEmployee.id}`)
+        .set({ "firebase-token": token })
+        .send({ name: "Bob" });
+
+      expect(res.status).toEqual(403);
+
+      done();
+    });
+
     it("should retrieve all employees", async (done) => {
       const token = await firebase.auth().currentUser.getIdToken();
 
@@ -225,6 +260,24 @@ describe("Business controller", () => {
       done();
     });
 
+    it("should return 403 when deleting an employee", async (done) => {
+      const token = await firebase.auth().currentUser.getIdToken();
+
+      const newBusiness = await Business.create(business);
+      const newEmployee = await newBusiness.createEmployee(employee);
+      const anotherBusiness = await Business.create(business);
+
+      // Update employee
+      const res = await request(app)
+        .delete(
+          `/api/business/${anotherBusiness.id}/employee/${newEmployee.id}`
+        )
+        .set({ "firebase-token": token });
+
+      expect(res.status).toEqual(403);
+
+      done();
+    });
     it("should delete all employees", async (done) => {
       const token = await firebase.auth().currentUser.getIdToken();
 

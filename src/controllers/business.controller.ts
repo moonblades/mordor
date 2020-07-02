@@ -1,39 +1,38 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { validationResult } from "express-validator";
 import { Business, Product, Reservation, User, Employee } from "../models";
+import {
+  InternalServerError,
+  BusinessNotFoundError,
+  HttpException,
+  UserNotFoundError,
+} from "../exceptions";
+import { employee } from "../test/testdata";
 
-function findAll(req: Request, res: Response) {
-  //   const displayName = req.query.displayName;
-
-  Business.findAll({
-    // where: {
-    //   displayName: displayName,
-    // },
-  })
-    .then((data) => {
-      return res.send(data);
+function findAll(req: Request, res: Response, next: NextFunction) {
+  Business.findAll({})
+    .then((businesses) => {
+      return res.status(200).send(businesses);
     })
     .catch((err) => {
-      return res.status(500).send({
-        message: err.message,
-      });
+      next(new InternalServerError(err.message));
+      return;
     });
 }
 
-function findOne(req: Request, res: Response) {
+function findOne(req: Request, res: Response, next: NextFunction) {
   const id = req.params.id;
   Business.findByPk(id)
-    .then((data) => {
-      return res.send(data);
+    .then((business) => {
+      return res.status(200).send(business);
     })
     .catch((err) => {
-      return res.status(500).send({
-        message: err.message,
-      });
+      next(new InternalServerError(err.message));
+      return;
     });
 }
 
-function findAllReservation(req: Request, res: Response) {
+function findAllReservation(req: Request, res: Response, next: NextFunction) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -44,17 +43,16 @@ function findAllReservation(req: Request, res: Response) {
   Reservation.findAll({
     where: { businessId },
   })
-    .then((data) => {
-      return res.send(data);
+    .then((reservations) => {
+      return res.status(200).send(reservations);
     })
     .catch((err) => {
-      return res.status(500).send({
-        message: err.message,
-      });
+      next(new InternalServerError(err.message));
+      return;
     });
 }
 
-function findOneReservation(req: Request, res: Response) {
+function findOneReservation(req: Request, res: Response, next: NextFunction) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -65,27 +63,21 @@ function findOneReservation(req: Request, res: Response) {
   Business.findByPk(businessId)
     .then((business: Business) => {
       if (!business) {
-        return res
-          .status(404)
-          .send({ message: `Cannot find Business with id ${businessId}.` });
+        next(new BusinessNotFoundError(businessId));
+        return;
       }
 
-      Reservation.findByPk(reservationId)
-        .then((data) => {
-          return res.send(data);
-        })
-        .catch((err) => {
-          return res.status(500).send({
-            message: err.message,
-          });
-        });
+      Reservation.findByPk(reservationId).then((reservation) => {
+        return res.status(200).send(reservation);
+      });
     })
     .catch((err) => {
-      return res.status(500).send({ message: err.message });
+      next(new InternalServerError(err.message));
+      return;
     });
 }
 
-function createReservation(req: Request, res: Response) {
+function createReservation(req: Request, res: Response, next: NextFunction) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -96,9 +88,8 @@ function createReservation(req: Request, res: Response) {
   Business.findByPk(businessId)
     .then((business: Business) => {
       if (!business) {
-        return res
-          .status(404)
-          .send({ message: `Cannot find Business with id ${businessId}.` });
+        next(new BusinessNotFoundError(businessId));
+        return;
       }
 
       const reservation = {
@@ -109,31 +100,34 @@ function createReservation(req: Request, res: Response) {
         completed: req.body.completed,
       };
 
-      business
-        .createReservation(reservation)
-        .then((data) => {
-          return res.status(201).send(data);
-        })
-        .catch((err) => {
-          return res.status(500).send({ message: err.message });
-        });
+      business.createReservation(reservation).then((reservation) => {
+        return res.status(201).send(reservation);
+      });
     })
     .catch((err) => {
-      return res.status(500).send({ message: err.message });
+      next(new InternalServerError(err.message));
+      return;
     });
 }
 
-function updateReservation(req: Request, res: Response) {
+function updateReservation(req: Request, res: Response, next: NextFunction) {
   const { id: businessId, reservationId } = req.params;
 
   Business.findByPk(businessId).then((business: Business) => {
+    if (!business) {
+      next(new BusinessNotFoundError(businessId));
+      return;
+    }
     business
       .hasReservation(parseInt(reservationId, 10))
       .then((value: boolean) => {
         if (!value) {
-          return res.status(404).send({
-            message: `Reservation with id ${reservationId} not found in Business with id ${businessId}`,
-          });
+          next(
+            new HttpException(
+              403,
+              `Reservation ${reservationId} does not belong to Business ${businessId}`
+            )
+          );
           return;
         }
 
@@ -142,25 +136,25 @@ function updateReservation(req: Request, res: Response) {
         })
           .then((num) => {
             if (num[0] === 1) {
-              return res.send({
+              return res.status(200).send({
                 message: "Reservation was updated successfully.",
               });
             } else {
+              // TODO: not needed? Reservation existance checked before, req.body should be validate in validation middleware
               return res.send({
                 message: `Cannot update Reservation with id=${reservationId}. Maybe Reservation was not found or req.body is empty!`,
               });
             }
           })
           .catch((err) => {
-            return res.status(500).send({
-              message: err.message,
-            });
+            next(new InternalServerError(err.message));
+            return;
           });
       });
   });
 }
 
-function deleteOneReservation(req: Request, res: Response) {
+function deleteOneReservation(req: Request, res: Response, next: NextFunction) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -169,11 +163,18 @@ function deleteOneReservation(req: Request, res: Response) {
   const { id: businessId, reservationId } = req.params;
 
   Business.findByPk(businessId).then((business: Business) => {
+    if (!business) {
+      next(new BusinessNotFoundError(businessId));
+      return;
+    }
     business.hasReservation(parseInt(reservationId, 10)).then((value) => {
       if (!value) {
-        return res.status(404).send({
-          message: `Reservation with id ${reservationId} not found in Business with id ${businessId}`,
-        });
+        next(
+          new HttpException(
+            403,
+            `Reservation ${reservationId} does not belong to Business ${businessId}`
+          )
+        );
         return;
       }
 
@@ -182,25 +183,25 @@ function deleteOneReservation(req: Request, res: Response) {
       })
         .then((num) => {
           if (num[0] === 1) {
-            return res.send({
+            return res.status(200).send({
               message: "Reservation was deleted successfully!",
             });
           } else {
+            // TODO: not needed? Reservation existance checked before, req.body should be validate in validation middleware
             return res.send({
               message: `Cannot delete Reservation with id=${reservationId}. Maybe Reservation was not found!`,
             });
           }
         })
         .catch((err) => {
-          return res.status(500).send({
-            message: err.message,
-          });
+          next(new InternalServerError(err.message));
+          return;
         });
     });
   });
 }
 
-function deleteAllReservation(req: Request, res: Response) {
+function deleteAllReservation(req: Request, res: Response, next: NextFunction) {
   const { id: businessId } = req.params;
 
   Reservation.destroy({
@@ -208,26 +209,24 @@ function deleteAllReservation(req: Request, res: Response) {
     truncate: false,
   })
     .then((nums) => {
-      return res.send({
+      return res.status(200).send({
         message: `${nums} Reservations were deleted successfully!`,
       });
     })
     .catch((err) => {
-      return res.status(500).send({
-        message: err.message,
-      });
+      next(new InternalServerError(err.message));
+      return;
     });
 }
 
-function createProduct(req: Request, res: Response) {
+function createProduct(req: Request, res: Response, next: NextFunction) {
   const { id: businessId } = req.params;
 
   Business.findByPk(businessId)
     .then((business: Business) => {
       if (!business) {
-        return res
-          .status(404)
-          .send({ message: `Cannot find Business with id ${businessId}.` });
+        next(new BusinessNotFoundError(businessId));
+        return;
       }
 
       const product = {
@@ -242,71 +241,67 @@ function createProduct(req: Request, res: Response) {
         whenAvailable: req.body.whenAvailable,
       };
 
-      business
-        .createProduct(product)
-        .then((data) => {
-          return res.status(201).send(data);
-        })
-        .catch((err) => {
-          return res.status(500).send({ message: err.message });
-        });
+      business.createProduct(product).then((product) => {
+        return res.status(201).send(product);
+      });
     })
     .catch((err) => {
-      return res.status(500).send({ message: err.message });
+      next(new InternalServerError(err.message));
+      return;
     });
 }
 
-function findAllProduct(req: Request, res: Response) {
+function findAllProduct(req: Request, res: Response, next: NextFunction) {
   const { id: businessId } = req.params;
 
   Product.findAll({
     where: { businessId },
   })
-    .then((data) => {
-      return res.send(data);
+    .then((products) => {
+      return res.status(200).send(products);
     })
     .catch((err) => {
-      return res.status(500).send({
-        message: err.message,
-      });
+      next(new InternalServerError(err.message));
+      return;
     });
 }
 
-function findOneProduct(req: Request, res: Response) {
+function findOneProduct(req: Request, res: Response, next: NextFunction) {
   const { id: businessId, productId } = req.params;
 
   Business.findByPk(businessId)
     .then((business: Business) => {
       if (!business) {
-        return res
-          .status(404)
-          .send({ message: `Cannot find Business with id ${businessId}.` });
+        next(new BusinessNotFoundError(businessId));
+        return;
       }
 
-      Product.findByPk(productId)
-        .then((data) => {
-          return res.send(data);
-        })
-        .catch((err) => {
-          return res.status(500).send({
-            message: err.message,
-          });
-        });
+      Product.findByPk(productId).then((product) => {
+        return res.status(200).send(product);
+      });
     })
     .catch((err) => {
-      return res.status(500).send({ message: err.message });
+      next(new InternalServerError(err.message));
+      return;
     });
 }
 
-function updateProduct(req: Request, res: Response) {
+function updateProduct(req: Request, res: Response, next: NextFunction) {
   const { id: businessId, productId } = req.params;
 
   Business.findByPk(businessId).then((business: Business) => {
+    if (!business) {
+      next(new BusinessNotFoundError(businessId));
+      return;
+    }
     business.hasProduct(parseInt(productId, 10)).then((value: boolean) => {
       if (!value) {
-        return res.status(404).send({
-          message: `Product with id ${productId} not found in Business with id ${businessId}`,
-        });
+        next(
+          new HttpException(
+            403,
+            `Product ${productId} does not belong to Business ${businessId}`
+          )
+        );
         return;
       }
 
@@ -315,33 +310,40 @@ function updateProduct(req: Request, res: Response) {
       })
         .then((num) => {
           if (num[0] === 1) {
-            return res.send({
+            return res.status(200).send({
               message: "Product was updated successfully.",
             });
           } else {
+            // TODO: not needed? Product existance checked before, req.body should be validate in validation middleware
             return res.send({
               message: `Cannot update Product with id=${productId}. Maybe Product was not found or req.body is empty!`,
             });
           }
         })
         .catch((err) => {
-          return res.status(500).send({
-            message: err.message,
-          });
+          next(new InternalServerError(err.message));
+          return;
         });
     });
   });
 }
 
-function deleteOneProduct(req: Request, res: Response) {
+function deleteOneProduct(req: Request, res: Response, next: NextFunction) {
   const { id: businessId, productId } = req.params;
 
   Business.findByPk(businessId).then((business: Business) => {
+    if (!business) {
+      next(new BusinessNotFoundError(businessId));
+      return;
+    }
     business.hasProduct(parseInt(productId, 10)).then((value) => {
       if (!value) {
-        return res.status(404).send({
-          message: `Product with id ${productId} not found in Business with id ${businessId}`,
-        });
+        next(
+          new HttpException(
+            403,
+            `Product ${productId} does not belong to Business ${businessId}`
+          )
+        );
         return;
       }
 
@@ -350,25 +352,25 @@ function deleteOneProduct(req: Request, res: Response) {
       })
         .then((num) => {
           if (num[0] === 1) {
-            return res.send({
+            return res.status(200).send({
               message: "Product was deleted successfully!",
             });
           } else {
+            // TODO: not needed? Product existance checked before, req.body should be validate in validation middleware
             return res.send({
               message: `Cannot delete Product with id=${productId}. Maybe Product was not found!`,
             });
           }
         })
         .catch((err) => {
-          return res.status(500).send({
-            message: err.message,
-          });
+          next(new InternalServerError(err.message));
+          return;
         });
     });
   });
 }
 
-function deleteAllProduct(req: Request, res: Response) {
+function deleteAllProduct(req: Request, res: Response, next: NextFunction) {
   const { id: businessId } = req.params;
 
   Product.destroy({
@@ -376,26 +378,24 @@ function deleteAllProduct(req: Request, res: Response) {
     truncate: false,
   })
     .then((nums) => {
-      return res.send({
+      return res.status(200).send({
         message: `${nums} Products were deleted successfully!`,
       });
     })
     .catch((err) => {
-      return res.status(500).send({
-        message: err.message,
-      });
+      next(new InternalServerError(err.message));
+      return;
     });
 }
 
-function createEmployee(req: Request, res: Response) {
+function createEmployee(req: Request, res: Response, next: NextFunction) {
   const { id: businessId } = req.params;
 
   Business.findByPk(businessId)
     .then((business: Business) => {
       if (!business) {
-        return res
-          .status(404)
-          .send({ message: `Cannot find Business with id ${businessId}.` });
+        next(new BusinessNotFoundError(businessId));
+        return;
       }
 
       const employee = {
@@ -403,78 +403,77 @@ function createEmployee(req: Request, res: Response) {
         surname: req.body.surname,
       };
 
-      business
-        .createEmployee(employee)
-        .then((data) => {
-          return res.status(201).send(data);
-        })
-        .catch((err) => {
-          return res.status(500).send({ message: err.message });
-        });
+      business.createEmployee(employee).then((employee) => {
+        return res.status(201).send(employee);
+      });
     })
     .catch((err) => {
-      return res.status(500).send({ message: err.message });
+      next(new InternalServerError(err.message));
+      return;
     });
 }
 
-function findAllEmployees(req: Request, res: Response) {
+function findAllEmployees(req: Request, res: Response, next: NextFunction) {
   const { id: businessId } = req.params;
 
   Employee.findAll({ where: { businessId } })
-    .then((data) => {
-      return res.status(200).send(data);
+    .then((employees) => {
+      return res.status(200).send(employees);
     })
     .catch((err) => {
-      return res.status(500).send({
-        message: err.message,
-      });
+      next(new InternalServerError(err.message));
+      return;
     });
 }
 
-function findOneEmployee(req: Request, res: Response) {
+function findOneEmployee(req: Request, res: Response, next: NextFunction) {
   const { id: businessId, employeeId } = req.params;
 
   Business.findByPk(businessId)
     .then((business: Business) => {
       if (!business) {
-        return res
-          .status(404)
-          .send({ message: `Cannot find Business with id ${businessId}.` });
+        next(new BusinessNotFoundError(businessId));
+        return;
       }
 
-      Employee.findByPk(employeeId)
-        .then((data) => {
-          return res.status(200).send(data);
-        })
-        .catch((err) => {
-          return res.status(500).send({
-            message: err.message,
-          });
-        });
+      Employee.findByPk(employeeId).then((data) => {
+        return res.status(200).send(data);
+      });
     })
     .catch((err) => {
-      return res.status(500).send({ message: err.message });
+      next(new InternalServerError(err.message));
+      return;
     });
 }
 
-function updateEmployee(req: Request, res: Response) {
+function updateEmployee(req: Request, res: Response, next: NextFunction) {
   const { id: businessId, employeeId } = req.params;
 
   Business.findByPk(businessId).then((business: Business) => {
+    if (!business) {
+      next(new BusinessNotFoundError(businessId));
+      return;
+    }
     business
       .hasEmployee(parseInt(employeeId, 10))
       .then((value: boolean) => {
         if (!value) {
-          return res.status(404).send({
-            message: `Employee with id ${employeeId} not found in Business with id ${businessId}`,
-          });
+          next(
+            new HttpException(
+              403,
+              `Employee ${employeeId} does not belong to Business ${businessId}`
+            )
+          );
+          return;
         }
+
         Employee.update(req.body, { where: { id: employeeId } }).then((num) => {
           if (num[0] === 1) {
-            return res.send({
+            return res.status(200).send({
               message: "Employee was updated successfully.",
             });
           } else {
+            // TODO: not needed? Employee existance checked before, req.body should be validate in validation middleware
             return res.send({
               message: `Cannot update Employee with id=${employeeId}. Maybe Employee was not found or req.body is empty!`,
             });
@@ -482,22 +481,25 @@ function updateEmployee(req: Request, res: Response) {
         });
       })
       .catch((err) => {
-        return res.status(500).send({
-          message: err.message,
-        });
+        next(new InternalServerError(err.message));
+        return;
       });
   });
 }
 
-function deleteOneEmployee(req: Request, res: Response) {
+function deleteOneEmployee(req: Request, res: Response, next: NextFunction) {
   const { id: businessId, employeeId } = req.params;
 
   Business.findByPk(businessId).then((business: Business) => {
     business.hasEmployee(parseInt(employeeId, 10)).then((value) => {
       if (!value) {
-        return res.status(400).send({
-          message: `Employee with id ${employeeId} not found in business with id ${businessId}`,
-        });
+        next(
+          new HttpException(
+            403,
+            `Employee ${employeeId} does not belong to Business ${businessId}`
+          )
+        );
+        return;
       }
 
       Employee.destroy({
@@ -505,25 +507,25 @@ function deleteOneEmployee(req: Request, res: Response) {
       })
         .then((num) => {
           if (num === 1) {
-            return res.send({
+            return res.status(200).send({
               message: "Employee was deleted successfully!",
             });
           } else {
+            // TODO: not needed? Employee existance checked before, req.body should be validate in validation middleware
             return res.send({
               message: `Cannot delete Employee with id=${employeeId}. Maybe Employee was not found!`,
             });
           }
         })
         .catch((err) => {
-          return res.status(500).send({
-            message: err.message,
-          });
+          next(new InternalServerError(err.message));
+          return;
         });
     });
   });
 }
 
-function deleteAllEmployees(req: Request, res: Response) {
+function deleteAllEmployees(req: Request, res: Response, next: NextFunction) {
   const { id: businessId } = req.params;
 
   Employee.destroy({
@@ -531,50 +533,40 @@ function deleteAllEmployees(req: Request, res: Response) {
     truncate: false,
   })
     .then((nums) => {
-      return res.send({
+      return res.status(200).send({
         message: `${nums} Employee were deleted successfully!`,
       });
     })
     .catch((err) => {
-      return res.status(500).send({
-        message: err.message,
-      });
+      next(new InternalServerError(err.message));
+      return;
     });
 }
 
-function addCustomer(req: Request, res: Response) {
+function addCustomer(req: Request, res: Response, next: NextFunction) {
   const { id: businessId, userId } = req.params;
 
   Business.findByPk(businessId)
     .then((business: Business) => {
       if (!business) {
-        return res
-          .status(404)
-          .send({ message: `Cannot find Business with id ${businessId}.` });
+        next(new BusinessNotFoundError(businessId));
+        return;
       }
-      User.findByPk(userId)
-        .then((user: User) => {
-          if (!user) {
-            return res.status(404).send({
-              message: `Cannot find User with id ${userId}.`,
-            });
-          }
+      User.findByPk(userId).then((user: User) => {
+        if (!user) {
+          next(new UserNotFoundError(userId));
+          return;
+        }
 
-          business.addUser(user);
-          return res.status(201).send({
-            message: `User ${userId} added to Business ${businessId}`,
-          });
-        })
-        .catch((err) => {
-          return res.status(500).send({
-            message: err.message,
-          });
+        business.addUser(user);
+        return res.status(201).send({
+          message: `User ${userId} added to Business ${businessId}`,
         });
+      });
     })
     .catch((err) => {
-      return res.status(500).send({
-        message: err.message,
-      });
+      next(new InternalServerError(err.message));
+      return;
     });
 }
 
