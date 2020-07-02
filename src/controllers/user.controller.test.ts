@@ -200,7 +200,7 @@ describe("User controller", () => {
       done();
     });
 
-    it("should return 404 when deleting a business of another user", async (done) => {
+    it("should return 403 when deleting a business of another user", async (done) => {
       const token = await firebase.auth().currentUser.getIdToken();
 
       const newUser = await User.create(user);
@@ -211,7 +211,7 @@ describe("User controller", () => {
         .delete(`/api/user/${newUser.id}/business/${newBusiness.id}`)
         .set({ "firebase-token": token });
 
-      expect(res.status).toEqual(400);
+      expect(res.status).toEqual(403);
 
       const num = await anotherUser.countBusinesses();
       expect(num).toEqual(1);
@@ -341,7 +341,7 @@ describe("User controller", () => {
       done();
     });
 
-    it("should return 404 when deleting a reservation of another user", async (done) => {
+    it("should return 403 when deleting a reservation of another user", async (done) => {
       const token = await firebase.auth().currentUser.getIdToken();
 
       const newUser = await User.create(user);
@@ -356,7 +356,7 @@ describe("User controller", () => {
         .delete(`/api/user/${newUser.id}/reservation/${newReservation.id}`)
         .set({ "firebase-token": token });
 
-      expect(res.status).toEqual(404);
+      expect(res.status).toEqual(403);
 
       const num = await anotherUser.countReservations();
       expect(num).toEqual(1);
