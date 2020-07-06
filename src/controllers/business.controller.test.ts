@@ -46,6 +46,31 @@ describe("Business controller", () => {
       done();
     });
 
+    it("should return 400 after creating a product with empty body", async (done) => {
+      const token = await firebase.auth().currentUser.getIdToken();
+      const newBusiness = await Business.create(business);
+      const res = await request(app)
+        .post(`/api/business/${newBusiness.id}/product`)
+        .set({ "firebase-token": token });
+
+      expect(res.status).toEqual(400);
+
+      done();
+    });
+
+    it("should return 404 after creating a product", async (done) => {
+      const token = await firebase.auth().currentUser.getIdToken();
+      // const newBusiness = await Business.create(business);
+      const res = await request(app)
+        .post(`/api/business/99/product`)
+        .set({ "firebase-token": token })
+        .send(product);
+
+      expect(res.status).toEqual(404);
+
+      done();
+    });
+
     it("should update a product", async (done) => {
       const token = await firebase.auth().currentUser.getIdToken();
 
