@@ -1,12 +1,15 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { Product } from "../models";
+import {
+  HttpException,
+  InternalServerError,
+  ProductNotFoundError,
+} from "../exceptions";
 
-function create(req: Request, res: Response) {
+function create(req: Request, res: Response, next: NextFunction) {
   // Validate request
   if (!req.body.businessId) {
-    return res.status(400).send({
-      message: "businessId can not be empty!",
-    });
+    next(new HttpException(400, "businessId can not be empty!"));
     return;
   }
 
@@ -24,43 +27,40 @@ function create(req: Request, res: Response) {
   };
 
   Product.create(product)
-    .then((data) => {
-      return res.status(201).send(data);
+    .then((product) => {
+      return res.status(201).send(product);
     })
     .catch((err) => {
-      return res.status(500).send({
-        message: err.message,
-      });
+      next(new InternalServerError(err.message));
+      return;
     });
 }
 
-function findAll(req: Request, res: Response) {
-  Product.findAll({})
-    .then((data) => {
-      return res.send(data);
+function findAll(req: Request, res: Response, next: NextFunction) {
+  Product.findAll()
+    .then((products) => {
+      return res.status(200).send(products);
     })
     .catch((err) => {
-      return res.status(500).send({
-        message: err.message,
-      });
+      next(new InternalServerError(err.message));
+      return;
     });
 }
 
-function findOne(req: Request, res: Response) {
+function findOne(req: Request, res: Response, next: NextFunction) {
   const id = req.params.id;
 
   Product.findByPk(id)
-    .then((data) => {
-      return res.send(data);
+    .then((product) => {
+      return res.status(200).send(product);
     })
     .catch((err) => {
-      return res.status(500).send({
-        message: err.message,
-      });
+      next(new InternalServerError(err.message));
+      return;
     });
 }
 
-function update(req: Request, res: Response) {
+function update(req: Request, res: Response, next: NextFunction) {
   const id = req.params.id;
 
   Product.update(req.body, {
@@ -68,23 +68,26 @@ function update(req: Request, res: Response) {
   })
     .then((num) => {
       if (num[0] === 1) {
-        return res.send({
+        return res.status(200).send({
           message: "Product was updated successfully.",
         });
       } else {
-        return res.send({
-          message: `Cannot update Product with id=${id}. Maybe Product was not found or req.body is empty!`,
-        });
+        if (Object.keys(req.body).length === 0) {
+          next(new HttpException(400, "Request's body cannot be empty"));
+          return;
+        } else {
+          next(new ProductNotFoundError(id));
+          return;
+        }
       }
     })
     .catch((err) => {
-      return res.status(500).send({
-        message: err.message,
-      });
+      next(new InternalServerError(err.message));
+      return;
     });
 }
 
-function deleteOne(req: Request, res: Response) {
+function deleteOne(req: Request, res: Response, next: NextFunction) {
   const id = req.params.id;
 
   Product.destroy({
@@ -92,36 +95,33 @@ function deleteOne(req: Request, res: Response) {
   })
     .then((num) => {
       if (num[0] === 1) {
-        return res.send({
+        return res.status(200).send({
           message: "Product was deleted successfully!",
         });
       } else {
-        return res.send({
-          message: `Cannot delete Product with id=${id}. Maybe Product was not found!`,
-        });
+        next(new ProductNotFoundError(id));
+        return;
       }
     })
     .catch((err) => {
-      return res.status(500).send({
-        message: err.message,
-      });
+      next(new InternalServerError(err.message));
+      return;
     });
 }
 
-function deleteAll(req: Request, res: Response) {
+function deleteAll(req: Request, res: Response, next: NextFunction) {
   Product.destroy({
     where: {},
     truncate: false,
   })
     .then((nums) => {
-      return res.send({
+      return res.status(200).send({
         message: `${nums} Products were deleted successfully!`,
       });
     })
     .catch((err) => {
-      return res.status(500).send({
-        message: err.message,
-      });
+      next(new InternalServerError(err.message));
+      return;
     });
 }
 
