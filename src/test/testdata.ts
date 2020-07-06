@@ -52,4 +52,10 @@ const employee = {
   surname: "Doe",
 };
 
-export { user, business, reservation, product, employee };
+const schedule = {
+  dayOfWeek: 1,
+  startTime: "00:00:00",
+  time: 90,
+};
+
+export { user, business, reservation, product, employee, schedule };

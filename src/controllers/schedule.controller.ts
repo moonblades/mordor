@@ -1,217 +1,172 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { Business, Schedule } from "../models";
+import {
+  HttpException,
+  InternalServerError,
+  BusinessNotFoundError,
+  ScheduleNotFoundError,
+} from "../exceptions";
 
-function create(req: Request, res: Response) {
-  // Validate request
-  if (!req.params.id) {
-    return res.status(400).send({
-      message: "BusinessId can not be empty!",
-    });
-    return;
-  }
+function create(req: Request, res: Response, next: NextFunction) {
+  const id = req.params.id;
+  Business.findByPk(id)
+    .then((business: Business) => {
+      if (!business) {
+        next(new BusinessNotFoundError(id));
+        return;
+      }
 
-  const { dayOfWeek, startTime, time } = req.body;
+      const { dayOfWeek, startTime, time } = req.body;
 
-  const schedule = {
-    businessId: req.params.id,
-    dayOfWeek,
-    startTime,
-    time,
-  };
+      const schedule = {
+        businessId: id,
+        dayOfWeek,
+        startTime,
+        time,
+      };
 
-  Schedule.create(schedule)
-    .then((data) => {
-      return res.status(201).send(data);
+      Schedule.create(schedule).then((schedule) => {
+        return res.status(201).send(schedule);
+      });
     })
     .catch((err) => {
-      return res.status(500).send({
-        message: err.message,
-      });
+      next(new InternalServerError(err.message));
+      return;
     });
 }
 
-function findAll(req: Request, res: Response) {
+function findAll(req: Request, res: Response, next: NextFunction) {
   const id = req.params.id;
 
-  Schedule.findAll({
-    where: {
-      businessId: id,
-    },
-  })
-    .then((data) => {
-      return res.send(data);
+  Business.findByPk(id)
+    .then((business: Business) => {
+      if (!business) {
+        next(new BusinessNotFoundError(id));
+        return;
+      }
+      Schedule.findAll({
+        where: {
+          businessId: id,
+        },
+      }).then((schedules) => {
+        return res.status(200).send(schedules);
+      });
     })
     .catch((err) => {
-      return res.status(500).send({
-        message: err.message,
-      });
+      next(new InternalServerError(err.message));
+      return;
     });
 }
 
-function findOne(req: Request, res: Response) {
+function findOne(req: Request, res: Response, next: NextFunction) {
   const { id, scheduleId } = req.params;
 
   Business.findByPk(id)
     .then((business: Business) => {
       if (!business) {
-        return res.status(404).send({
-          message: "Error retrieving Business with id=" + id,
-        });
-
+        next(new BusinessNotFoundError(id));
         return;
       }
 
       Schedule.findByPk(scheduleId).then((schedule: Schedule) => {
         if (!schedule) {
-          return res.status(404).send({
-            message: "Schedule with id " + scheduleId + " not found!",
-          });
+          next(new ScheduleNotFoundError(scheduleId));
           return;
         }
-        return res.send(schedule);
+        return res.status(200).send(schedule);
       });
     })
     .catch((err) => {
-      return res.status(500).send({
-        message: err.message,
-      });
+      next(new InternalServerError(err.message));
+      return;
     });
 }
 
-function update(req: Request, res: Response) {
+function update(req: Request, res: Response, next: NextFunction) {
   const { id, scheduleId } = req.params;
 
   Business.findByPk(id)
     .then((business: Business) => {
       if (!business) {
-        return res.status(404).send({
-          message: "Error retrieving Business with id=" + id,
-        });
-
+        next(new BusinessNotFoundError(id));
         return;
       }
 
       Schedule.update(req.body, {
         where: { id: scheduleId },
-      })
-        .then((num) => {
-          if (num[0] === 1) {
-            return res.send({
-              message: "Schedule was updated successfully.",
-            });
-          } else {
-            return res.send({
-              message: `Cannot update Schedule with id=${scheduleId}. Maybe Schedule was not found or req.body is empty!`,
-            });
-          }
-        })
-        .catch((err) => {
-          return res.status(500).send({
-            message: err.message,
+      }).then((num) => {
+        if (num[0] === 1) {
+          return res.status(200).send({
+            message: "Schedule was updated successfully.",
           });
-        });
+        } else {
+          if (Object.keys(req.body).length === 0) {
+            next(new HttpException(400, "Request's body cannot be empty"));
+            return;
+          } else {
+            next(new ScheduleNotFoundError(scheduleId));
+            return;
+          }
+        }
+      });
     })
     .catch((err) => {
-      return res.status(500).send({
-        message: err.message,
-      });
+      next(new InternalServerError(err.message));
+      return;
     });
 }
 
-function deleteOne(req: Request, res: Response) {
+function deleteOne(req: Request, res: Response, next: NextFunction) {
   const { id, scheduleId } = req.params;
 
   Business.findByPk(id)
     .then((business: Business) => {
       if (!business) {
-        return res.status(404).send({
-          message: "Error retrieving Business with id=" + id,
-        });
-
+        next(new BusinessNotFoundError(id));
         return;
       }
 
       Schedule.destroy({
         where: { id: scheduleId },
-      })
-        .then((num) => {
-          if (num[0] === 1) {
-            return res.send({
-              message: "Schedule was deleted successfully.",
-            });
-          } else {
-            return res.send({
-              message: `Cannot delete Schedule with id=${scheduleId}. Maybe Schedule was not found!`,
-            });
-          }
-        })
-        .catch((err) => {
-          return res.status(500).send({
-            message: err.message,
+      }).then((num) => {
+        if (num[0] === 1) {
+          return res.send({
+            message: "Schedule was deleted successfully.",
           });
-        });
+        } else {
+          next(new ScheduleNotFoundError(scheduleId));
+          return;
+        }
+      });
     })
     .catch((err) => {
-      return res.status(500).send({
-        message: err.message,
-      });
+      next(new InternalServerError(err.message));
+      return;
     });
 }
 
-function deleteAll(req: Request, res: Response) {
+function deleteAll(req: Request, res: Response, next: NextFunction) {
   const { id } = req.params;
 
   Business.findByPk(id)
     .then((business: Business) => {
-      business
-        .getSchedules()
-        .then((schedules: Schedule[]) => {
-          schedules.forEach((schedule) => {
-            schedule
-              .destroy()
-              .then((num) => {
-                if (num[0] === 1) {
-                  return res.send({
-                    message: "Schedule was deleted successfully.",
-                  });
-                } else {
-                  return res.send({
-                    message: `Cannot delete Schedule with scheduleId=${schedule.id}. Maybe Schedule was not found!`,
-                  });
-                }
-              })
-              .catch((err) => {
-                return res.status(500).send({
-                  message: err.message,
-                });
-              });
-          });
-        })
-        .catch((err) => {
-          return res.status(500).send({
-            message: err.message,
-          });
-        });
-    })
-    .catch((err) => {
-      return res.status(500).send({
-        message: err.message,
-      });
-    });
+      if (!business) {
+        next(new BusinessNotFoundError(id));
+        return;
+      }
 
-  Schedule.destroy({
-    where: {},
-    truncate: false,
-  })
-    .then((nums) => {
-      return res.send({
-        message: `${nums} Schedules were deleted successfully!`,
+      Schedule.destroy({
+        where: { businessId: business.id },
+        truncate: false,
+      }).then((nums) => {
+        return res.status(200).send({
+          message: `${nums} Schedules were deleted successfully!`,
+        });
       });
     })
     .catch((err) => {
-      return res.status(500).send({
-        message: err.message,
-      });
+      next(new InternalServerError(err.message));
+      return;
     });
 }
 
