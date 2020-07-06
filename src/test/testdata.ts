@@ -58,4 +58,9 @@ const schedule = {
   time: 90,
 };
 
-export { user, business, reservation, product, employee, schedule };
+const vacation = {
+  dateStart: "2020-09-22T00:00:00.000Z",
+  dateEnd: "2020-10-22T00:00:00.000Z",
+};
+
+export { user, business, reservation, product, employee, schedule, vacation };
