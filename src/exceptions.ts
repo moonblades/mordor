@@ -44,6 +44,12 @@ class ProductNotFoundError extends HttpException {
   }
 }
 
+class ReservationNotFoundError extends HttpException {
+  constructor(id: string) {
+    super(404, `Reservation with id ${id} not found`);
+  }
+}
+
 class ScheduleNotFoundError extends HttpException {
   constructor(id: string) {
     super(404, `Schedule with id ${id} not found`);
@@ -63,6 +69,7 @@ export {
   UserNotFoundError,
   BusinessNotFoundError,
   ProductNotFoundError,
+  ReservationNotFoundError,
   ScheduleNotFoundError,
   VacationNotFoundError,
 };

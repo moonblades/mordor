@@ -1,46 +1,47 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { Product, Reservation } from "../models";
+import {
+  InternalServerError,
+  ReservationNotFoundError,
+  ProductNotFoundError,
+} from "../exceptions";
 
-function findAll(req: Request, res: Response) {
+function findAll(req: Request, res: Response, next: NextFunction) {
   Reservation.findAll()
-    .then((data) => {
-      return res.send(data);
+    .then((reservations) => {
+      return res.status(200).send(reservations);
     })
     .catch((err) => {
-      return res.status(500).send({
-        message: err.message,
-      });
+      next(new InternalServerError(err.message));
+      return;
     });
 }
 
-function findOne(req: Request, res: Response) {
+function findOne(req: Request, res: Response, next: NextFunction) {
   const { id } = req.params;
 
   Reservation.findByPk(id)
     .then((data) => {
-      return res.send(data);
+      return res.status(200).send(data);
     })
     .catch((err) => {
-      return res.status(500).send({
-        message: err.message,
-      });
+      next(new InternalServerError(err.message));
+      return;
     });
 }
 
-function addProduct(req: Request, res: Response) {
+function addProduct(req: Request, res: Response, next: NextFunction) {
   const { id: reservationId, productId } = req.params;
 
   Reservation.findByPk(reservationId).then((reservation: Reservation) => {
     if (!reservation) {
-      return res
-        .status(404)
-        .send({ message: `Cannot find reservation with id ${reservationId}.` });
+      next(new ReservationNotFoundError(reservationId));
+      return;
     }
     Product.findByPk(productId).then((product: Product) => {
       if (!product) {
-        return res
-          .status(404)
-          .send({ message: `Cannot find product with id ${productId}.` });
+        next(new ProductNotFoundError(productId));
+        return;
       }
 
       reservation.addProduct(product);
@@ -50,28 +51,5 @@ function addProduct(req: Request, res: Response) {
     });
   });
 }
-
-// function removeProduct(req: Request, res: Response) {
-//   const { id: reservationId, productId } = req.params;
-
-//   Reservation.findByPk(reservationId).then((reservation: Reservation) => {
-//     if (!reservation) {
-//      return res
-//         .status(404)
-//         .send({ message: `Cannot find reservation with id ${reservationId}.` });
-//     }
-//     Product.findByPk(productId).then((product: Product) => {
-//       if (!product) {
-//        return res
-//           .status(404)
-//           .send({ message: `Cannot find product with id ${productId}.` });
-//       }
-
-//       return res.status(201).send({
-//         message: `Product ${productId} deleted from Reservation ${reservationId}`,
-//       });
-//     });
-//   });
-// }
 
 export { findAll, findOne, addProduct };
