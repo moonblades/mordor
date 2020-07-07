@@ -19,7 +19,7 @@ function init(app: Express) {
     business.findOne
   );
 
-  // Create a new reservation for user
+  // Create a new reservation for business
   router.post(
     "/:id/reservation",
     reservationSchema(),
@@ -67,7 +67,7 @@ function init(app: Express) {
     business.deleteAllReservation
   );
 
-  // Create a new product for user
+  // Create a new product for business
   router.post(
     "/:id/product",
     productSchema(),

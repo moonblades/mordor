@@ -10,11 +10,11 @@ import {
 
 // Create and save a new User
 function create(req: Request, res: Response, next: NextFunction) {
-  // TODO: Validate request in middleware
-  if (!req.body.email) {
-    next(new BadRequestError("Email can not be empty!"));
-    return;
-  }
+  // // TODO: Validate request in middleware
+  // if (!req.body.email) {
+  //   next(new BadRequestError("Email can not be empty!"));
+  //   return;
+  // }
 
   const user = {
     id: req.body.id,
@@ -472,6 +472,7 @@ function addFavorite(req: Request, res: Response, next: NextFunction) {
       Business.findByPk(businessId).then((business: Business) => {
         if (!business) {
           next(new BusinessNotFoundError(businessId));
+          return;
         }
 
         Favorite.create({
