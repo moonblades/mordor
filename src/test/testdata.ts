@@ -1,7 +1,7 @@
 const user = {
   email: "foo.bar@baz.com",
   displayName: "foo",
-  imageUrl: "",
+  imageUrl: "https://fake.com/fake_image.png",
   name: "foo",
   surname: "bar",
   password: "foobared",
