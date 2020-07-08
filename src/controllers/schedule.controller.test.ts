@@ -30,7 +30,8 @@ describe("Schedule controller", () => {
 
     const res = await request(app)
       .post("/api/business/99/schedule")
-      .set({ "firebase-token": token });
+      .set({ "firebase-token": token })
+      .send(schedule);
 
     expect(res.status).toEqual(404);
     done();
