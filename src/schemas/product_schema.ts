@@ -2,33 +2,25 @@ import { checkSchema } from "express-validator";
 
 function productSchema() {
   return checkSchema({
-    //   "name": "test",
-    //   "description": "test_description",
-    //   "price": 6.0,
-    //   "duration": 30,
-    //   "weight": 0,
-    //   "sale": false,
-    //   "salePercentage": 20,
-    //   "available": true,
-    //   "whenAvailable": "2020-05-23"
     name: {
       in: ["body"],
       isString: true,
-      exists: true,
+      optional: true,
     },
     description: {
       in: ["body"],
       isString: true,
-      exists: true,
+      optional: true,
     },
     price: {
       in: ["body"],
       isFloat: true,
-      exists: true,
+      optional: true,
     },
     duration: {
       in: ["body"],
       isInt: true,
+      optional: true,
     },
     preparation: {
       in: ["body"],
@@ -46,7 +38,7 @@ function productSchema() {
     sale: {
       in: ["body"],
       isBoolean: true,
-      exists: true,
+      optional: true,
     },
     salePercentage: {
       in: ["body"],
@@ -56,7 +48,7 @@ function productSchema() {
     available: {
       in: ["body"],
       isBoolean: true,
-      exists: true,
+      optional: true,
     },
     whenAvailable: {
       in: ["body"],
