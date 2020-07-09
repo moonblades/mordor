@@ -171,6 +171,49 @@ function init(app: Express) {
     business.addCustomer
   );
 
+  // Create a new vacation
+  router.post("/:id/vacation", business.createVacation);
+
+  // Retrieve all business vacation
+  router.get(
+    "/:id/vacation",
+    [param("id").isInt()],
+    typeValidation,
+    business.findAllVacations
+  );
+
+  //
+  router.get(
+    "/:id/vacation/:vacationId",
+    [param("id").isInt(), param("vacationId").isInt()],
+    typeValidation,
+    business.findOneVacation
+  );
+
+  // Update a vacation
+  router.put(
+    "/:id/vacation/:vacationId",
+    [param("id").isInt(), param("vacationId").isInt()],
+    typeValidation,
+    business.updateVacation
+  );
+
+  // Delete a vacation
+  router.delete(
+    "/:id/vacation/:vacationId",
+    [param("id").isInt(), param("vacationId").isInt()],
+    typeValidation,
+    business.deleteOneVacation
+  );
+
+  // Delete all vacations
+  router.delete(
+    "/:id/vacation",
+    [param("id").isInt()],
+    typeValidation,
+    business.deleteAllVacations
+  );
+
   app.use("/api/business", router);
 }
 
