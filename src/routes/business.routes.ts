@@ -1,9 +1,9 @@
 import { Express, Router } from "express";
 import { param } from "express-validator";
-import * as business from "../controllers/business.controller";
 import { typeValidation } from "../middlewares/validation";
 import { productSchema } from "../schemas/product_schema";
 import { reservationSchema } from "../schemas/reservation.schema";
+import * as business from "../controllers/business";
 
 function init(app: Express) {
   const router = Router();
@@ -32,7 +32,7 @@ function init(app: Express) {
     "/:id/reservation",
     [param("id").isNumeric()],
     typeValidation,
-    business.findAllReservation
+    business.findAllReservations
   );
 
   // Retrieve a reservation for business
@@ -64,7 +64,7 @@ function init(app: Express) {
     "/:id/reservation",
     [param("id").isNumeric()],
     typeValidation,
-    business.deleteAllReservation
+    business.deleteAllReservations
   );
 
   // Create a new product for business
@@ -80,7 +80,7 @@ function init(app: Express) {
     "/:id/product",
     [param("id").isNumeric()],
     typeValidation,
-    business.findAllProduct
+    business.findAllProducts
   );
 
   // Retrieve a product for business
@@ -112,7 +112,7 @@ function init(app: Express) {
     "/:id/product",
     [param("id").isNumeric()],
     typeValidation,
-    business.deleteAllProduct
+    business.deleteAllProducts
   );
 
   // Retrieve all employee for business
@@ -168,7 +168,7 @@ function init(app: Express) {
     "/:id/user/:userId",
     [param("id").isNumeric(), param("userId").isNumeric()],
     typeValidation,
-    business.addUser
+    business.addCustomer
   );
 
   app.use("/api/business", router);

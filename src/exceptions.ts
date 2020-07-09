@@ -62,6 +62,12 @@ class VacationNotFoundError extends HttpException {
   }
 }
 
+class EmployeeNotFoundError extends HttpException {
+  constructor(id: string) {
+    super(404, `Employee with id ${id} not found`);
+  }
+}
+
 export {
   HttpException,
   BadRequestError,
@@ -72,4 +78,5 @@ export {
   ReservationNotFoundError,
   ScheduleNotFoundError,
   VacationNotFoundError,
+  EmployeeNotFoundError,
 };
