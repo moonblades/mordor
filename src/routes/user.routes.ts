@@ -1,10 +1,10 @@
 import { Express, Router } from "express";
-import * as user from "../controllers/user.controller";
 import { typeValidation } from "../middlewares/validation";
 import { param, body } from "express-validator";
 import { userSchema } from "../schemas/user.schema";
 import { reservationSchema } from "../schemas/reservation.schema";
 import { businessSchema } from "../schemas/business.schema";
+import * as user from "../controllers/user";
 
 function init(app: Express) {
   const router = Router();
@@ -86,7 +86,7 @@ function init(app: Express) {
     "/:id/reservation",
     [param("id").isNumeric()],
     typeValidation,
-    user.deleteAllReservation
+    user.deleteAllReservations
   );
 
   // Retrieve all business for user
