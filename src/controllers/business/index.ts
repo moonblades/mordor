@@ -31,6 +31,7 @@ import updateProduct from "./updateProduct";
 import updateReservation from "./updateReservation";
 import updateSchedule from "./updateSchedule";
 import updateVacation from "./updateVacation";
+import addProductToReservation from "./addProductToReservation";
 
 export {
   addCustomer,
@@ -66,4 +67,5 @@ export {
   updateReservation,
   updateSchedule,
   updateVacation,
+  addProductToReservation,
 };

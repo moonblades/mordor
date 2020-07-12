@@ -265,6 +265,18 @@ function init(app: Express) {
     business.deleteAllVacations
   );
 
+  // Add product to reservation
+  router.post(
+    "/:id/reservation/:reservationId/product/:productId",
+    [
+      param("id").isInt(),
+      param("reservationId").isInt(),
+      param("productId").isInt(),
+    ],
+    typeValidation,
+    business.addProductToReservation
+  );
+
   app.use("/api/business", router);
 }
 

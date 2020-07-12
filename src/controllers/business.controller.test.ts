@@ -1,7 +1,7 @@
 import request from "supertest";
 import app from "../app";
 import { Business, Employee, Product } from "../models";
-import { business, employee, product } from "../test/testdata";
+import { business, employee, product, reservation } from "../test/testdata";
 import { truncateAllTables } from "../test/truncateTables";
 import firebase from "firebase";
 
@@ -320,6 +320,69 @@ describe("Business controller", () => {
 
       const num = await newBusiness.countEmployees();
       expect(num).toEqual(0);
+      done();
+    });
+  });
+
+  describe("reservation", () => {
+    it("should create a reservation", async (done) => {
+      const token = await firebase.auth().currentUser.getIdToken();
+      const newBusiness = await Business.create(business);
+
+      const res = await request(app)
+        .post(`/api/business/${newBusiness.id}/reservation`)
+        .set({ "firebase-token": token });
+
+      expect(res.status).toEqual(201);
+
+      done();
+    });
+
+    it("should retrieve three reservations", async (done) => {
+      const token = await firebase.auth().currentUser.getIdToken();
+      const newBusiness = await Business.create(business);
+      await newBusiness.createReservation(reservation);
+      await newBusiness.createReservation(reservation);
+      await newBusiness.createReservation(reservation);
+
+      const res = await request(app)
+        .get(`/api/business/${newBusiness.id}/reservation`)
+        .set({ "firebase-token": token });
+
+      expect(res.status).toEqual(200);
+      expect(res.body).toHaveLength(3);
+      done();
+    });
+
+    it("should return a specific reservation", async (done) => {
+      const token = await firebase.auth().currentUser.getIdToken();
+      const newBusiness = await Business.create(business);
+      const newReservation = await newBusiness.createReservation(reservation);
+
+      const res = await request(app)
+        .get(`/api/business/${newBusiness.id}/reservation/${newReservation.id}`)
+        .set({ "firebase-token": token });
+
+      expect(res.status).toEqual(200);
+      expect(res.body).toMatchObject(reservation);
+      done();
+    });
+
+    it("should add a product to a reservation", async (done) => {
+      const token = await firebase.auth().currentUser.getIdToken();
+
+      const newBusiness = await Business.create(business);
+      const newProduct = await newBusiness.createProduct(product);
+      const newReservation = await newBusiness.createReservation(reservation);
+
+      const res = await request(app)
+        .post(
+          `/api/business/${newBusiness.id}/reservation/${newReservation.id}/product/${newProduct.id}`
+        )
+        .set({ "firebase-token": token });
+
+      expect(res.status).toEqual(201);
+
       done();
     });
   });
