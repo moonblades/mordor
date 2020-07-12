@@ -3,6 +3,10 @@ import { param } from "express-validator";
 import { typeValidation } from "../middlewares/validation";
 import { productSchema } from "../schemas/product_schema";
 import { reservationSchema } from "../schemas/reservation.schema";
+import {
+  createScheduleSchema,
+  updateScheduleSchema,
+} from "../schemas/schedule.schema";
 import * as business from "../controllers/business";
 
 function init(app: Express) {
@@ -169,6 +173,53 @@ function init(app: Express) {
     [param("id").isNumeric(), param("userId").isNumeric()],
     typeValidation,
     business.addCustomer
+  );
+
+  // Create a new schedule
+  router.post(
+    "/:id/schedule",
+    createScheduleSchema(),
+    typeValidation,
+    business.createSchedule
+  );
+
+  // Retrieve all business schedule
+  router.get(
+    "/:id/schedule",
+    [param("id").isInt()],
+    typeValidation,
+    business.findAllSchedules
+  );
+
+  router.get(
+    "/:id/schedule/:scheduleId",
+    [param("id").isInt(), param("scheduleId").isInt()],
+    typeValidation,
+    business.findOneSchedule
+  );
+
+  // Update a schedule
+  router.put(
+    "/:id/schedule/:scheduleId",
+    updateScheduleSchema(),
+    typeValidation,
+    business.updateSchedule
+  );
+
+  // Delete a schedule
+  router.delete(
+    "/:id/schedule/:scheduleId",
+    [param("id").isInt(), param("scheduleId").isInt()],
+    typeValidation,
+    business.deleteOneSchedule
+  );
+
+  // Delete all schedules
+  router.delete(
+    "/:id/schedule",
+    [param("id").isInt()],
+    typeValidation,
+    business.deleteAllSchedules
   );
 
   // Create a new vacation
