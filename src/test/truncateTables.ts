@@ -17,6 +17,12 @@ async function truncateAllTables() {
   await sequelize.query("TRUNCATE `favorite`");
   sequelizeLogger.info(`Cleaned up Favorite table`);
 
+  await sequelize.query("TRUNCATE `schedule`");
+  sequelizeLogger.info(`Cleaned up Schedule table`);
+
+  await sequelize.query("TRUNCATE `vacation`");
+  sequelizeLogger.info(`Cleaned up Vacation table`);
+
   await Reservation.destroy({
     where: {},
     truncate: true,
