@@ -1,0 +1,20 @@
+{
+  "create test": {
+    "prefix": "test",
+    "body": [
+      "import firebase from \"firebase\";",
+      "import request from \"supertest\";",
+      "import app from \"../../../app\";",
+      "",
+      "async function ${1:name}(done: jest.DoneCallback) {",
+      "  const token = await firebase.auth().currentUser.getIdToken();",
+      "",
+      "  done();",
+      "}",
+      "",
+      "export default ${1:name};",
+      ""
+    ],
+    "description": "create test"
+  }
+}
