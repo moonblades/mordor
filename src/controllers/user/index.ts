@@ -1,4 +1,4 @@
-import create from "./create";
+import createUser from "./createUser";
 import findAll from "./findAll";
 import findOne from "./findOne";
 import update from "./update";
@@ -19,7 +19,7 @@ import addFavorite from "./addFavorite";
 import findAllFavorites from "./findAllFavorites";
 
 export {
-  create,
+  createUser,
   findAll,
   findOne,
   update,

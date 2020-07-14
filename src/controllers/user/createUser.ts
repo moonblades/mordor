@@ -3,7 +3,7 @@ import { User } from "../../models";
 import { HttpException, InternalServerError } from "../../exceptions";
 
 // Create and save a new User
-function create(req: Request, res: Response, next: NextFunction) {
+function createUser(req: Request, res: Response, next: NextFunction) {
   const user = {
     id: req.body.id,
     email: req.body.email,
@@ -34,4 +34,4 @@ function create(req: Request, res: Response, next: NextFunction) {
     });
 }
 
-export default create;
+export default createUser;

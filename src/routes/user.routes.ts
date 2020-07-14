@@ -18,7 +18,7 @@ function init(app: Express) {
       body("imageUrl").isURL(),
     ],
     typeValidation,
-    user.create
+    user.createUser
   );
 
   // Retrieve all users
