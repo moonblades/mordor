@@ -5,8 +5,5 @@ module.exports = {
   setupFilesAfterEnv: ["<rootDir>/src/test/setup.ts"],
   globalSetup: "<rootDir>/src/test/globalSetup.ts",
   runner: "./serial-jest-runner.js",
-  testMatch: [
-    "**/__tests__/**/*.test.[jt]s?(x)",
-    "**/?(*.)+(spec|test).[jt]s?(x)",
-  ],
+  testMatch: ["**/__tests__/**/*.test.[jt]s?(x)", "**/?(*.)+(test).[jt]s?(x)"],
 };
