@@ -35,8 +35,8 @@ beforeEach(async (done) => {
 });
 
 describe("Business controller", () => {
-  // it("should add a customer", addCustomer);
-  // it("should add a product to a reservation", addProductToReservation);
+  it("should add a customer", addCustomer);
+  it("should add a product to a reservation", addProductToReservation);
   it("should create an employee", createEmployee);
   it("should create a product", createProduct);
   it("should add a schedule", addSchedule);
@@ -51,8 +51,8 @@ describe("Business controller", () => {
   it("should delete an employee", deleteOneEmployee);
   it("should delete a product", deleteOneProduct);
   it("should delete a reservation", deleteOneReservation);
-  // it("should delete a schedule", deleteOneSchedule);
-  // it("should delete a vacation", deleteOneVacation);
+  it("should delete a schedule", deleteOneSchedule);
+  it("should delete a vacation", deleteOneVacation);
   it("should retrieve all business", findAll);
   it("should retrieve all employees", findAllEmployees);
   it("should retrieve all reservations", findAllReservations);

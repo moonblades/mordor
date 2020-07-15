@@ -8,6 +8,10 @@ import sequelize, {
 import { sequelizeLogger } from "../logger";
 
 async function truncateAllTables() {
+  await sequelize.query("SET FOREIGN_KEY_CHECKS = 0", {
+    raw: true,
+  }); //
+
   await sequelize.query("TRUNCATE `reservation_product`");
   sequelizeLogger.info(`Cleaned up ReservationProduct table`);
 
@@ -24,7 +28,7 @@ async function truncateAllTables() {
   sequelizeLogger.info(`Cleaned up Vacation table`);
 
   await Reservation.destroy({
-    where: {},
+    // where: {},
     truncate: true,
     cascade: true,
     force: true,
@@ -33,7 +37,7 @@ async function truncateAllTables() {
   sequelizeLogger.info(`Cleaned up Reservation table`);
 
   await Product.destroy({
-    where: {},
+    // where: {},
     truncate: true,
     cascade: true,
     force: true,
@@ -42,7 +46,7 @@ async function truncateAllTables() {
   sequelizeLogger.info(`Cleaned up Product table`);
 
   await User.destroy({
-    where: {},
+    // where: {},
     truncate: true,
     cascade: true,
     force: true,
@@ -51,7 +55,7 @@ async function truncateAllTables() {
   sequelizeLogger.info(`Cleaned up User table`);
 
   await Business.destroy({
-    where: {},
+    // where: {},
     truncate: true,
     cascade: true,
     force: true,
@@ -60,7 +64,7 @@ async function truncateAllTables() {
   sequelizeLogger.info(`Cleaned up Business table`);
 
   await Employee.destroy({
-    where: {},
+    // where: {},
     truncate: true,
     cascade: true,
     force: true,

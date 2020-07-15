@@ -19,7 +19,7 @@ function deleteOneVacation(req: Request, res: Response, next: NextFunction) {
       Vacation.destroy({
         where: { id: vacationId },
       }).then((num) => {
-        if (num[0] === 1) {
+        if (num === 1) {
           return res.status(200).send({
             message: "Vacation was deleted successfully.",
           });

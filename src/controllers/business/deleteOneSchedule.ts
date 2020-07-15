@@ -19,7 +19,7 @@ function deleteOneSchedule(req: Request, res: Response, next: NextFunction) {
       Schedule.destroy({
         where: { id: scheduleId },
       }).then((num) => {
-        if (num[0] === 1) {
+        if (num === 1) {
           return res.send({
             message: "Schedule was deleted successfully.",
           });
