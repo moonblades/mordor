@@ -6,7 +6,10 @@ import {
   reservationSchema,
   updateReservationSchema,
 } from "../schemas/reservation.schema";
-import { businessSchema } from "../schemas/business.schema";
+import {
+  businessSchema,
+  updateBusinessSchema,
+} from "../schemas/business.schema";
 import * as user from "../controllers/user";
 
 function init(app: Express) {
@@ -111,7 +114,7 @@ function init(app: Express) {
   // Update business for user
   router.put(
     "/:id/business/:businessId",
-    businessSchema(),
+    updateBusinessSchema(),
     typeValidation,
     user.updateBusiness
   );
