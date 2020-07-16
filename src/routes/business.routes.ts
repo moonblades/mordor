@@ -2,12 +2,17 @@ import { Express, Router } from "express";
 import { param } from "express-validator";
 import { typeValidation } from "../middlewares/validation";
 import { productSchema } from "../schemas/product_schema";
-import { reservationSchema } from "../schemas/reservation.schema";
+import {
+  reservationSchema,
+  updateReservationSchema,
+} from "../schemas/reservation.schema";
 import {
   createScheduleSchema,
   updateScheduleSchema,
 } from "../schemas/schedule.schema";
 import * as business from "../controllers/business";
+import { employeeSchema } from "../schemas/employee.schema";
+import { vacationSchema } from "../schemas/vacation.schema";
 
 function init(app: Express) {
   const router = Router();
@@ -50,7 +55,7 @@ function init(app: Express) {
   // Update a reservation for business
   router.put(
     "/:id/reservation/:reservationId",
-    reservationSchema(),
+    updateReservationSchema(),
     typeValidation,
     business.updateReservation
   );
@@ -138,7 +143,7 @@ function init(app: Express) {
   // Create an employee for business
   router.post(
     "/:id/employee",
-    [param("id").isNumeric()],
+    employeeSchema(),
     typeValidation,
     business.createEmployee
   );
@@ -223,7 +228,12 @@ function init(app: Express) {
   );
 
   // Create a new vacation
-  router.post("/:id/vacation", business.createVacation);
+  router.post(
+    "/:id/vacation",
+    vacationSchema(),
+    typeValidation,
+    business.createVacation
+  );
 
   // Retrieve all business vacation
   router.get(

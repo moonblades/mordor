@@ -7,24 +7,31 @@ import { user, business, reservation } from "../../../test/testdata";
 async function createReservation(done: jest.DoneCallback) {
   const token = await firebase.auth().currentUser.getIdToken();
 
-  const res = await request(app)
+  // User not found
+  let res = await request(app)
     .post("/api/user/99/reservation/")
     .set({ "firebase-token": token })
-    .send(business);
+    .send(reservation);
 
   expect(res.status).toEqual(404);
 
   const newUser = await User.create(user);
   const newBusiness = await newUser.createBusiness(business);
-  const res2 = await request(app)
+  res = await request(app)
     .post(`/api/user/${newUser.id}/reservation/`)
     .set({ "firebase-token": token })
     .send({ businessId: newBusiness.id, ...reservation });
 
-  expect(res2.status).toEqual(201);
+  expect(res.status).toEqual(201);
 
   const num = await newUser.countReservations();
   expect(num).toEqual(1);
+
+  res = await request(app)
+    .post(`/api/user/${newUser.id}/reservation/`)
+    .set({ "firebase-token": token });
+
+  expect(res.status).toEqual(400);
 
   done();
 }

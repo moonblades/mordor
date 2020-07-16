@@ -9,7 +9,7 @@ async function createProduct(done: jest.DoneCallback) {
 
   const newBusiness = await Business.create(business);
 
-  const res = await request(app)
+  let res = await request(app)
     .post(`/api/business/${newBusiness.id}/product`)
     .set({ "firebase-token": token })
     .send(product);
@@ -18,6 +18,22 @@ async function createProduct(done: jest.DoneCallback) {
 
   const num = await newBusiness.countProducts();
   expect(num).toEqual(1);
+
+  // Business not found
+  res = await request(app)
+    .post(`/api/business/99/product`)
+    .set({ "firebase-token": token })
+    .send(product);
+
+  expect(res.status).toEqual(404);
+
+  // Missing body
+  res = await request(app)
+    .post(`/api/business/${newBusiness.id}/product`)
+    .set({ "firebase-token": token });
+
+  expect(res.status).toEqual(400);
+
   done();
 }
 

@@ -11,7 +11,8 @@ async function addProductToReservation(done: jest.DoneCallback) {
   const newProduct = await newBusiness.createProduct(product);
   const newReservation = await newBusiness.createReservation(reservation);
 
-  const res = await request(app)
+  // Ok
+  let res = await request(app)
     .post(
       `/api/business/${newBusiness.id}/reservation/${newReservation.id}/product/${newProduct.id}`
     )
@@ -19,6 +20,32 @@ async function addProductToReservation(done: jest.DoneCallback) {
 
   expect(res.status).toEqual(201);
 
+  // Business not found
+  res = await request(app)
+    .post(
+      `/api/business/99/reservation/${newReservation.id}/product/${newProduct.id}`
+    )
+    .set({ "firebase-token": token });
+
+  expect(res.status).toEqual(404);
+
+  // Reservation not found
+  res = await request(app)
+    .post(
+      `/api/business/${newBusiness.id}/reservation/99/product/${newProduct.id}`
+    )
+    .set({ "firebase-token": token });
+
+  expect(res.status).toEqual(404);
+
+  // Product not found
+  res = await request(app)
+    .post(
+      `/api/business/${newBusiness.id}/reservation/${newReservation.id}/product/99`
+    )
+    .set({ "firebase-token": token });
+
+  expect(res.status).toEqual(404);
   done();
 }
 

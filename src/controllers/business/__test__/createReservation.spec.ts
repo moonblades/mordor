@@ -9,12 +9,25 @@ async function createReservation(done: jest.DoneCallback) {
 
   const newBusiness = await Business.create(business);
 
-  const res = await request(app)
+  let res = await request(app)
     .post(`/api/business/${newBusiness.id}/reservation`)
-    .send(reservation)
-    .set({ "firebase-token": token });
+    .set({ "firebase-token": token })
+    .send(reservation);
 
   expect(res.status).toEqual(201);
+
+  res = await request(app)
+    .post(`/api/business/99/reservation`)
+    .set({ "firebase-token": token })
+    .send(reservation);
+
+  expect(res.status).toEqual(404);
+
+  res = await request(app)
+    .post(`/api/business/${newBusiness.id}/reservation`)
+    .set({ "firebase-token": token });
+
+  expect(res.status).toEqual(400);
 
   done();
 }

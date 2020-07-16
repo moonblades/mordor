@@ -9,7 +9,7 @@ async function createEmployee(done: jest.DoneCallback) {
 
   const newBusiness = await Business.create(business);
 
-  const res = await request(app)
+  let res = await request(app)
     .post(`/api/business/${newBusiness.id}/employee/`)
     .set({ "firebase-token": token })
     .send(employee);
@@ -18,6 +18,20 @@ async function createEmployee(done: jest.DoneCallback) {
 
   const num = await newBusiness.countEmployees();
   expect(num).toEqual(1);
+
+  res = await request(app)
+    .post(`/api/business/99/employee/`)
+    .set({ "firebase-token": token })
+    .send(employee);
+
+  expect(res.status).toEqual(404);
+
+  res = await request(app)
+    .post(`/api/business/${newBusiness.id}/employee`)
+    .set({ "firebase-token": token });
+
+  expect(res.status).toEqual(400);
+
   done();
 }
 

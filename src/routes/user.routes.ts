@@ -2,7 +2,10 @@ import { Express, Router } from "express";
 import { typeValidation } from "../middlewares/validation";
 import { param, body } from "express-validator";
 import { userSchema } from "../schemas/user.schema";
-import { reservationSchema } from "../schemas/reservation.schema";
+import {
+  reservationSchema,
+  updateReservationSchema,
+} from "../schemas/reservation.schema";
 import { businessSchema } from "../schemas/business.schema";
 import * as user from "../controllers/user";
 
@@ -68,7 +71,7 @@ function init(app: Express) {
   // Update a reservation for user
   router.put(
     "/:id/reservation/:reservationId",
-    reservationSchema(),
+    updateReservationSchema(),
     typeValidation,
     user.updateReservation
   );
