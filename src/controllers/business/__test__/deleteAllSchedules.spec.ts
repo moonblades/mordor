@@ -7,16 +7,22 @@ import { business, schedule } from "../../../test/testdata";
 async function deleteAllSchedules(done: jest.DoneCallback) {
   const token = await firebase.auth().currentUser.getIdToken();
 
+  const res = await request(app)
+    .delete(`/api/business/99/schedule`)
+    .set({ "firebase-token": token });
+
+  expect(res.status).toEqual(404);
+
   const newBusiness = await Business.create(business);
   await newBusiness.createSchedule(schedule);
   await newBusiness.createSchedule(schedule);
   await newBusiness.createSchedule(schedule);
 
-  const res = await request(app)
+  const res2 = await request(app)
     .delete(`/api/business/${newBusiness.id}/schedule`)
     .set({ "firebase-token": token });
 
-  expect(res.status).toEqual(200);
+  expect(res2.status).toEqual(200);
 
   done();
 }
