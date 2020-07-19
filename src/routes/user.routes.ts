@@ -1,7 +1,7 @@
 import { Express, Router } from "express";
 import { typeValidation } from "../middlewares/validation";
-import { param, body } from "express-validator";
-import { userSchema } from "../schemas/user.schema";
+import { param } from "express-validator";
+import { userSchema, updateUserSchema } from "../schemas/user.schema";
 import {
   reservationSchema,
   updateReservationSchema,
@@ -16,16 +16,7 @@ function init(app: Express) {
   const router = Router();
 
   // Create a new user
-  router.post(
-    "/",
-    [
-      body("email").isEmail(),
-      body("displayName").isString(),
-      body("imageUrl").isURL(),
-    ],
-    typeValidation,
-    user.createUser
-  );
+  router.post("/", userSchema(), typeValidation, user.createUser);
 
   // Retrieve all users
   router.get("/", user.findAll);
@@ -34,7 +25,7 @@ function init(app: Express) {
   router.get("/:id", [param("id").isNumeric()], typeValidation, user.findOne);
 
   // Update a user with id
-  router.put("/:id", userSchema(), typeValidation, user.update);
+  router.put("/:id", updateUserSchema(), typeValidation, user.update);
 
   // Delete a user with id
   router.delete(
