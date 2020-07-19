@@ -52,7 +52,8 @@
     "webpack-node-externals": "^1.7.2"
   },
   "scripts": {
-    "clean": "rimraf logs dist",
+    "clean_logs": "rimraf logs",
+    "clean": "rimraf dist && npm run clean_logs",
     "lint": "eslint . --ext .js,.ts",
     "build": "rimraf dist && webpack",
     "watch": "rimraf dist && webpack --watch --node-args=\"--trace-sync-io\"",
