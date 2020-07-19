@@ -11,12 +11,12 @@ async function findAllEmployees(done: jest.DoneCallback) {
   await newBusiness.createEmployee(employee);
   await newBusiness.createEmployee(employee);
 
-  // Update employee
   const res = await request(app)
     .get(`/api/business/${newBusiness.id}/employee/`)
     .set({ "firebase-token": token });
 
   expect(res.status).toEqual(200);
+
   expect(res.body).toHaveLength(3);
   done();
 }

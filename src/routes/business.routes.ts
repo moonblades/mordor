@@ -68,7 +68,7 @@ function init(app: Express) {
     business.deleteOneReservation
   );
 
-  // Delte all reservation for business
+  // Delete all reservation for business
   router.delete(
     "/:id/reservation",
     [param("id").isNumeric()],
@@ -164,7 +164,7 @@ function init(app: Express) {
     business.deleteOneEmployee
   );
 
-  // Delte all employee for business
+  // Delete all employee for business
   router.delete(
     "/:id/employee",
     [param("id").isNumeric()],

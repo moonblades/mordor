@@ -19,6 +19,7 @@ import deleteOneSchedule from "./deleteOneSchedule.spec";
 import deleteOneVacation from "./deleteOneVacation.spec";
 import findAll from "./findAll.spec";
 import findAllEmployees from "./findAllEmployees.spec";
+import findAllProducts from "./findAllProducts.spec";
 import findAllReservations from "./findAllReservations.spec";
 import findAllSchedules from "./findAllSchedules.spec";
 import findAllVacations from "./findAllVacations.spec";
@@ -55,6 +56,7 @@ describe("Business controller", () => {
   it("should delete a vacation", deleteOneVacation);
   it("should retrieve all business", findAll);
   it("should retrieve all employees", findAllEmployees);
+  it("should retrieve all products", findAllProducts);
   it("should retrieve all reservations", findAllReservations);
   it("should retrieve all schedules", findAllSchedules);
   it("should retrieve all vacations", findAllVacations);

@@ -12,10 +12,22 @@ async function deleteOneSchedule(done: jest.DoneCallback) {
   expect(await newBusiness.countSchedules()).toEqual(1);
 
   const res = await request(app)
+    .delete(`/api/business/99/schedule/${newSchedule.id}`)
+    .set({ "firebase-token": token });
+
+  expect(res.status).toEqual(404);
+
+  const res2 = await request(app)
+    .delete(`/api/business/${newBusiness.id}/schedule/99`)
+    .set({ "firebase-token": token });
+
+  expect(res2.status).toEqual(404); // TODO: why not 403?
+
+  const res3 = await request(app)
     .delete(`/api/business/${newBusiness.id}/schedule/${newSchedule.id}`)
     .set({ "firebase-token": token });
 
-  expect(res.status).toEqual(200);
+  expect(res3.status).toEqual(200);
 
   const num = await newBusiness.countSchedules();
   expect(num).toEqual(0);
