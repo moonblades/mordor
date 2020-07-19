@@ -57,5 +57,3 @@ https://semver.org/
 
 ### Commits
 https://www.conventionalcommits.org/
-
-<iframe src="https://discordapp.com/widget?id=410194658501591056&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0"></iframe>
