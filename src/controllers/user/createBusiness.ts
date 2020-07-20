@@ -6,6 +6,13 @@ import {
   HttpException,
 } from "../../exceptions";
 
+/**
+ * Creates a business for user
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
 function createBusiness(req: Request, res: Response, next: NextFunction) {
   const { id: userId } = req.params;
 

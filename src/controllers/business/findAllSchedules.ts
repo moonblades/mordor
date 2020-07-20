@@ -2,6 +2,13 @@ import { Request, Response, NextFunction } from "express";
 import { Business, Schedule } from "../../models";
 import { InternalServerError, BusinessNotFoundError } from "../../exceptions";
 
+/**
+ * Finds all schedules for business
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
 function findAllSchedules(req: Request, res: Response, next: NextFunction) {
   const id = req.params.id;
 

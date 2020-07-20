@@ -6,6 +6,13 @@ import {
 } from "../../exceptions";
 import { Business, User } from "../../models";
 
+/**
+ * Adds a customer to business
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
 function addCustomer(req: Request, res: Response, next: NextFunction) {
   const { id: businessId, userId } = req.params;
 

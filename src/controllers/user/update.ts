@@ -2,6 +2,13 @@ import { Request, Response, NextFunction } from "express";
 import { User } from "../../models";
 import { InternalServerError, UserNotFoundError } from "../../exceptions";
 
+/**
+ * Updates a user
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
 function update(req: Request, res: Response, next: NextFunction) {
   const id = req.params.id;
 

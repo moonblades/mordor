@@ -6,6 +6,13 @@ import {
 } from "../../exceptions";
 import { Employee, Business } from "../../models";
 
+/**
+ * Deletes an employee for business
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
 function deleteOneEmployee(req: Request, res: Response, next: NextFunction) {
   const { id: businessId, employeeId } = req.params;
 

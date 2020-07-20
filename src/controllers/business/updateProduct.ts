@@ -7,6 +7,13 @@ import {
 } from "../../exceptions";
 import { Business, Product } from "../../models";
 
+/**
+ * Updates a product
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
 function updateProduct(req: Request, res: Response, next: NextFunction) {
   const { id: businessId, productId } = req.params;
 

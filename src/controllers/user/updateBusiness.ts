@@ -7,6 +7,13 @@ import {
   BusinessNotFoundError,
 } from "../../exceptions";
 
+/**
+ * Updates a business for a user
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
 function updateBusiness(req: Request, res: Response, next: NextFunction) {
   const { id: userId, businessId } = req.params;
 

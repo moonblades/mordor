@@ -6,6 +6,13 @@ import {
   VacationNotFoundError,
 } from "../../exceptions";
 
+/**
+ * Deletes a vacation for business
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
 function deleteOneVacation(req: Request, res: Response, next: NextFunction) {
   const { id, vacationId } = req.params;
 

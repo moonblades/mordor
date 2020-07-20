@@ -7,6 +7,13 @@ import {
 } from "../../exceptions";
 import { Employee, Business } from "../../models";
 
+/**
+ * Updates an employee
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
 function updateEmployee(req: Request, res: Response, next: NextFunction) {
   const { id: businessId, employeeId } = req.params;
 

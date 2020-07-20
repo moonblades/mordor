@@ -2,6 +2,13 @@ import { Request, Response, NextFunction } from "express";
 import { User } from "../../models";
 import { InternalServerError, UserNotFoundError } from "../../exceptions";
 
+/**
+ * Deletes one user
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
 function deleteOne(req: Request, res: Response, next: NextFunction) {
   const id = req.params.id;
 

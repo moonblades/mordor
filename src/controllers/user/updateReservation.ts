@@ -7,6 +7,13 @@ import {
   ReservationNotFoundError,
 } from "../../exceptions";
 
+/**
+ * Updates a reservation for a user
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
 function updateReservation(req: Request, res: Response, next: NextFunction) {
   const { id: userId, reservationId } = req.params;
 

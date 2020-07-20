@@ -2,6 +2,13 @@ import { Request, Response, NextFunction } from "express";
 import { User } from "../../models";
 import { InternalServerError, UserNotFoundError } from "../../exceptions";
 
+/**
+ * Creates a reservation for user
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
 function createReservation(req: Request, res: Response, next: NextFunction) {
   const { id: userId } = req.params;
 

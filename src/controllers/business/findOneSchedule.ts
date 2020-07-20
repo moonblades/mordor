@@ -6,6 +6,13 @@ import {
   ScheduleNotFoundError,
 } from "../../exceptions";
 
+/**
+ * Finds a schedule for business
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
 function findOneSchedule(req: Request, res: Response, next: NextFunction) {
   const { id, scheduleId } = req.params;
 

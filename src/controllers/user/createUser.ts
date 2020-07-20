@@ -2,7 +2,13 @@ import { Request, Response, NextFunction } from "express";
 import { User } from "../../models";
 import { HttpException, InternalServerError } from "../../exceptions";
 
-// Create and save a new User
+/**
+ * Create and save a new User
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
 function createUser(req: Request, res: Response, next: NextFunction) {
   const user = {
     id: req.body.id,

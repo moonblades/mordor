@@ -6,6 +6,13 @@ import {
   BusinessNotFoundError,
 } from "../../exceptions";
 
+/**
+ * Adds a favorite Business to User
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
 function addFavorite(req: Request, res: Response, next: NextFunction) {
   const { id: userId, businessId } = req.params;
 

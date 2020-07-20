@@ -2,6 +2,13 @@ import { Request, Response, NextFunction } from "express";
 import { Reservation, User } from "../../models";
 import { InternalServerError, UserNotFoundError } from "../../exceptions";
 
+/**
+ * Finds a reservation for a user
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
 function findOneReservation(req: Request, res: Response, next: NextFunction) {
   const { id: userId, reservationId } = req.params;
 

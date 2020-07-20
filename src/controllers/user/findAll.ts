@@ -2,6 +2,13 @@ import { Request, Response, NextFunction } from "express";
 import { User } from "../../models";
 import { InternalServerError } from "../../exceptions";
 
+/**
+ * Finds all users
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
 function findAll(req: Request, res: Response, next: NextFunction) {
   User.findAll()
     .then((users) => {

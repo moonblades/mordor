@@ -2,6 +2,13 @@ import { Request, Response, NextFunction } from "express";
 import { InternalServerError, BusinessNotFoundError } from "../../exceptions";
 import { Business } from "../../models";
 
+/**
+ * Creates an employee for a business
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
 function createEmployee(req: Request, res: Response, next: NextFunction) {
   const { id: businessId } = req.params;
 

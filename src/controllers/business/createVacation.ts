@@ -2,6 +2,13 @@ import { Request, Response, NextFunction } from "express";
 import { Business, Vacation } from "../../models";
 import { InternalServerError, BusinessNotFoundError } from "../../exceptions";
 
+/**
+ * Creates a vacation for business
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
 function createVacation(req: Request, res: Response, next: NextFunction) {
   const { dateStart, dateEnd } = req.body;
   const id = req.params.id;

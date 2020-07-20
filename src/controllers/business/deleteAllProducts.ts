@@ -2,6 +2,13 @@ import { Request, Response, NextFunction } from "express";
 import { InternalServerError } from "../../exceptions";
 import { Product } from "../../models";
 
+/**
+ * Deletes all products for business
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
 function deleteAllProduct(req: Request, res: Response, next: NextFunction) {
   const { id: businessId } = req.params;
 

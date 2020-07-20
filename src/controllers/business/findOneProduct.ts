@@ -2,6 +2,13 @@ import { Request, Response, NextFunction } from "express";
 import { InternalServerError, BusinessNotFoundError } from "../../exceptions";
 import { Business, Product } from "../../models";
 
+/**
+ * Finds a product for business
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
 function findOneProduct(req: Request, res: Response, next: NextFunction) {
   const { id: businessId, productId } = req.params;
 

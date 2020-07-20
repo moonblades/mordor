@@ -7,6 +7,13 @@ import {
 } from "../../exceptions";
 import { Business, User } from "../../models";
 
+/**
+ * Deletes one business for user
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
 function deleteOneBusiness(req: Request, res: Response, next: NextFunction) {
   const { id: userId, businessId } = req.params;
 

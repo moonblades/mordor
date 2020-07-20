@@ -2,6 +2,13 @@ import { Request, Response, NextFunction } from "express";
 import { Reservation } from "../../models";
 import { InternalServerError } from "../../exceptions";
 
+/**
+ * Deletes all reservations for user
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
 function deleteAllReservations(
   req: Request,
   res: Response,

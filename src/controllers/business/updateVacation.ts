@@ -7,6 +7,13 @@ import {
   HttpException,
 } from "../../exceptions";
 
+/**
+ * Updates a vacation for business
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
 function updateVacation(req: Request, res: Response, next: NextFunction) {
   const { id, vacationId } = req.params;
 

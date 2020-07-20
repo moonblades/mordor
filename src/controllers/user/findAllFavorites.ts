@@ -2,6 +2,13 @@ import { Request, Response, NextFunction } from "express";
 import { User, Favorite } from "../../models";
 import { InternalServerError, UserNotFoundError } from "../../exceptions";
 
+/**
+ * Finds all favorite businesses for a user
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
 function findAllFavorites(req: Request, res: Response, next: NextFunction) {
   const { id: userId } = req.params;
 

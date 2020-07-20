@@ -7,6 +7,13 @@ import {
 } from "../../exceptions";
 import { Reservation, Product, Business } from "../../models";
 
+/**
+ * Adds a product to a reservation
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
 function addProductToReservation(
   req: Request,
   res: Response,

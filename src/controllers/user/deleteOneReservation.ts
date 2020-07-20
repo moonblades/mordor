@@ -7,6 +7,13 @@ import {
   ReservationNotFoundError,
 } from "../../exceptions";
 
+/**
+ * Deletes one reservation for user
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
 function deleteOneReservation(req: Request, res: Response, next: NextFunction) {
   const { id: userId, reservationId } = req.params;
 

@@ -2,6 +2,13 @@ import { Request, Response, NextFunction } from "express";
 import { User } from "../../models";
 import { InternalServerError } from "../../exceptions";
 
+/**
+ * Deletes all users
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
 function deleteAll(req: Request, res: Response, next: NextFunction) {
   User.destroy({
     where: {},
