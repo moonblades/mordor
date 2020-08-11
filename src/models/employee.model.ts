@@ -8,6 +8,9 @@ class Employee extends Model {
   public productId!: number;
   public name: string;
   public surname: string;
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
 }
 
 function init(sequelize) {
